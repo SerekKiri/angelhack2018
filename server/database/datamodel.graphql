@@ -43,3 +43,21 @@ type DocumentTemplate {
   textFields: [TextField!]!
   markdownFields: [MarkdownField!]!
 }
+
+enum WorkflowNodeType {
+  ENTRY,
+  END,
+  NOTIFICATION,
+  EDIT_REQUEST,
+  WAIT,
+  EMAIL,
+  APPROVAL
+}
+
+type WorkflowNode {
+   id: ID! @unique
+   x: Int!
+   y: Int!
+   type: WorkflowNodeType!
+   properties: Json!
+}
