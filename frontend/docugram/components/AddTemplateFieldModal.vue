@@ -6,7 +6,14 @@
                 <p>Select a field type to be added</p>
 
                 <v-card v-for="fp in fieldPreviews" :key="fp.type + fp.name">
-                    <component :is="fp.component" v-bind="fp.props" />
+                    <v-card-title class="heading">{{fp.name}}</v-card-title>
+                    <v-card-text>
+                        <component :is="fp.component" v-bind="fp.props" />
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" flat @click.native="$emit('close')">Cancel</v-btn>
+                    </v-card-actions>
                 </v-card>
 
             </v-card-text>
