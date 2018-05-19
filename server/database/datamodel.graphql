@@ -62,6 +62,7 @@ enum UserActionRequestType {
 
 type UserActionRequest {
   id: ID! @unique
+  user: User!
   type: UserActionRequestType!
   title: String!
   content: String!

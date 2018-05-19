@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat May 19 2018 23:56:11 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 00:11:25 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -1292,6 +1292,7 @@ type User implements Node {
 
 type UserActionRequest implements Node {
   id: ID!
+  user(where: UserWhereInput): User!
   type: UserActionRequestType!
   title: String!
   content: String!
@@ -1311,6 +1312,7 @@ input UserActionRequestCreateInput {
   type: UserActionRequestType!
   title: String!
   content: String!
+  user: UserCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -1393,6 +1395,7 @@ input UserActionRequestUpdateInput {
   type: UserActionRequestType
   title: String
   content: String
+  user: UserUpdateOneInput
 }
 
 input UserActionRequestWhereInput {
@@ -1534,6 +1537,7 @@ input UserActionRequestWhereInput {
 
   """All values not ending with the given string."""
   content_not_ends_with: String
+  user: UserWhereInput
 }
 
 input UserActionRequestWhereUniqueInput {
@@ -1554,6 +1558,11 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -1626,10 +1635,29 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  email: String
+  password: String
+  name: String
+}
+
 input UserUpdateInput {
   email: String
   password: String
   name: String
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
