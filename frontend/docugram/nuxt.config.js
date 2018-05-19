@@ -39,12 +39,12 @@ module.exports = {
     */
     extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
+        
         config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          test: /\.graphql?$/,
+          loader: 'graphql-tag/loader'
         })
+        console.log(config.module.rules)
       }
     }
   },

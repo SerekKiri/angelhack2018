@@ -20,7 +20,8 @@
     "graphql-tag": "^2.9.2",
     "nuxt": "^1.0.0",
     "vue-apollo": "^3.0.0-beta.10",
-    "vuetify": "^1.0.0"
+    "vuetify": "^1.0.0",
+    "webpack-graphql-loader": "^0.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
