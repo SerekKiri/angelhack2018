@@ -11,7 +11,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>Docugram &copy; 2017</span>
+        <span>Docugram &copy; 2017</span>
     </v-footer>
   </v-app>
 </template>
