@@ -1,5 +1,6 @@
 <template>
     <v-card>
+        <AddWorkflowNodeModal :open="addWorkflowNodeModal" @hide="addWorkflowNodeModal = false"/>
         <svg :style="rootStyles" @mouseover="diagramHovered" @mouseout="diagramMouseOut" @mousemove="diagramMouseMove" @mouseup="endDrag()" class="main-diagram" ref="svg">
             <defs>
                 <!-- <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -46,7 +47,7 @@
         <button @click="add('action')">Add action</button>
         <button @click="add('decision')">Add decision</button> -->
         <v-fab-transition>
-            <v-btn color="primary" dark absolute right fab class="add-node-fab">
+            <v-btn color="primary" dark absolute right fab class="add-node-fab" @click="addWorkflowNodeModal = true">
                 <v-icon>add</v-icon>
             </v-btn>
         </v-fab-transition>
@@ -58,6 +59,7 @@ import EntryNode from './nodes/EntryNode'
 import DecisionNode from './nodes/DecisionNode'
 import ActionNode from './nodes/ActionNode'
 import nodeTypes from '../lib/nodeTypes'
+import AddWorkflowNodeModal from './AddWorkflowNodeModal'
 
 const randId = _ =>
   Math.random()
@@ -76,6 +78,7 @@ export default {
       temporaryConnection: null,
       connectorDragSourceNode: null,
       connectorDragSourceConnector: null,
+      addWorkflowNodeModal: false,
       nodes: [
         {
           id: 'node_1',
@@ -101,7 +104,12 @@ export default {
       ]
     }
   },
-  components: { EntryNode, DecisionNode, ActionNode },
+  components: {
+    EntryNode,
+    DecisionNode,
+    ActionNode,
+    AddWorkflowNodeModal
+  },
   methods: {
     nodeHovered() {
       if (this.cursorState === 'IDLE') {

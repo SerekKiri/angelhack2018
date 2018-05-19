@@ -2,6 +2,7 @@ const sq2 = Math.sqrt(2)
 
 export default {
   ENTRY: {
+    name: 'Entry',
     component: 'EntryNode',
     connectors: {
       out: {
@@ -13,6 +14,7 @@ export default {
     }
   },
   action: {
+    name: 'Action',
     component: 'ActionNode',
     connectors: {
       out: {
@@ -30,6 +32,7 @@ export default {
     }
   },
   decision: {
+    name: 'Decision',
     component: 'DecisionNode',
     connectors: {
       in: {
