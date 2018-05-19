@@ -14,7 +14,7 @@
             <v-list>
                 <v-subheader>Document templates</v-subheader>
                 <v-divider></v-divider>
-                <v-list-tile>
+                <v-list-tile nuxt to="/new-template">
                     <v-list-tile-title>New template</v-list-tile-title>
                     <v-list-tile-action>
                         <v-btn fab small flat>
