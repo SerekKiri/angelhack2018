@@ -1,6 +1,9 @@
 <template>
 <div>
   <v-form v-model="valid" ref="form" lazy-validation>
+      <div class="text-xs-center">
+       <img src="/logo.svg" alt="Vuetify.js" />
+       </div>
     <v-text-field
       color="primary"
       label="Your email"
