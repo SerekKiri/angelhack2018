@@ -149,7 +149,7 @@ export default {
       },
       set(newOrder) {
         for (let i = 0; i < newOrder.length; i++) {
-          this.template.fieldHeaders.find(fh => newOrder[i]).order = i
+          this.template.fieldHeaders.find(fh => fh.id === newOrder[i].id).order = i
         }
       }
     }

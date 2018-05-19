@@ -9,6 +9,9 @@
                     <v-card-title class="heading">{{nodeType.name}}</v-card-title>
                     <v-card-text>
                         <!-- <component :is="nodeType.component" v-bind="fp.props" /> -->
+                        <svg class="node-preview-svg" :style="{height: nodeType.height + 10}">
+                            <component :is="nodeType.component" :node="{id: 'node_preview', x: 210 - (nodeType.width / 2), y: 0}" />
+                        </svg>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -48,5 +51,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.node-preview-svg {
+  width: 100%;
+}
 </style>

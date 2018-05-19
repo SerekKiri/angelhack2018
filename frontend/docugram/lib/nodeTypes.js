@@ -1,9 +1,15 @@
+import ActionNode from '../components/nodes/ActionNode'
+import EntryNode from '../components/nodes/EntryNode'
+import DecisionNode from '../components/nodes/DecisionNode'
+
 const sq2 = Math.sqrt(2)
 
 export default {
   ENTRY: {
     name: 'Entry',
-    component: 'EntryNode',
+    component: EntryNode,
+    width: 100,
+    height: 30,
     connectors: {
       out: {
         color: '#3498db', // peter river
@@ -15,7 +21,9 @@ export default {
   },
   action: {
     name: 'Action',
-    component: 'ActionNode',
+    component: ActionNode,
+    width: 100,
+    height: 30,
     connectors: {
       out: {
         color: '#3498db', // peter river
@@ -33,7 +41,9 @@ export default {
   },
   decision: {
     name: 'Decision',
-    component: 'DecisionNode',
+    component: DecisionNode,
+    width: sq2 * 100,
+    height: 100 * sq2,
     connectors: {
       in: {
         color: '#34495e', // dark blue
