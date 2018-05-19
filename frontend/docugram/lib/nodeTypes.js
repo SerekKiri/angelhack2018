@@ -1,7 +1,7 @@
 const sq2 = Math.sqrt(2)
 
 export default {
-  entry: {
+  ENTRY: {
     component: 'EntryNode',
     connectors: {
       out: {

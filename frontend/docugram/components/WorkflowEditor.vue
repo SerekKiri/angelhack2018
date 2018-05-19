@@ -65,7 +65,7 @@ const randId = _ =>
     .substring(7)
 
 export default {
-  name: 'Diagram',
+  name: 'WorkflowEditor',
   data() {
     return {
       cursorState: 'IDLE',
@@ -79,7 +79,7 @@ export default {
       nodes: [
         {
           id: 'node_1',
-          type: 'entry',
+          type: 'ENTRY',
           x: 20,
           y: 20,
           connections: []
@@ -220,6 +220,6 @@ export default {
   cursor: crosshair;
 }
 .add-node-fab {
-    bottom: 30px;
+  bottom: 30px;
 }
 </style>
