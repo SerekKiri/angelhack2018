@@ -7,6 +7,8 @@ import io.github.feelfree.docugram.api.repository.login.LoginApi
 import io.github.feelfree.docugram.api.repository.login.LoginRepository
 import io.github.feelfree.docugram.api.repository.submission.SubmissionApi
 import io.github.feelfree.docugram.api.repository.submission.SubmissionRepository
+import io.github.feelfree.docugram.api.repository.template.TemplateApi
+import io.github.feelfree.docugram.api.repository.template.TemplateRepository
 
 @Module
 class RepositoryModule {
@@ -15,4 +17,7 @@ class RepositoryModule {
 
     @Provides
     fun provideLoginApi(apolloClient: ApolloClient) : LoginApi = LoginRepository(apolloClient)
+
+    @Provides
+    fun provideTemplateApi(apolloClient: ApolloClient) : TemplateApi = TemplateRepository(apolloClient)
 }

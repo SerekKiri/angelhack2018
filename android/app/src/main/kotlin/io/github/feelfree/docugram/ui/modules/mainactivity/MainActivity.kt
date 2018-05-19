@@ -11,8 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
+import io.github.feelfree.docugram.ui.modules.NavigatorApi
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     companion object {
@@ -21,6 +23,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    @Inject
+    lateinit var navigator : NavigatorApi
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return true
     }
@@ -41,6 +45,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
+        fab.setOnClickListener {
+            navigator.openTemplateActivity(this, "ddd")
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
