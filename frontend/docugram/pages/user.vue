@@ -6,11 +6,7 @@
           Welcome {{me && me.name}}!
           </v-card-title>
         <v-card-text>
-          If you want to start creating yours form just click on menu icon in top left corner of your screen or just continue,<br />
-          then you can build it by clicking button with plus sign like this one:
-          <v-btn block color="primary">
-            <v-icon>add</v-icon>
-          </v-btn>
+          If you want to start creating yours form just click on menu icon in top left corner of your screen or just continue.
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
