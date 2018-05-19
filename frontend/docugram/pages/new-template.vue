@@ -15,15 +15,17 @@
       <v-spacer />
       <v-btn right bottom class="mt-4" color="secondary" @click="save">Save</v-btn>
       <v-tab-item :key="0">
-        <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" @fieldAdded="addField" />
-
+      <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" @fieldAdded="addField" />
+       
         <v-card flat>
           <v-card-text>
             <div class="force-height">
+              <draggable v-model='myList'>
               <div v-for="(fieldHeader, fieldIndex) in template.fieldHeaders" :key="fieldHeader.id" :class="{'elevation-3': selectedFieldIndex === fieldIndex}" class="pa-2">
                 <component :is="fieldComponents[fieldHeader.type]" v-bind="fieldProps(fieldHeader)" @click.prevent="selectField(fieldIndex)" :editorMode="true" />
                 <v-btn color="error" @click="removeEvent(event)">Delete</v-btn>
               </div>
+               </draggable>
             </div>
             <v-btn color="primary" block @click="addFieldModalOpen = true">
               <v-icon>
@@ -32,6 +34,7 @@
             </v-btn>
           </v-card-text>
         </v-card>
+      
       </v-tab-item>
       <v-tab-item :key="1">
         <v-card flat>
@@ -45,21 +48,22 @@
 </template>
 
 <script>
-import AddTemplateFieldModal from '../components/AddTemplateFieldModal'
-import cuid from 'cuid'
-import TextField from '../components/fields/TextField.vue'
-import CheckboxField from '../components/fields/CheckboxField.vue'
-import MarkdownField from '../components/fields/MarkdownField.vue'
-import PropertyEditorDrawer from '../components/PropertyEditorDrawer'
-import WorkflowEditor from '../components/WorkflowEditor'
+import AddTemplateFieldModal from "../components/AddTemplateFieldModal";
+import cuid from "cuid";
+import TextField from "../components/fields/TextField.vue";
+import CheckboxField from "../components/fields/CheckboxField.vue";
+import MarkdownField from "../components/fields/MarkdownField.vue";
+import PropertyEditorDrawer from "../components/PropertyEditorDrawer";
+import WorkflowEditor from "../components/WorkflowEditor";
+import draggable from "vuedraggable";
 
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 const fieldComponents = {
   TEXT: TextField,
   CHECKBOX: CheckboxField,
   MARKDOWN: MarkdownField
-}
+};
 
 /*const fieldMockProps = {
     TEXT: {
@@ -68,44 +72,44 @@ const fieldComponents = {
 }*/
 
 const fieldDefinitionKeys = {
-  TEXT: 'textFields',
-  CHECKBOX: 'checkboxFields',
-  MARKDOWN: 'markdownFields'
-}
+  TEXT: "textFields",
+  CHECKBOX: "checkboxFields",
+  MARKDOWN: "markdownFields"
+};
 
 const fieldProperties = {
   TEXT: [
     {
       type: String,
-      key: 'label',
-      label: 'Label'
+      key: "label",
+      label: "Label"
     },
     {
       type: String,
-      key: 'defaultValue',
-      label: 'Default value'
+      key: "defaultValue",
+      label: "Default value"
     }
   ],
   CHECKBOX: [
     {
       type: String,
-      key: 'label',
-      label: 'Label'
+      key: "label",
+      label: "Label"
     },
     {
       type: Boolean,
-      key: 'defaultValue',
-      label: 'Default value'
+      key: "defaultValue",
+      label: "Default value"
     }
   ],
   MARKDOWN: [
     {
-      type: 'LONG_STRING',
-      key: 'content',
-      label: 'Content'
+      type: "LONG_STRING",
+      key: "content",
+      label: "Content"
     }
   ]
-}
+};
 
 export default {
   data() {
@@ -123,18 +127,30 @@ export default {
         checkboxFields: [],
         markdownFields: []
       }
-    }
+    };
   },
   computed: {
     selectedField() {
-      return this.template.fieldHeaders[this.selectedFieldIndex]
+      return this.template.fieldHeaders[this.selectedFieldIndex];
     },
     selectedFieldDefinition() {
-      if (!this.selectedField) return null
+      if (!this.selectedField) return null;
       return {
         ...this.template[fieldDefinitionKeys[this.selectedField.type]].find(
           fd => fd.id === this.selectedField.definitionId
         )
+      };
+    },
+    draggableCards: {
+      get() {
+        return this.template.fieldHeaders
+          .map(fh => fh)
+          .sort((a, b) => a.order - b.order);
+      },
+      set(newOrder) {
+        for (let i = 0; i < newOrder.length; i++) {
+          this.template.fieldHeaders.find(fh => newOrder[i]).order = i;
+        }
       }
     }
   },
@@ -143,14 +159,14 @@ export default {
       try {
         for (let fieldHeader of this.template.fieldHeaders) {
           switch (fieldHeader.type) {
-            case 'TEXT': {
+            case "TEXT": {
               let textFieldDefinition = this.template.textFields.find(
                 tf => tf.id === fieldHeader.definitionId
-              )
+              );
               if (!textFieldDefinition) {
                 throw new Error(
-                  'Jestes debilem, textFieldDefinition jest falsy'
-                )
+                  "Jestes debilem, textFieldDefinition jest falsy"
+                );
               }
               let {
                 data: { createTextField: { id } }
@@ -163,19 +179,19 @@ export default {
                   }
                 `,
                 variables: { data: { ...textFieldDefinition, id: undefined } }
-              })
-              textFieldDefinition.id = id
-              fieldHeader.definitionId = id
-              break
+              });
+              textFieldDefinition.id = id;
+              fieldHeader.definitionId = id;
+              break;
             }
-            case 'CHECKBOX': {
+            case "CHECKBOX": {
               let checkboxFieldDefinition = this.template.checkboxFields.find(
                 tf => tf.id === fieldHeader.definitionId
-              )
+              );
               if (!checkboxFieldDefinition) {
                 throw new Error(
-                  'Jestes debilem, checkboxFieldDefinition jest falsy'
-                )
+                  "Jestes debilem, checkboxFieldDefinition jest falsy"
+                );
               }
               let {
                 data: { createCheckboxField: { id } }
@@ -192,19 +208,19 @@ export default {
                 variables: {
                   data: { ...checkboxFieldDefinition, id: undefined }
                 }
-              })
-              checkboxFieldDefinition.id = id
-              fieldHeader.definitionId = id
-              break
+              });
+              checkboxFieldDefinition.id = id;
+              fieldHeader.definitionId = id;
+              break;
             }
-            case 'MARKDOWN': {
+            case "MARKDOWN": {
               let markdownFieldDefinition = this.template.markdownFields.find(
                 tf => tf.id === fieldHeader.definitionId
-              )
+              );
               if (!markdownFieldDefinition) {
                 throw new Error(
-                  'Jestes debilem, markdownFieldDefinition jest falsy'
-                )
+                  "Jestes debilem, markdownFieldDefinition jest falsy"
+                );
               }
               let {
                 data: { createMarkdownField: { id } }
@@ -221,10 +237,10 @@ export default {
                 variables: {
                   data: { ...markdownFieldDefinition, id: undefined }
                 }
-              })
-              markdownFieldDefinition.id = id
-              fieldHeader.definitionId = id
-              break
+              });
+              markdownFieldDefinition.id = id;
+              fieldHeader.definitionId = id;
+              break;
             }
           }
         }
@@ -253,7 +269,7 @@ export default {
               id: tf.id
             }))
           }
-        }
+        };
 
         await this.$apollo.mutate({
           mutation: gql`
@@ -266,86 +282,87 @@ export default {
             }
           `,
           variables: { data: templateCreateData }
-        })
+        });
       } catch (e) {
-        console.log(e)
-        this.error = e.message
+        console.log(e);
+        this.error = e.message;
       }
     },
     updateSelectedDefinition(newDefinition) {
-      if (this.selectedField === null) return null
+      if (this.selectedField === null) return null;
 
       let fieldsOfTypeList = this.template[
         fieldDefinitionKeys[this.selectedField.type]
-      ]
+      ];
       this.template[
         fieldDefinitionKeys[this.selectedField.type]
       ] = fieldsOfTypeList.map(
         fd => (fd.id === this.selectedField.definitionId ? newDefinition : fd)
-      )
+      );
     },
     fieldProps(fieldHeader) {
-      let value = undefined
+      let value = undefined;
       let definition = this.template[
         fieldDefinitionKeys[fieldHeader.type]
-      ].find(fd => fd.id === fieldHeader.definitionId)
+      ].find(fd => fd.id === fieldHeader.definitionId);
 
-      if (['CHECKBOX', 'TEXT'].indexOf(fieldHeader.type) !== -1) {
+      if (["CHECKBOX", "TEXT"].indexOf(fieldHeader.type) !== -1) {
         // set value to default value for preview
-        value = definition.defaultValue
+        value = definition.defaultValue;
       }
       return {
         ...definition,
         value
-      }
+      };
     },
     selectField(fieldIndex) {
-      this.selectedFieldIndex = fieldIndex
+      this.selectedFieldIndex = fieldIndex;
     },
     addField(type) {
-      this.addFieldModalOpen = false
-      let fieldDefinitionId = cuid()
+      this.addFieldModalOpen = false;
+      let fieldDefinitionId = cuid();
       this.template.fieldHeaders.push({
         id: cuid(),
         type,
         order: this.template.fieldHeaders.length,
         definitionId: fieldDefinitionId
-      })
+      });
       switch (type) {
-        case 'TEXT':
+        case "TEXT":
           this.template.textFields.push({
             id: fieldDefinitionId,
-            label: 'New field',
-            defaultValue: ''
-          })
-          break
-        case 'CHECKBOX':
+            label: "New field",
+            defaultValue: ""
+          });
+          break;
+        case "CHECKBOX":
           this.template.checkboxFields.push({
             id: fieldDefinitionId,
-            label: 'New field',
+            label: "New field",
             defaultValue: false
-          })
-          break
-        case 'MARKDOWN':
+          });
+          break;
+        case "MARKDOWN":
           this.template.markdownFields.push({
             id: fieldDefinitionId,
-            content: 'Your custom **description**.'
-          })
-          break
+            content: "Your custom **description**."
+          });
+          break;
       }
     },
     removeEvent(event) {
       const removeIndex = this.template.fieldHeaders.indexOf(event);
       this.template.fieldHeaders.splice(removeIndex, 1);
-    },
+    }
   },
-  layout: 'dashboard',
+  layout: "dashboard",
   components: {
     AddTemplateFieldModal,
     PropertyEditorDrawer,
-    WorkflowEditor
+    WorkflowEditor,
+    draggable
   }
-}
+};
 </script>
 
 <style scoped>
