@@ -23,7 +23,6 @@
 
         <EditText
             android:id="@+id/emailEditText"
-            android:hint="@string/email_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -38,7 +37,6 @@
 
         <EditText
             android:id="@+id/passwordEditText"
-            android:hint="@string/email_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

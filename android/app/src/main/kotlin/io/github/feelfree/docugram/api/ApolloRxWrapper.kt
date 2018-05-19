@@ -5,9 +5,13 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.Single
 import io.reactivex.functions.Function
+import java.io.IOException
 
 class ApolloRxWrapper <T: Any> : Function<Response<T>, T> {
     override fun apply(t: Response<T>): T {
+        if(t.hasErrors()) {
+            throw IOException(t.errors().first().message())
+        }
         return t.data()!!
     }
 }
