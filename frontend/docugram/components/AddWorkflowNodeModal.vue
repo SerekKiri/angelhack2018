@@ -9,13 +9,17 @@
                     <v-card-title class="heading">{{nodeType.name}}</v-card-title>
                     <v-card-text>
                         <!-- <component :is="nodeType.component" v-bind="fp.props" /> -->
-                        <svg class="node-preview-svg" :style="{height: nodeType.height + 10}">
-                            <component :is="nodeType.component" :node="{id: 'node_preview', x: 210 - (nodeType.width / 2), y: 0}" />
+                        <svg class="node-preview-svg" :style="{height: nodeType.height + 50}">
+                            <component :is="nodeType.component" :node="previewNodeData(nodeType)" :nodeType="nodeType" />
+
+                            <template v-for="(connector, ci) in nodeType.connectors">
+                                <circle :key="ci" :cx="previewNodeData(nodeType).x + connector.x" :cy="previewNodeData(nodeType).y + connector.y" :r="5" :fill="connector.color" style="filter:url(#dropshadow)" :class="{'connector-out': connector.type === 'OUT'}" />
+                            </template>
                         </svg>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="$emit('fieldAdded', nodeType.type)">Add {{nodeType.name.toLowerCase()}}</v-btn>
+                        <v-btn color="primary" @click="$emit('nodeAdded', typename)">Add {{nodeType.name.toLowerCase()}}</v-btn>
                     </v-card-actions>
                 </v-card>
 
@@ -40,6 +44,9 @@ export default {
   methods: {
     emitDialogEvent(ev) {
       if (ev === false) this.$emit('close')
+    },
+    previewNodeData(nodeType) {
+      return { id: 'node_preview', x: 210 - nodeType.width / 2, y: 10 }
     }
   },
   props: {

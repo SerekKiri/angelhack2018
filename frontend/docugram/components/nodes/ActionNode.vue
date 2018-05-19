@@ -3,7 +3,7 @@
         <rect
             width="100"
             height="30"
-            fill="#9b59b6"
+            :fill="nodeType.color"
             :x="node.x"
             :y="node.y"
             v-on="$listeners"
@@ -19,13 +19,13 @@
             alignment-baseline="central"
             v-on.stop="$listeners"
             style="user-select: none;"
-        >Action</text>
+        >{{nodeType.name}}</text>
     </g>
 </template>
 
 <script>
 export default {
-  props: ["node"]
+  props: ["node", "nodeType"]
 };
 </script>
 

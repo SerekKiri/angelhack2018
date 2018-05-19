@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <AddWorkflowNodeModal :open="addWorkflowNodeModal" @hide="addWorkflowNodeModal = false"/>
+        <AddWorkflowNodeModal :open="addWorkflowNodeModal" @hide="addWorkflowNodeModal = false" @nodeAdded="nodeAdded" />
         <svg :style="rootStyles" @mouseover="diagramHovered" @mouseout="diagramMouseOut" @mousemove="diagramMouseMove" @mouseup="endDrag()" class="main-diagram" ref="svg">
             <defs>
                 <!-- <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -31,7 +31,7 @@
             </filter>
 
             <g v-for="(node, i) in nodes" :key="i">
-                <component :is="nodeTypes[node.type].component" :node="node" @mouseover="nodeHovered(node)" @mouseout="nodeEndHover(node)" @mousedown="nodeDrag(node, $event)" />
+                <component :is="nodeTypes[node.type].component" :node="node" :nodeType="nodeTypes[node.type]" @mouseover="nodeHovered(node)" @mouseout="nodeEndHover(node)" @mousedown="nodeDrag(node, $event)" />
                 <line v-for="(connection, ci) in node.connections" :key="ci" :x1="node.x + connection.sourceConnector.x" :y1="node.y + connection.sourceConnector.y" :x2="connection.targetNode.x + connection.targetConnector.x" :y2="connection.targetNode.y + connection.targetConnector.y" stroke-width="2" stroke="black" />
                 <template v-for="(connector, ci) in nodeTypes[node.type].connectors">
                     <circle :key="ci" :cx="node.x + connector.x" :cy="node.y + connector.y" :r="connectorSize(connector)" :fill="connector.color" style="filter:url(#dropshadow)" :class="{'connector-out': connector.type === 'OUT'}" @mousedown="connectorDrag(node, connector, $event)" @mouseup="connectorEndDrag(node, connector, $event)" />
@@ -55,9 +55,6 @@
 </template>
 
 <script>
-import EntryNode from './nodes/EntryNode'
-import DecisionNode from './nodes/DecisionNode'
-import ActionNode from './nodes/ActionNode'
 import nodeTypes from '../lib/nodeTypes'
 import AddWorkflowNodeModal from './AddWorkflowNodeModal'
 
@@ -89,7 +86,7 @@ export default {
         },
         {
           id: 'node_2',
-          type: 'action',
+          type: 'NOTIFICATION',
           x: 100,
           y: 100,
           connections: []
@@ -105,9 +102,6 @@ export default {
     }
   },
   components: {
-    EntryNode,
-    DecisionNode,
-    ActionNode,
     AddWorkflowNodeModal
   },
   methods: {
@@ -191,12 +185,14 @@ export default {
         )
       ]
     },
-    add(type) {
+    nodeAdded(type) {
+      console.log(type)
+      this.addWorkflowNodeModal = false
       this.nodes.push({
         id: randId(),
         type: type,
-        x: Math.floor(Math.random() * 800),
-        y: Math.floor(Math.random() * 800),
+        x: 400,
+        y: 400,
         connections: []
       })
     }
