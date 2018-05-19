@@ -18,7 +18,15 @@
         fixed
         >
             <v-list>
-                <v-subheader>Document templates</v-subheader>
+                <v-subheader>
+                    <v-btn
+                    icon
+                    @click.stop="rightDrawer = !rightDrawer"
+                    >
+                    <v-icon>arrow_left</v-icon>
+                    </v-btn>
+                    Document templates
+                    </v-subheader>
                 <v-divider></v-divider>
                 <v-list-tile nuxt to="/new-template">
                     <v-list-tile-title>New template</v-list-tile-title>
