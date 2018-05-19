@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="subheader">Create a document template</h1>
-        <v-tabs v-model="active" color="primary" dark slider-color="secondary">
+        <v-tabs v-model="active" >
             <v-tab :key="0" ripple>
                 Template
             </v-tab>
