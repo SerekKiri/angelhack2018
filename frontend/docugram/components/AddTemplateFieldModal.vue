@@ -12,7 +12,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary">Add {{fp.name.toLowerCase()}}</v-btn>
+                        <v-btn color="primary" @click="$emit('fieldAdded', fp.type)">Add {{fp.name.toLowerCase()}}</v-btn>
                     </v-card-actions>
                 </v-card>
 
@@ -28,6 +28,7 @@
 <script>
 import TextField from './fields/TextField.vue'
 import CheckboxField from './fields/CheckboxField.vue'
+import MarkdownField from './fields/MarkdownField.vue'
 
 const fieldPreviews = [
   {
@@ -48,6 +49,14 @@ const fieldPreviews = [
       label: 'Sample label',
       value: true,
       disabled: true
+    }
+  },
+  {
+    name: 'Description paragraph',
+    type: 'MARKDOWN',
+    component: MarkdownField,
+    props: {
+      content: 'Yout **rich** text here!'
     }
   }
 ]
