@@ -15,10 +15,10 @@ export default ctx => {
     /*  const token = process.server
       ? ctx.req.session
       : window.__NUXT__.state.session;
-
+*/
     operation.setContext({
-      headers: { authorization: `Bearer ${token}` }
-    }); */
+      headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
     return forward(operation)
   })
   const link = middlewareLink.concat(httpLink)
