@@ -54,6 +54,19 @@ enum WorkflowNodeType {
   APPROVAL
 }
 
+enum UserActionRequestType {
+  NOTIFICATION,
+  APPROVAL,
+  EDIT_REQUEST
+}
+
+type UserActionRequest {
+  id: ID! @unique
+  type: UserActionRequestType!
+  title: String!
+  content: String!
+}
+
 type WorkflowNode {
    id: ID! @unique
    x: Int!
