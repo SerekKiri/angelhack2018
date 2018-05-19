@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <h1 class="subheader">Create a document template</h1> -->
-    <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]" :show="selectedFieldIndex !== null" :value="selectedFieldDefinition" @input="updateSelectedDefinition($event)" />
+    <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]" :show="selectedFieldIndex !== null" :value="selectedFieldDefinition" @hide="selectedFieldIndex = null" @input="updateSelectedDefinition($event)" />
     <v-tabs v-model="activeTab">
       <v-tab :key="0" ripple>
         Template

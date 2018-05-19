@@ -22,6 +22,7 @@
     "marked": "^0.3.19",
     "nuxt": "^1.0.0",
     "vue-apollo": "^3.0.0-beta.10",
+    "vue-click-outside": "^1.0.7",
     "vuetify": "^1.0.0",
     "webpack-graphql-loader": "^0.1.2"
   },
