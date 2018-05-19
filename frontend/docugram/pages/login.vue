@@ -53,6 +53,9 @@ export default {
             `
           })
           localStorage.setItem('token', data.login.token)
+          this.$router.push({
+            path: '/user'
+          })
         } catch (e) {
           this.error = e.message
         }
