@@ -1,6 +1,11 @@
 <template>
     <v-app dark>
-        <v-toolbar fixed app :clipped-left="clipped">
+        <v-toolbar>
+         <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon> 
+      <v-btn 
+        icon 
+        @click.stop="miniVariant = !miniVariant" 
+      ></v-btn>
             <v-spacer></v-spacer>
             <v-btn flat to='/'>{{me && me.name}}</v-btn>
             <v-btn flat to='/'>Logout</v-btn>
@@ -31,7 +36,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 export default {
   apollo: {
     me: {
@@ -53,8 +58,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Docugram'
-    }
+      title: "Docugram"
+    };
   }
-}
+};
 </script>
