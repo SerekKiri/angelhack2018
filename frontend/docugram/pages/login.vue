@@ -7,8 +7,8 @@
       <v-alert v-if="!!error" value="true" type="error">
         {{error}}
       </v-alert>
-      <v-text-field color="primary" label="Your email" v-model="email" :rules="emailRules" required></v-text-field>
-      <v-text-field color="primary" label="Password" v-model="password" type="password" :rules="passwordRules" required></v-text-field>
+      <v-text-field color="primary" label="Your email" v-model="email" :rules="emailRules" required @keyup.enter="login"></v-text-field>
+      <v-text-field color="primary" label="Password" v-model="password" type="password" :rules="passwordRules" required @keyup.enter="login"></v-text-field>
       <v-btn color="secondary" :disabled="!valid" @click="login">
         Login
       </v-btn>
@@ -34,7 +34,7 @@ export default {
     async login() {
       if (this.$refs.form.validate()) {
         try {
-          await this.$apollo.mutate({
+          let { data } = await this.$apollo.mutate({
             variables: {
               email: this.email,
               password: this.password
@@ -52,6 +52,7 @@ export default {
               }
             `
           })
+          localStorage.setItem('token', data.login.token)
         } catch (e) {
           this.error = e.message
         }
