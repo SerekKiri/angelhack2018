@@ -1,11 +1,8 @@
 <template>
     <v-app>
         <v-toolbar>
-         <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon> 
-      <v-btn 
-        icon 
-        @click.stop="miniVariant = !miniVariant" 
-      ></v-btn>
+            <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+            <v-btn icon @click.stop="miniVariant = !miniVariant"></v-btn>
             <v-spacer></v-spacer>
             <v-btn flat to='/'>{{me && me.name}}</v-btn>
             <v-btn flat to='/'>Logout</v-btn>
@@ -26,7 +23,7 @@
         </v-navigation-drawer>
         <v-content>
             <!--<v-container> -->
-                <nuxt />
+            <nuxt />
             <!-- </v-container> -->
         </v-content>
         <v-footer :fixed="fixed" app>
@@ -36,8 +33,13 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 export default {
+  data() {
+    return {
+      me: null
+    }
+  },
   apollo: {
     me: {
       query: gql`
@@ -58,8 +60,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Docugram"
-    };
+      title: 'Docugram'
+    }
   }
-};
+}
 </script>
