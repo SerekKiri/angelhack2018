@@ -9,6 +9,8 @@
       <v-tab :key="2" ripple>
         Workflow
       </v-tab>
+      <v-spacer />
+      <v-btn right bottom class="mt-4" color="secondary" @click="save">Save</v-btn>
       <v-tab-item :key="0">
         <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" @fieldAdded="addField" />
 
@@ -44,6 +46,7 @@ import TextField from '../components/fields/TextField.vue'
 import CheckboxField from '../components/fields/CheckboxField.vue'
 import MarkdownField from '../components/fields/MarkdownField.vue'
 import PropertyEditorDrawer from '../components/PropertyEditorDrawer'
+import gql from 'graphql-tag'
 
 const fieldComponents = {
   TEXT: TextField,
@@ -128,6 +131,107 @@ export default {
     }
   },
   methods: {
+    async save() {
+      try {
+        for (let fieldHeader of this.template.fieldHeaders) {
+          switch (fieldHeader.type) {
+            case 'TEXT': {
+              let textFieldDefinition = this.template.textFields.find(
+                tf => tf.id === fieldHeader.definitionId
+              )
+              if (!textFieldDefinition) {
+                throw new Error(
+                  'Jestes debilem, textFieldDefinition jest falsy'
+                )
+              }
+              let {
+                data: { createTextField: { id } }
+              } = await this.$apollo.mutate({
+                mutation: gql`
+                  mutation createTextField($data: TextFieldCreateInput!) {
+                    createTextField(data: $data) {
+                      id
+                    }
+                  }
+                `,
+                variables: { data: { ...textFieldDefinition, id: undefined } }
+              })
+              textFieldDefinition.id = id
+              fieldHeader.definitionId = id
+              break
+            }
+            case 'CHECKBOX': {
+              let checkboxFieldDefinition = this.template.checkboxFields.find(
+                tf => tf.id === fieldHeader.definitionId
+              )
+              if (!checkboxFieldDefinition) {
+                throw new Error(
+                  'Jestes debilem, checkboxFieldDefinition jest falsy'
+                )
+              }
+              let {
+                data: { createCheckboxField: { id } }
+              } = await this.$apollo.mutate({
+                mutation: gql`
+                  mutation createCheckboxField(
+                    $data: CheckboxFieldCreateInput!
+                  ) {
+                    createCheckboxField(data: $data) {
+                      id
+                    }
+                  }
+                `,
+                variables: {
+                  data: { ...checkboxFieldDefinition, id: undefined }
+                }
+              })
+              checkboxFieldDefinition.id = id
+              fieldHeader.definitionId = id
+              break
+            }
+          }
+        }
+
+        // now really create the template
+        let templateCreateData = {
+          fieldHeaders: {
+            create: this.template.fieldHeaders.map(fh => ({
+              ...fh,
+              id: undefined
+            }))
+          },
+          textFields: {
+            connect: this.template.textFields.map(tf => ({
+              fdhfdhufd: console.log(tf),
+              id: tf.id
+            }))
+          },
+          checkboxFields: {
+            connect: this.template.checkboxFields.map(tf => ({
+              id: tf.id
+            }))
+          },
+          markdownFields: {
+            connect: this.template.markdownFields.map(tf => ({
+              id: tf.id
+            }))
+          }
+        }
+
+        await this.$apollo.mutate({
+          mutation: gql`
+            mutation createDocumentTemplate($data: DocumentTemplateCreateInput!) {
+              createDocumentTemplate(data: $data) {
+                id
+              }
+            }
+          `,
+          variables: { data: templateCreateData }
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    },
     updateSelectedDefinition(newDefinition) {
       if (this.selectedField === null) return null
 

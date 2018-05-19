@@ -8,6 +8,10 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  createCheckboxField(data: CheckboxFieldCreateInput!): CheckboxField!
+  createTextField(data: TextFieldCreateInput!): TextField!
+  createMarkdownField(data: MarkdownFieldCreateInput!): MarkdownField!
+  createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
 }
 
 #type Subscription {
