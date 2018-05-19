@@ -20,9 +20,9 @@
             </v-list>
         </v-navigation-drawer>
         <v-content>
-            <v-container>
+            <!--<v-container> -->
                 <nuxt />
-            </v-container>
+            <!-- </v-container> -->
         </v-content>
         <v-footer :fixed="fixed" app>
             <span>Docugram &copy; 2017</span>
