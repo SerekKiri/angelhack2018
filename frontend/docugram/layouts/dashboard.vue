@@ -45,7 +45,7 @@
         </v-content>
         <v-footer :fixed="fixed" app>
             <v-card-text>
-                <p class="text-md-center">Docugram &copy 2018</p>
+                <p class="text-md-center">Docugram &copy; 2018</p>
             </v-card-text>
         </v-footer>
     </v-app>
