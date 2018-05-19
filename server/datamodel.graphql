@@ -1,0 +1,37 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+  password: String!
+}
+
+enum FieldType {
+  TEXT
+  CHECKBOX
+  MARKDOWN
+}
+
+type FieldHeader {
+  type: FieldType!
+  order: Int!
+  definitionId: ID!
+}
+
+type CheckboxField {
+  id: ID! @unique
+  label: String!
+  defaultValue: Boolean!
+}
+
+type TextField {
+  id: ID! @unique
+  label: String!
+  defaultValue: String!
+}
+
+type DocumentTemplate {
+  id: ID! @unique
+  fieldHeaders: [FieldHeader!]!
+  checkboxFields: [CheckboxField!]!
+  textFields: [TextField!]!
+}
