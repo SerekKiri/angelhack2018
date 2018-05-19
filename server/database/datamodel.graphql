@@ -12,7 +12,7 @@ enum FieldType {
 }
 
 type FieldHeader {
-   id: ID! @unique
+  id: ID! @unique
   type: FieldType!
   order: Int!
   definitionId: ID!
@@ -35,7 +35,6 @@ type MarkdownField {
   content: String!
 }
 
-
 type DocumentTemplate {
   id: ID! @unique
   fieldHeaders: [FieldHeader!]!
@@ -45,33 +44,34 @@ type DocumentTemplate {
 }
 
 enum WorkflowNodeType {
-  ENTRY,
-  END,
-  NOTIFICATION,
-  EDIT_REQUEST,
-  WAIT,
-  EMAIL,
+  ENTRY
+  END
+  NOTIFICATION
+  EDIT_REQUEST
+  WAIT
+  EMAIL
   APPROVAL
 }
 
 enum UserActionRequestType {
-  NOTIFICATION,
-  APPROVAL,
+  NOTIFICATION
+  APPROVAL
   EDIT_REQUEST
 }
 
 type UserActionRequest {
   id: ID! @unique
   user: User!
+  createdAt: DateTime!
   type: UserActionRequestType!
   title: String!
   content: String!
 }
 
 type WorkflowNode {
-   id: ID! @unique
-   x: Int!
-   y: Int!
-   type: WorkflowNodeType!
-   properties: Json!
+  id: ID! @unique
+  x: Int!
+  y: Int!
+  type: WorkflowNodeType!
+  properties: Json!
 }

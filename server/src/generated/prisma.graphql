@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 00:11:25 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 00:13:45 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -259,6 +259,8 @@ input CheckboxFieldWhereInput {
 input CheckboxFieldWhereUniqueInput {
   id: ID
 }
+
+scalar DateTime
 
 type DocumentTemplate implements Node {
   id: ID!
@@ -1293,6 +1295,7 @@ type User implements Node {
 type UserActionRequest implements Node {
   id: ID!
   user(where: UserWhereInput): User!
+  createdAt: DateTime!
   type: UserActionRequestType!
   title: String!
   content: String!
@@ -1327,6 +1330,8 @@ type UserActionRequestEdge {
 enum UserActionRequestOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
   type_ASC
   type_DESC
   title_ASC
@@ -1335,12 +1340,11 @@ enum UserActionRequestOrderByInput {
   content_DESC
   updatedAt_ASC
   updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type UserActionRequestPreviousValues {
   id: ID!
+  createdAt: DateTime!
   type: UserActionRequestType!
   title: String!
   content: String!
@@ -1447,6 +1451,28 @@ input UserActionRequestWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   type: UserActionRequestType
 
   """All values that are not equal to given value."""
