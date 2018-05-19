@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat May 19 2018 14:09:16 GMT+0200 (CEST)
+# timestamp: Sat May 19 2018 14:59:27 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateDocumentTemplate {
 }
 
 type AggregateFieldHeader {
+  count: Int!
+}
+
+type AggregateMarkdownField {
   count: Int!
 }
 
@@ -253,6 +257,7 @@ type DocumentTemplate implements Node {
   fieldHeaders(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldHeader!]
   checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField!]
   textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField!]
+  markdownFields(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MarkdownField!]
 }
 
 """A connection to a list of items."""
@@ -269,6 +274,7 @@ input DocumentTemplateCreateInput {
   fieldHeaders: FieldHeaderCreateManyInput
   checkboxFields: CheckboxFieldCreateManyInput
   textFields: TextFieldCreateManyInput
+  markdownFields: MarkdownFieldCreateManyInput
 }
 
 """An edge in a connection."""
@@ -336,6 +342,7 @@ input DocumentTemplateUpdateInput {
   fieldHeaders: FieldHeaderUpdateManyInput
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
+  markdownFields: MarkdownFieldUpdateManyInput
 }
 
 input DocumentTemplateWhereInput {
@@ -396,6 +403,9 @@ input DocumentTemplateWhereInput {
   textFields_every: TextFieldWhereInput
   textFields_some: TextFieldWhereInput
   textFields_none: TextFieldWhereInput
+  markdownFields_every: MarkdownFieldWhereInput
+  markdownFields_some: MarkdownFieldWhereInput
+  markdownFields_none: MarkdownFieldWhereInput
 }
 
 input DocumentTemplateWhereUniqueInput {
@@ -602,33 +612,250 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
+type MarkdownField implements Node {
+  id: ID!
+  content: String!
+}
+
+"""A connection to a list of items."""
+type MarkdownFieldConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MarkdownFieldEdge]!
+  aggregate: AggregateMarkdownField!
+}
+
+input MarkdownFieldCreateInput {
+  content: String!
+}
+
+input MarkdownFieldCreateManyInput {
+  create: [MarkdownFieldCreateInput!]
+  connect: [MarkdownFieldWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type MarkdownFieldEdge {
+  """The item at the end of the edge."""
+  node: MarkdownField!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MarkdownFieldOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MarkdownFieldPreviousValues {
+  id: ID!
+  content: String!
+}
+
+type MarkdownFieldSubscriptionPayload {
+  mutation: MutationType!
+  node: MarkdownField
+  updatedFields: [String!]
+  previousValues: MarkdownFieldPreviousValues
+}
+
+input MarkdownFieldSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MarkdownFieldSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MarkdownFieldSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MarkdownFieldSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MarkdownFieldWhereInput
+}
+
+input MarkdownFieldUpdateDataInput {
+  content: String
+}
+
+input MarkdownFieldUpdateInput {
+  content: String
+}
+
+input MarkdownFieldUpdateManyInput {
+  create: [MarkdownFieldCreateInput!]
+  connect: [MarkdownFieldWhereUniqueInput!]
+  disconnect: [MarkdownFieldWhereUniqueInput!]
+  delete: [MarkdownFieldWhereUniqueInput!]
+  update: [MarkdownFieldUpdateWithWhereUniqueNestedInput!]
+  upsert: [MarkdownFieldUpsertWithWhereUniqueNestedInput!]
+}
+
+input MarkdownFieldUpdateWithWhereUniqueNestedInput {
+  where: MarkdownFieldWhereUniqueInput!
+  data: MarkdownFieldUpdateDataInput!
+}
+
+input MarkdownFieldUpsertWithWhereUniqueNestedInput {
+  where: MarkdownFieldWhereUniqueInput!
+  update: MarkdownFieldUpdateDataInput!
+  create: MarkdownFieldCreateInput!
+}
+
+input MarkdownFieldWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MarkdownFieldWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MarkdownFieldWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MarkdownFieldWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+}
+
+input MarkdownFieldWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createFieldHeader(data: FieldHeaderCreateInput!): FieldHeader!
   createCheckboxField(data: CheckboxFieldCreateInput!): CheckboxField!
   createTextField(data: TextFieldCreateInput!): TextField!
+  createMarkdownField(data: MarkdownFieldCreateInput!): MarkdownField!
   createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateCheckboxField(data: CheckboxFieldUpdateInput!, where: CheckboxFieldWhereUniqueInput!): CheckboxField
   updateTextField(data: TextFieldUpdateInput!, where: TextFieldWhereUniqueInput!): TextField
+  updateMarkdownField(data: MarkdownFieldUpdateInput!, where: MarkdownFieldWhereUniqueInput!): MarkdownField
   updateDocumentTemplate(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
   deleteUser(where: UserWhereUniqueInput!): User
   deleteCheckboxField(where: CheckboxFieldWhereUniqueInput!): CheckboxField
   deleteTextField(where: TextFieldWhereUniqueInput!): TextField
+  deleteMarkdownField(where: MarkdownFieldWhereUniqueInput!): MarkdownField
   deleteDocumentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertCheckboxField(where: CheckboxFieldWhereUniqueInput!, create: CheckboxFieldCreateInput!, update: CheckboxFieldUpdateInput!): CheckboxField!
   upsertTextField(where: TextFieldWhereUniqueInput!, create: TextFieldCreateInput!, update: TextFieldUpdateInput!): TextField!
+  upsertMarkdownField(where: MarkdownFieldWhereUniqueInput!, create: MarkdownFieldCreateInput!, update: MarkdownFieldUpdateInput!): MarkdownField!
   upsertDocumentTemplate(where: DocumentTemplateWhereUniqueInput!, create: DocumentTemplateCreateInput!, update: DocumentTemplateUpdateInput!): DocumentTemplate!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyFieldHeaders(data: FieldHeaderUpdateInput!, where: FieldHeaderWhereInput): BatchPayload!
   updateManyCheckboxFields(data: CheckboxFieldUpdateInput!, where: CheckboxFieldWhereInput): BatchPayload!
   updateManyTextFields(data: TextFieldUpdateInput!, where: TextFieldWhereInput): BatchPayload!
+  updateManyMarkdownFields(data: MarkdownFieldUpdateInput!, where: MarkdownFieldWhereInput): BatchPayload!
   updateManyDocumentTemplates(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyFieldHeaders(where: FieldHeaderWhereInput): BatchPayload!
   deleteManyCheckboxFields(where: CheckboxFieldWhereInput): BatchPayload!
   deleteManyTextFields(where: TextFieldWhereInput): BatchPayload!
+  deleteManyMarkdownFields(where: MarkdownFieldWhereInput): BatchPayload!
   deleteManyDocumentTemplates(where: DocumentTemplateWhereInput): BatchPayload!
 }
 
@@ -664,15 +891,18 @@ type Query {
   fieldHeaders(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldHeader]!
   checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField]!
   textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField]!
+  markdownFields(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MarkdownField]!
   documentTemplates(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DocumentTemplate]!
   user(where: UserWhereUniqueInput!): User
   checkboxField(where: CheckboxFieldWhereUniqueInput!): CheckboxField
   textField(where: TextFieldWhereUniqueInput!): TextField
+  markdownField(where: MarkdownFieldWhereUniqueInput!): MarkdownField
   documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   fieldHeadersConnection(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldHeaderConnection!
   checkboxFieldsConnection(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckboxFieldConnection!
   textFieldsConnection(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TextFieldConnection!
+  markdownFieldsConnection(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MarkdownFieldConnection!
   documentTemplatesConnection(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentTemplateConnection!
 
   """Fetches an object given its ID"""
@@ -687,6 +917,7 @@ type Subscription {
   fieldHeader(where: FieldHeaderSubscriptionWhereInput): FieldHeaderSubscriptionPayload
   checkboxField(where: CheckboxFieldSubscriptionWhereInput): CheckboxFieldSubscriptionPayload
   textField(where: TextFieldSubscriptionWhereInput): TextFieldSubscriptionPayload
+  markdownField(where: MarkdownFieldSubscriptionWhereInput): MarkdownFieldSubscriptionPayload
   documentTemplate(where: DocumentTemplateSubscriptionWhereInput): DocumentTemplateSubscriptionPayload
 }
 

@@ -29,9 +29,16 @@ type TextField {
   defaultValue: String!
 }
 
+type MarkdownField {
+  id: ID! @unique
+  content: String!
+}
+
+
 type DocumentTemplate {
   id: ID! @unique
   fieldHeaders: [FieldHeader!]!
   checkboxFields: [CheckboxField!]!
   textFields: [TextField!]!
+  markdownFields: [MarkdownField!]!
 }
