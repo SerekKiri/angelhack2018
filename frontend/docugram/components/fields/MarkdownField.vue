@@ -1,5 +1,5 @@
 <template>
-    <div v-html="renderedHtml" />
+    <div v-on="$listeners" v-html="renderedHtml" />
 </template>
 
 <script>

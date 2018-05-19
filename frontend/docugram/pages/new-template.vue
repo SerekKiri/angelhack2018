@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1 class="subheader">Create a document template</h1>
+    <!-- <h1 class="subheader">Create a document template</h1> -->
+    <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]" :show="selectedFieldIndex !== null" :value="selectedFieldDefinition" @input="updateSelectedDefinition($event)" />
     <v-tabs v-model="activeTab">
       <v-tab :key="0" ripple>
         Template
@@ -10,9 +11,14 @@
       </v-tab>
       <v-tab-item :key="0">
         <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" @fieldAdded="addField" />
+
         <v-card flat>
           <v-card-text>
-            <component v-for="fieldHeader in template.fieldHeaders" :is="fieldComponents[fieldHeader.type]" :key="fieldHeader.id" v-bind="fieldProps(fieldHeader)" />
+            <div class="force-height">
+              <div v-for="(fieldHeader, fieldIndex) in template.fieldHeaders" :key="fieldHeader.id" :class="{'elevation-3': selectedFieldIndex === fieldIndex}" class="pa-2">
+                <component :is="fieldComponents[fieldHeader.type]" v-bind="fieldProps(fieldHeader)" @click.prevent="selectField(fieldIndex)" :editorMode="true" />
+              </div>
+            </div>
             <v-btn color="primary" block @click="addFieldModalOpen = true">
               <v-icon>
                 add
@@ -36,6 +42,7 @@ import cuid from 'cuid'
 import TextField from '../components/fields/TextField.vue'
 import CheckboxField from '../components/fields/CheckboxField.vue'
 import MarkdownField from '../components/fields/MarkdownField.vue'
+import PropertyEditorDrawer from '../components/PropertyEditorDrawer'
 
 const fieldComponents = {
   TEXT: TextField,
@@ -67,6 +74,25 @@ const fieldProperties = {
       key: 'defaultValue',
       label: 'Default value'
     }
+  ],
+  CHECKBOX: [
+    {
+      type: String,
+      key: 'label',
+      label: 'Label'
+    },
+    {
+      type: Boolean,
+      key: 'defaultValue',
+      label: 'Default value'
+    }
+  ],
+  MARKDOWN: [
+    {
+      type: 'LONG_STRING',
+      key: 'content',
+      label: 'Content'
+    }
   ]
 }
 
@@ -75,6 +101,7 @@ export default {
     return {
       activeTab: 0,
       addFieldModalOpen: false,
+      selectedFieldIndex: null,
       fieldComponents,
       fieldDefinitionKeys,
       fieldProperties,
@@ -86,13 +113,42 @@ export default {
       }
     }
   },
+  computed: {
+    selectedField() {
+      return this.template.fieldHeaders[this.selectedFieldIndex]
+    },
+    selectedFieldDefinition() {
+      if (!this.selectedField) return null
+      return {
+        ...this.template[fieldDefinitionKeys[this.selectedField.type]].find(
+          fd => fd.id === this.selectedField.definitionId
+        )
+      }
+    }
+  },
   methods: {
+    updateSelectedDefinition(newDefinition) {
+      console.log(newDefinition)
+      if (this.selectedField === null) return null
+
+      let fieldsOfTypeList = this.template[
+        fieldDefinitionKeys[this.selectedField.type]
+      ]
+      this.template[
+        fieldDefinitionKeys[this.selectedField.type]
+      ] = fieldsOfTypeList.map(
+        fd => (fd.id === this.selectedField.definitionId ? newDefinition : fd)
+      )
+    },
     fieldProps(fieldHeader) {
       return {
         ...this.template[fieldDefinitionKeys[fieldHeader.type]].find(
           fd => fd.id === fieldHeader.definitionId
         )
       }
+    },
+    selectField(fieldIndex) {
+      this.selectedFieldIndex = fieldIndex
     },
     addField(type) {
       this.addFieldModalOpen = false
@@ -129,10 +185,14 @@ export default {
   },
   layout: 'dashboard',
   components: {
-    AddTemplateFieldModal
+    AddTemplateFieldModal,
+    PropertyEditorDrawer
   }
 }
 </script>
 
-<style>
+<style scoped>
+.force-height {
+  min-height: 70vh;
+}
 </style>

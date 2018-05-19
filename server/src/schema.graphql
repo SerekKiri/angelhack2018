@@ -2,6 +2,7 @@
 
 type Query {
   me: User
+  documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
 }
 
 type Mutation {
