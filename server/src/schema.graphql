@@ -3,6 +3,15 @@
 type Query {
   me: User
   documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  userActionRequests(
+    where: UserActionRequestWhereInput
+    orderBy: UserActionRequestOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [UserActionRequest]!
 }
 
 type Mutation {

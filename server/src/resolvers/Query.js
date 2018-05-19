@@ -6,8 +6,10 @@ const Query = {
     return ctx.db.query.user({ where: { id } }, info)
   },
   documentTemplate(parent, args, ctx, info) {
-    const id = getUserId(ctx)
-    return ctx.db.query.documentTemplate({ where: { id } }, info)
+    return ctx.db.query.documentTemplate(args, info)
+  },
+  userActionRequests(parent, args, ctx, info) {
+    return ctx.db.query.userActionRequests(args, info)
   },
 }
 
