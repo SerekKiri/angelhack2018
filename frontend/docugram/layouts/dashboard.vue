@@ -8,7 +8,7 @@
         <v-icon>menu</v-icon>
       </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat>{{me && me.name}}</v-btn>
+            <v-btn flat to="/user">{{me && me.name}}</v-btn>
             <v-btn flat to='/'>Logout</v-btn>
         </v-toolbar>
         <v-navigation-drawer 
