@@ -12,6 +12,7 @@ enum FieldType {
 }
 
 type FieldHeader {
+   id: ID! @unique
   type: FieldType!
   order: Int!
   definitionId: ID!
