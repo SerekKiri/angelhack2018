@@ -1,32 +1,18 @@
 <template>
-<div>
-  <v-form v-model="valid" ref="form" lazy-validation>
+  <div>
+    <v-form v-model="valid" ref="form" lazy-validation>
       <div class="text-xs-center">
-       <img src="/logo.svg" alt="Vuetify.js" />
-       </div>
-    <v-text-field
-      color="primary"
-      label="Your email"
-      v-model="email"
-      :rules="emailRules"
-      required
-    ></v-text-field>
-    <v-text-field
-      color="primary"
-      label="Password"
-      v-model="password"
-      type="password"
-      :rules="passwordRules"
-      required
-    ></v-text-field>
-    <v-btn
-      color="secondary"
-      :disabled="!valid"
-      @click="login"
-    >
-    Login
-    </v-btn>
-  </v-form>
+        <img src="/logo.svg" alt="Vuetify.js" />
+      </div>
+      <v-alert v-if="!!error" value="true" type="error">
+        {{error}}
+      </v-alert>
+      <v-text-field color="primary" label="Your email" v-model="email" :rules="emailRules" required></v-text-field>
+      <v-text-field color="primary" label="Password" v-model="password" type="password" :rules="passwordRules" required></v-text-field>
+      <v-btn color="secondary" :disabled="!valid" @click="login">
+        Login
+      </v-btn>
+    </v-form>
   </div>
 </template>
 
@@ -67,7 +53,7 @@ export default {
             `
           })
         } catch (e) {
-          this.error = e.message;
+          this.error = e.message
         }
       }
     }
