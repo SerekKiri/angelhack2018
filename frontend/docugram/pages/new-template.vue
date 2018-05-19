@@ -17,6 +17,7 @@
             <div class="force-height">
               <div v-for="(fieldHeader, fieldIndex) in template.fieldHeaders" :key="fieldHeader.id" :class="{'elevation-3': selectedFieldIndex === fieldIndex}" class="pa-2">
                 <component :is="fieldComponents[fieldHeader.type]" v-bind="fieldProps(fieldHeader)" @click.prevent="selectField(fieldIndex)" :editorMode="true" />
+                <v-btn color="error">Delete</v-btn>
               </div>
             </div>
             <v-btn color="primary" block @click="addFieldModalOpen = true">

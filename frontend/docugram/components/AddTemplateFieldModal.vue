@@ -56,7 +56,7 @@ const fieldPreviews = [
     type: 'MARKDOWN',
     component: MarkdownField,
     props: {
-      content: 'Yout **rich** text here!'
+      content: 'Your **rich** text here!'
     }
   }
 ]
