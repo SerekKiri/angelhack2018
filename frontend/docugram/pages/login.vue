@@ -2,7 +2,7 @@
   <div>
     <v-form v-model="valid" ref="form" lazy-validation>
       <div class="text-xs-center">
-        <img src="/logo.svg" alt="Vuetify.js" />
+        <img src="/logo.svg" alt="logo" />
       </div>
       <v-alert v-if="!!error" value="true" type="error">
         {{error}}

@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline">Welcome to the Docugram</v-card-title>
         <v-card-text>
-          Here you can create forumlars for school trips and more!
+          Here you can create forms tailored to your expectations by simple way!
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
