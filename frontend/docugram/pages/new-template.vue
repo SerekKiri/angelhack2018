@@ -128,7 +128,6 @@ export default {
   },
   methods: {
     updateSelectedDefinition(newDefinition) {
-      console.log(newDefinition)
       if (this.selectedField === null) return null
 
       let fieldsOfTypeList = this.template[
@@ -141,10 +140,18 @@ export default {
       )
     },
     fieldProps(fieldHeader) {
+      let value = undefined
+      let definition = this.template[
+        fieldDefinitionKeys[fieldHeader.type]
+      ].find(fd => fd.id === fieldHeader.definitionId)
+
+      if (['CHECKBOX', 'TEXT'].indexOf(fieldHeader.type) !== -1) {
+        // set value to default value for preview
+        value = definition.defaultValue
+      }
       return {
-        ...this.template[fieldDefinitionKeys[fieldHeader.type]].find(
-          fd => fd.id === fieldHeader.definitionId
-        )
+        ...definition,
+        value
       }
     },
     selectField(fieldIndex) {
