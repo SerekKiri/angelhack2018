@@ -1,5 +1,5 @@
 <template>
-    <v-checkbox v-on="$listeners" :value="value" :disabled="disabled" :label="label" />
+    <v-checkbox v-on="$listeners" :input-value="value" :disabled="disabled" :label="label" />
 </template>
 
 <script>
