@@ -4,7 +4,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 export default ctx => {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:4000', // Server URL (must be absolute)
+    uri: 'http://10.1.1.222:4000', // Server URL (must be absolute)
     credentials: 'same-origin' // Additional fetch() options like `credentials` or `headers`
   })
 
