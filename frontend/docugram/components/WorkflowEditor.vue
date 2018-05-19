@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <AddWorkflowNodeModal :open="addWorkflowNodeModal" @hide="addWorkflowNodeModal = false" @nodeAdded="nodeAdded" />
+        <AddWorkflowNodeModal :open="!!addWorkflowNodeModal" @close="addWorkflowNodeModal = false" @nodeAdded="nodeAdded" />
         <svg :style="rootStyles" @mouseover="diagramHovered" @mouseout="diagramMouseOut" @mousemove="diagramMouseMove" @mouseup="endDrag()" class="main-diagram" ref="svg">
             <defs>
                 <!-- <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -186,7 +186,6 @@ export default {
       ]
     },
     nodeAdded(type) {
-      console.log(type)
       this.addWorkflowNodeModal = false
       this.nodes.push({
         id: randId(),
