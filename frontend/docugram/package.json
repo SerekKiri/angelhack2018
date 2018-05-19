@@ -16,6 +16,7 @@
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
+    "cuid": "^2.1.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "marked": "^0.3.19",
