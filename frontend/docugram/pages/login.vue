@@ -6,7 +6,6 @@
       label="Your email"
       v-model="email"
       :rules="emailRules"
-      @keyup.enter="login"
       required
     ></v-text-field>
     <v-text-field
@@ -15,12 +14,10 @@
       v-model="password"
       type="password"
       :rules="passwordRules"
-      @keyup.enter="login"
       required
     ></v-text-field>
     <v-btn
       color="secondary"
-      @click="login"
       :disabled="!valid"
       to="/user"
     >
