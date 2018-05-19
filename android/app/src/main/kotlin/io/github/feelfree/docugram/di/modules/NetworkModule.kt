@@ -7,6 +7,8 @@ import dagger.Provides
 import io.github.feelfree.docugram.DocugramApp
 import io.github.feelfree.docugram.base.ApplicationSchedulers
 import io.github.feelfree.docugram.base.Schedulers
+import io.github.feelfree.docugram.ui.modules.Navigator
+import io.github.feelfree.docugram.ui.modules.NavigatorApi
 import io.github.feelfree.docugram.utils.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -61,5 +63,11 @@ class NetworkModule {
     @Singleton
     fun provideUserManagerApi(credentialPreferencesApi: CredentialPreferencesApi) : UserManagerApi {
         return UserManager(credentialPreferencesApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNavigatorApi() : NavigatorApi {
+        return Navigator()
     }
 }

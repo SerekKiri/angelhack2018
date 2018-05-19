@@ -28,10 +28,10 @@
                     Document templates
                     </v-subheader>
                 <v-divider></v-divider>
-                <v-list-tile nuxt to="/new-template">
+                <v-list-tile nuxt to="/new-template" color="primary">
                     <v-list-tile-title>New template</v-list-tile-title>
                     <v-list-tile-action>
-                        <v-btn fab small flat>
+                        <v-btn fab small flat color="primary">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-list-tile-action>
@@ -44,7 +44,9 @@
             <!-- </v-container> -->
         </v-content>
         <v-footer :fixed="fixed" app>
-            <span>Docugram &copy; 2017</span>
+            <v-card-text>
+                <p class="text-md-center">Docugram &copy 2018</p>
+            </v-card-text>
         </v-footer>
     </v-app>
 </template>

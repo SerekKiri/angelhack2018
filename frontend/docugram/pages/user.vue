@@ -2,8 +2,15 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
       <v-card class="mt-3">
-        <v-card-title class="headline">Welcome {{me && me.name}}!</v-card-title>
+        <v-card-title class="headline">
+          Welcome {{me && me.name}}!
+          </v-card-title>
         <v-card-text>
+          If you want to start creating yours form just click on menu icon in top left corner of your screen,<br />
+          then you can build it by clicking button with plus sign like this one:
+          <v-btn block color="primary">
+               <v-icon>add</v-icon>
+          </v-btn>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -27,6 +34,6 @@ export default {
       `
     }
   },
-  layout: 'dashboard'
-}
+  layout: "dashboard"
+};
 </script>
