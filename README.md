@@ -1,4 +1,4 @@
-![Docugram](./branding/controllers_brief.svg)
+![Docugram](./branding/logo.svg)
 # Docugram
 
 To run this app you need:
