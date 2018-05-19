@@ -7,14 +7,47 @@
     <ImageView
         android:id="@+id/logo"
         android:src="@drawable/ic_docugram"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="150dp"
         android:layout_height="150dp" />
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/emailEditTextTitle"
+        android:hint="@string/email_address"
         app:layout_constraintTop_toBottomOf="@id/logo"
-        android:id="@+id/email"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
+        <EditText
+            android:id="@+id/emailEditText"
+            android:hint="@string/email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/passwordEditTextTitle"
+        android:hint="@string/password"
+        app:layout_constraintTop_toBottomOf="@id/emailEditTextTitle"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:hint="@string/email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/loginButton"
+        android:text="@string/login"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditTextTitle"
+        style="@style/AccentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>
