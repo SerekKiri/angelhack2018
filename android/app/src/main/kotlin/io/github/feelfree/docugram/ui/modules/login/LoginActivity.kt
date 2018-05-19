@@ -5,6 +5,7 @@ import android.os.Bundle
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
 import io.github.feelfree.docugram.models.User
+import io.github.feelfree.docugram.ui.modules.NavigatorApi
 import io.github.feelfree.docugram.utils.UserManagerApi
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -12,6 +13,9 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity(), LoginView {
     @Inject
     lateinit var presenter : LoginPresenter
+
+    @Inject
+    lateinit var navigatorApi: NavigatorApi
 
     @Inject
     lateinit var userManagerApi : UserManagerApi
@@ -23,6 +27,7 @@ class LoginActivity : BaseActivity(), LoginView {
     override fun userLoggedIn(user: User, token: String) {
         userManagerApi.loginUser(user, token)
         progressDialog.dismiss()
+        navigatorApi.openMainActivity(this)
         finish()
     }
 
@@ -30,6 +35,11 @@ class LoginActivity : BaseActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         presenter.subscribe(this)
+
+        if (userManagerApi.isUserLoggedIn) {
+            navigatorApi.openMainActivity(this)
+            finish()
+        }
 
         loginButton.setOnClickListener {
             verifyData()
