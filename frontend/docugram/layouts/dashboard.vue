@@ -1,13 +1,8 @@
 <template>
     <v-app>
         <v-toolbar>
-         <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon> 
-      <v-btn 
-        icon 
-        @click.stop="miniVariant = !miniVariant" 
-      ></v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat to='/'>{{me && me.name}}</v-btn>
+            <v-btn flat>{{me && me.name}}</v-btn>
             <v-btn flat to='/'>Logout</v-btn>
         </v-toolbar>
         <v-navigation-drawer app clipped permanent>
