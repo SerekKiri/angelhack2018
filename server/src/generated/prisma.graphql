@@ -1,7 +1,19 @@
-# source: https://eu1.prisma.sh/public-pondtooth-230/server/dev
-# timestamp: Sat May 19 2018 13:17:55 GMT+0200 (CEST)
+# source: http://localhost:4466
+# timestamp: Sat May 19 2018 14:09:16 GMT+0200 (CEST)
 
-type AggregatePost {
+type AggregateCheckboxField {
+  count: Int!
+}
+
+type AggregateDocumentTemplate {
+  count: Int!
+}
+
+type AggregateFieldHeader {
+  count: Int!
+}
+
+type AggregateTextField {
   count: Int!
 }
 
@@ -14,143 +26,76 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
-type Mutation {
-  createPost(data: PostCreateInput!): Post!
-  createUser(data: UserCreateInput!): User!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deletePost(where: PostWhereUniqueInput!): Post
-  deleteUser(where: UserWhereUniqueInput!): User
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  deleteManyPosts(where: PostWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
+type CheckboxField implements Node {
   id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-type Post implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
-  author(where: UserWhereInput): User!
+  label: String!
+  defaultValue: Boolean!
 }
 
 """A connection to a list of items."""
-type PostConnection {
+type CheckboxFieldConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
+  edges: [CheckboxFieldEdge]!
+  aggregate: AggregateCheckboxField!
 }
 
-input PostCreateInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
-  author: UserCreateOneWithoutPostsInput!
+input CheckboxFieldCreateInput {
+  label: String!
+  defaultValue: Boolean!
 }
 
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-}
-
-input PostCreateWithoutAuthorInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
+input CheckboxFieldCreateManyInput {
+  create: [CheckboxFieldCreateInput!]
+  connect: [CheckboxFieldWhereUniqueInput!]
 }
 
 """An edge in a connection."""
-type PostEdge {
+type CheckboxFieldEdge {
   """The item at the end of the edge."""
-  node: Post!
+  node: CheckboxField!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum PostOrderByInput {
+enum CheckboxFieldOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
+  label_ASC
+  label_DESC
+  defaultValue_ASC
+  defaultValue_DESC
   updatedAt_ASC
   updatedAt_DESC
-  isPublished_ASC
-  isPublished_DESC
-  title_ASC
-  title_DESC
-  text_ASC
-  text_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
-type PostPreviousValues {
+type CheckboxFieldPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
+  label: String!
+  defaultValue: Boolean!
 }
 
-type PostSubscriptionPayload {
+type CheckboxFieldSubscriptionPayload {
   mutation: MutationType!
-  node: Post
+  node: CheckboxField
   updatedFields: [String!]
-  previousValues: PostPreviousValues
+  previousValues: CheckboxFieldPreviousValues
 }
 
-input PostSubscriptionWhereInput {
+input CheckboxFieldSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [PostSubscriptionWhereInput!]
+  AND: [CheckboxFieldSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [PostSubscriptionWhereInput!]
+  OR: [CheckboxFieldSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [PostSubscriptionWhereInput!]
+  NOT: [CheckboxFieldSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -171,51 +116,48 @@ input PostSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: PostWhereInput
+  node: CheckboxFieldWhereInput
 }
 
-input PostUpdateInput {
-  isPublished: Boolean
-  title: String
-  text: String
-  author: UserUpdateOneWithoutPostsInput
+input CheckboxFieldUpdateDataInput {
+  label: String
+  defaultValue: Boolean
 }
 
-input PostUpdateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
+input CheckboxFieldUpdateInput {
+  label: String
+  defaultValue: Boolean
 }
 
-input PostUpdateWithoutAuthorDataInput {
-  isPublished: Boolean
-  title: String
-  text: String
+input CheckboxFieldUpdateManyInput {
+  create: [CheckboxFieldCreateInput!]
+  connect: [CheckboxFieldWhereUniqueInput!]
+  disconnect: [CheckboxFieldWhereUniqueInput!]
+  delete: [CheckboxFieldWhereUniqueInput!]
+  update: [CheckboxFieldUpdateWithWhereUniqueNestedInput!]
+  upsert: [CheckboxFieldUpsertWithWhereUniqueNestedInput!]
 }
 
-input PostUpdateWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutAuthorDataInput!
+input CheckboxFieldUpdateWithWhereUniqueNestedInput {
+  where: CheckboxFieldWhereUniqueInput!
+  data: CheckboxFieldUpdateDataInput!
 }
 
-input PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutAuthorDataInput!
-  create: PostCreateWithoutAuthorInput!
+input CheckboxFieldUpsertWithWhereUniqueNestedInput {
+  where: CheckboxFieldWhereUniqueInput!
+  update: CheckboxFieldUpdateDataInput!
+  create: CheckboxFieldCreateInput!
 }
 
-input PostWhereInput {
+input CheckboxFieldWhereInput {
   """Logical AND on all given filters."""
-  AND: [PostWhereInput!]
+  AND: [CheckboxFieldWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [PostWhereInput!]
+  OR: [CheckboxFieldWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [PostWhereInput!]
+  NOT: [CheckboxFieldWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -256,148 +198,482 @@ input PostWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  createdAt: DateTime
+  label: String
 
   """All values that are not equal to given value."""
-  createdAt_not: DateTime
+  label_not: String
 
   """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+  label_in: [String!]
 
   """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+  label_not_in: [String!]
 
   """All values less than the given value."""
-  createdAt_lt: DateTime
+  label_lt: String
 
   """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+  label_lte: String
 
   """All values greater than the given value."""
-  createdAt_gt: DateTime
+  label_gt: String
 
   """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  isPublished: Boolean
-
-  """All values that are not equal to given value."""
-  isPublished_not: Boolean
-  title: String
-
-  """All values that are not equal to given value."""
-  title_not: String
-
-  """All values that are contained in given list."""
-  title_in: [String!]
-
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
-
-  """All values less than the given value."""
-  title_lt: String
-
-  """All values less than or equal the given value."""
-  title_lte: String
-
-  """All values greater than the given value."""
-  title_gt: String
-
-  """All values greater than or equal the given value."""
-  title_gte: String
+  label_gte: String
 
   """All values containing the given string."""
-  title_contains: String
+  label_contains: String
 
   """All values not containing the given string."""
-  title_not_contains: String
+  label_not_contains: String
 
   """All values starting with the given string."""
-  title_starts_with: String
+  label_starts_with: String
 
   """All values not starting with the given string."""
-  title_not_starts_with: String
+  label_not_starts_with: String
 
   """All values ending with the given string."""
-  title_ends_with: String
+  label_ends_with: String
 
   """All values not ending with the given string."""
-  title_not_ends_with: String
-  text: String
+  label_not_ends_with: String
+  defaultValue: Boolean
 
   """All values that are not equal to given value."""
-  text_not: String
-
-  """All values that are contained in given list."""
-  text_in: [String!]
-
-  """All values that are not contained in given list."""
-  text_not_in: [String!]
-
-  """All values less than the given value."""
-  text_lt: String
-
-  """All values less than or equal the given value."""
-  text_lte: String
-
-  """All values greater than the given value."""
-  text_gt: String
-
-  """All values greater than or equal the given value."""
-  text_gte: String
-
-  """All values containing the given string."""
-  text_contains: String
-
-  """All values not containing the given string."""
-  text_not_contains: String
-
-  """All values starting with the given string."""
-  text_starts_with: String
-
-  """All values not starting with the given string."""
-  text_not_starts_with: String
-
-  """All values ending with the given string."""
-  text_ends_with: String
-
-  """All values not ending with the given string."""
-  text_not_ends_with: String
-  author: UserWhereInput
+  defaultValue_not: Boolean
 }
 
-input PostWhereUniqueInput {
+input CheckboxFieldWhereUniqueInput {
   id: ID
 }
 
+type DocumentTemplate implements Node {
+  id: ID!
+  fieldHeaders(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldHeader!]
+  checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField!]
+  textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField!]
+}
+
+"""A connection to a list of items."""
+type DocumentTemplateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DocumentTemplateEdge]!
+  aggregate: AggregateDocumentTemplate!
+}
+
+input DocumentTemplateCreateInput {
+  fieldHeaders: FieldHeaderCreateManyInput
+  checkboxFields: CheckboxFieldCreateManyInput
+  textFields: TextFieldCreateManyInput
+}
+
+"""An edge in a connection."""
+type DocumentTemplateEdge {
+  """The item at the end of the edge."""
+  node: DocumentTemplate!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DocumentTemplateOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DocumentTemplatePreviousValues {
+  id: ID!
+}
+
+type DocumentTemplateSubscriptionPayload {
+  mutation: MutationType!
+  node: DocumentTemplate
+  updatedFields: [String!]
+  previousValues: DocumentTemplatePreviousValues
+}
+
+input DocumentTemplateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DocumentTemplateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DocumentTemplateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DocumentTemplateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DocumentTemplateWhereInput
+}
+
+input DocumentTemplateUpdateInput {
+  fieldHeaders: FieldHeaderUpdateManyInput
+  checkboxFields: CheckboxFieldUpdateManyInput
+  textFields: TextFieldUpdateManyInput
+}
+
+input DocumentTemplateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DocumentTemplateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DocumentTemplateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DocumentTemplateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  fieldHeaders_every: FieldHeaderWhereInput
+  fieldHeaders_some: FieldHeaderWhereInput
+  fieldHeaders_none: FieldHeaderWhereInput
+  checkboxFields_every: CheckboxFieldWhereInput
+  checkboxFields_some: CheckboxFieldWhereInput
+  checkboxFields_none: CheckboxFieldWhereInput
+  textFields_every: TextFieldWhereInput
+  textFields_some: TextFieldWhereInput
+  textFields_none: TextFieldWhereInput
+}
+
+input DocumentTemplateWhereUniqueInput {
+  id: ID
+}
+
+type FieldHeader {
+  type: FieldType!
+  order: Int!
+  definitionId: ID!
+}
+
+"""A connection to a list of items."""
+type FieldHeaderConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FieldHeaderEdge]!
+  aggregate: AggregateFieldHeader!
+}
+
+input FieldHeaderCreateInput {
+  type: FieldType!
+  order: Int!
+  definitionId: ID!
+}
+
+input FieldHeaderCreateManyInput {
+  create: [FieldHeaderCreateInput!]
+}
+
+"""An edge in a connection."""
+type FieldHeaderEdge {
+  """The item at the end of the edge."""
+  node: FieldHeader!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FieldHeaderOrderByInput {
+  type_ASC
+  type_DESC
+  order_ASC
+  order_DESC
+  definitionId_ASC
+  definitionId_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FieldHeaderPreviousValues {
+  type: FieldType!
+  order: Int!
+  definitionId: ID!
+}
+
+type FieldHeaderSubscriptionPayload {
+  mutation: MutationType!
+  node: FieldHeader
+  updatedFields: [String!]
+  previousValues: FieldHeaderPreviousValues
+}
+
+input FieldHeaderSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldHeaderSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldHeaderSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldHeaderSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FieldHeaderWhereInput
+}
+
+input FieldHeaderUpdateInput {
+  type: FieldType
+  order: Int
+  definitionId: ID
+}
+
+input FieldHeaderUpdateManyInput {
+  create: [FieldHeaderCreateInput!]
+}
+
+input FieldHeaderWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldHeaderWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldHeaderWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldHeaderWhereInput!]
+  type: FieldType
+
+  """All values that are not equal to given value."""
+  type_not: FieldType
+
+  """All values that are contained in given list."""
+  type_in: [FieldType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [FieldType!]
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
+  definitionId: ID
+
+  """All values that are not equal to given value."""
+  definitionId_not: ID
+
+  """All values that are contained in given list."""
+  definitionId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  definitionId_not_in: [ID!]
+
+  """All values less than the given value."""
+  definitionId_lt: ID
+
+  """All values less than or equal the given value."""
+  definitionId_lte: ID
+
+  """All values greater than the given value."""
+  definitionId_gt: ID
+
+  """All values greater than or equal the given value."""
+  definitionId_gte: ID
+
+  """All values containing the given string."""
+  definitionId_contains: ID
+
+  """All values not containing the given string."""
+  definitionId_not_contains: ID
+
+  """All values starting with the given string."""
+  definitionId_starts_with: ID
+
+  """All values not starting with the given string."""
+  definitionId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  definitionId_ends_with: ID
+
+  """All values not ending with the given string."""
+  definitionId_not_ends_with: ID
+}
+
+enum FieldType {
+  TEXT
+  CHECKBOX
+  MARKDOWN
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  createFieldHeader(data: FieldHeaderCreateInput!): FieldHeader!
+  createCheckboxField(data: CheckboxFieldCreateInput!): CheckboxField!
+  createTextField(data: TextFieldCreateInput!): TextField!
+  createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCheckboxField(data: CheckboxFieldUpdateInput!, where: CheckboxFieldWhereUniqueInput!): CheckboxField
+  updateTextField(data: TextFieldUpdateInput!, where: TextFieldWhereUniqueInput!): TextField
+  updateDocumentTemplate(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteCheckboxField(where: CheckboxFieldWhereUniqueInput!): CheckboxField
+  deleteTextField(where: TextFieldWhereUniqueInput!): TextField
+  deleteDocumentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCheckboxField(where: CheckboxFieldWhereUniqueInput!, create: CheckboxFieldCreateInput!, update: CheckboxFieldUpdateInput!): CheckboxField!
+  upsertTextField(where: TextFieldWhereUniqueInput!, create: TextFieldCreateInput!, update: TextFieldUpdateInput!): TextField!
+  upsertDocumentTemplate(where: DocumentTemplateWhereUniqueInput!, create: DocumentTemplateCreateInput!, update: DocumentTemplateUpdateInput!): DocumentTemplate!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyFieldHeaders(data: FieldHeaderUpdateInput!, where: FieldHeaderWhereInput): BatchPayload!
+  updateManyCheckboxFields(data: CheckboxFieldUpdateInput!, where: CheckboxFieldWhereInput): BatchPayload!
+  updateManyTextFields(data: TextFieldUpdateInput!, where: TextFieldWhereInput): BatchPayload!
+  updateManyDocumentTemplates(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyFieldHeaders(where: FieldHeaderWhereInput): BatchPayload!
+  deleteManyCheckboxFields(where: CheckboxFieldWhereInput): BatchPayload!
+  deleteManyTextFields(where: TextFieldWhereInput): BatchPayload!
+  deleteManyDocumentTemplates(where: DocumentTemplateWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
 type Query {
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  post(where: PostWhereUniqueInput!): Post
+  fieldHeaders(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldHeader]!
+  checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField]!
+  textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField]!
+  documentTemplates(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DocumentTemplate]!
   user(where: UserWhereUniqueInput!): User
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  checkboxField(where: CheckboxFieldWhereUniqueInput!): CheckboxField
+  textField(where: TextFieldWhereUniqueInput!): TextField
+  documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  fieldHeadersConnection(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldHeaderConnection!
+  checkboxFieldsConnection(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckboxFieldConnection!
+  textFieldsConnection(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TextFieldConnection!
+  documentTemplatesConnection(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentTemplateConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -407,8 +683,269 @@ type Query {
 }
 
 type Subscription {
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  fieldHeader(where: FieldHeaderSubscriptionWhereInput): FieldHeaderSubscriptionPayload
+  checkboxField(where: CheckboxFieldSubscriptionWhereInput): CheckboxFieldSubscriptionPayload
+  textField(where: TextFieldSubscriptionWhereInput): TextFieldSubscriptionPayload
+  documentTemplate(where: DocumentTemplateSubscriptionWhereInput): DocumentTemplateSubscriptionPayload
+}
+
+type TextField implements Node {
+  id: ID!
+  label: String!
+  defaultValue: String!
+}
+
+"""A connection to a list of items."""
+type TextFieldConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TextFieldEdge]!
+  aggregate: AggregateTextField!
+}
+
+input TextFieldCreateInput {
+  label: String!
+  defaultValue: String!
+}
+
+input TextFieldCreateManyInput {
+  create: [TextFieldCreateInput!]
+  connect: [TextFieldWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TextFieldEdge {
+  """The item at the end of the edge."""
+  node: TextField!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TextFieldOrderByInput {
+  id_ASC
+  id_DESC
+  label_ASC
+  label_DESC
+  defaultValue_ASC
+  defaultValue_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TextFieldPreviousValues {
+  id: ID!
+  label: String!
+  defaultValue: String!
+}
+
+type TextFieldSubscriptionPayload {
+  mutation: MutationType!
+  node: TextField
+  updatedFields: [String!]
+  previousValues: TextFieldPreviousValues
+}
+
+input TextFieldSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TextFieldSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TextFieldSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TextFieldSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TextFieldWhereInput
+}
+
+input TextFieldUpdateDataInput {
+  label: String
+  defaultValue: String
+}
+
+input TextFieldUpdateInput {
+  label: String
+  defaultValue: String
+}
+
+input TextFieldUpdateManyInput {
+  create: [TextFieldCreateInput!]
+  connect: [TextFieldWhereUniqueInput!]
+  disconnect: [TextFieldWhereUniqueInput!]
+  delete: [TextFieldWhereUniqueInput!]
+  update: [TextFieldUpdateWithWhereUniqueNestedInput!]
+  upsert: [TextFieldUpsertWithWhereUniqueNestedInput!]
+}
+
+input TextFieldUpdateWithWhereUniqueNestedInput {
+  where: TextFieldWhereUniqueInput!
+  data: TextFieldUpdateDataInput!
+}
+
+input TextFieldUpsertWithWhereUniqueNestedInput {
+  where: TextFieldWhereUniqueInput!
+  update: TextFieldUpdateDataInput!
+  create: TextFieldCreateInput!
+}
+
+input TextFieldWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TextFieldWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TextFieldWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TextFieldWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  label: String
+
+  """All values that are not equal to given value."""
+  label_not: String
+
+  """All values that are contained in given list."""
+  label_in: [String!]
+
+  """All values that are not contained in given list."""
+  label_not_in: [String!]
+
+  """All values less than the given value."""
+  label_lt: String
+
+  """All values less than or equal the given value."""
+  label_lte: String
+
+  """All values greater than the given value."""
+  label_gt: String
+
+  """All values greater than or equal the given value."""
+  label_gte: String
+
+  """All values containing the given string."""
+  label_contains: String
+
+  """All values not containing the given string."""
+  label_not_contains: String
+
+  """All values starting with the given string."""
+  label_starts_with: String
+
+  """All values not starting with the given string."""
+  label_not_starts_with: String
+
+  """All values ending with the given string."""
+  label_ends_with: String
+
+  """All values not ending with the given string."""
+  label_not_ends_with: String
+  defaultValue: String
+
+  """All values that are not equal to given value."""
+  defaultValue_not: String
+
+  """All values that are contained in given list."""
+  defaultValue_in: [String!]
+
+  """All values that are not contained in given list."""
+  defaultValue_not_in: [String!]
+
+  """All values less than the given value."""
+  defaultValue_lt: String
+
+  """All values less than or equal the given value."""
+  defaultValue_lte: String
+
+  """All values greater than the given value."""
+  defaultValue_gt: String
+
+  """All values greater than or equal the given value."""
+  defaultValue_gte: String
+
+  """All values containing the given string."""
+  defaultValue_contains: String
+
+  """All values not containing the given string."""
+  defaultValue_not_contains: String
+
+  """All values starting with the given string."""
+  defaultValue_starts_with: String
+
+  """All values not starting with the given string."""
+  defaultValue_not_starts_with: String
+
+  """All values ending with the given string."""
+  defaultValue_ends_with: String
+
+  """All values not ending with the given string."""
+  defaultValue_not_ends_with: String
+}
+
+input TextFieldWhereUniqueInput {
+  id: ID
 }
 
 type User implements Node {
@@ -416,7 +953,6 @@ type User implements Node {
   email: String!
   password: String!
   name: String!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 """A connection to a list of items."""
@@ -430,18 +966,6 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  email: String!
-  password: String!
-  name: String!
-  posts: PostCreateManyWithoutAuthorInput
-}
-
-input UserCreateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutPostsInput {
   email: String!
   password: String!
   name: String!
@@ -521,26 +1045,6 @@ input UserUpdateInput {
   email: String
   password: String
   name: String
-  posts: PostUpdateManyWithoutAuthorInput
-}
-
-input UserUpdateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateWithoutPostsDataInput
-  upsert: UserUpsertWithoutPostsInput
-}
-
-input UserUpdateWithoutPostsDataInput {
-  email: String
-  password: String
-  name: String
-}
-
-input UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
 }
 
 input UserWhereInput {
@@ -712,9 +1216,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
 }
 
 input UserWhereUniqueInput {
