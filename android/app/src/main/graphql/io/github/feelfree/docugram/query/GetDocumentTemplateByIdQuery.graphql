@@ -1,0 +1,46 @@
+query getDocumentTemplateById($id:ID!) {
+  documentTemplate(where: { id: $id }) {
+    ... DocumentTemplateFragment
+  }
+}
+
+fragment DocumentTemplateFragment on DocumentTemplate {
+  id
+  fieldHeaders: fieldHeaders(orderBy: order_ASC) {
+    ...FieldHeaderFragment
+  }
+  checkboxFields: checkboxFields(orderBy: id_ASC) {
+    ...CheckboxFieldFragment
+  }
+  
+  textFields: textFields(orderBy: id_ASC) {
+    ...TextFieldFragment
+  }
+  
+  markdownFields: markdownFields(orderBy: id_ASC) {
+    ...MarkdownFieldFragment
+  }
+}
+
+fragment FieldHeaderFragment on FieldHeader {
+  type
+  order
+  definitionId
+}
+
+fragment CheckboxFieldFragment on CheckboxField {
+  id
+  label
+  defaultValue
+}
+
+fragment TextFieldFragment on TextField {
+  id
+  label
+  defaultValue
+}
+
+fragment MarkdownFieldFragment on MarkdownField {
+  id
+  content
+}

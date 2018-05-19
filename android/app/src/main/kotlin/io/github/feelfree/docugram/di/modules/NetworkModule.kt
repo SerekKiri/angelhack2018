@@ -5,6 +5,7 @@ import com.apollographql.apollo.ApolloClient
 import dagger.Module
 import dagger.Provides
 import io.github.feelfree.docugram.DocugramApp
+import io.github.feelfree.docugram.api.AuthorizationInterceptor
 import io.github.feelfree.docugram.base.ApplicationSchedulers
 import io.github.feelfree.docugram.base.Schedulers
 import io.github.feelfree.docugram.ui.modules.Navigator
@@ -16,6 +17,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
+
+
 
 // Provides network-related classes
 @Module
@@ -25,8 +29,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(interceptor : AuthorizationInterceptor): OkHttpClient {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.HEADERS
         return OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .addInterceptor(interceptor)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)

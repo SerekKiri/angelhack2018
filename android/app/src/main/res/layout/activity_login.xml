@@ -6,7 +6,7 @@
     android:padding="36dp">
     <ImageView
         android:id="@+id/logo"
-        android:src="@drawable/ic_docugram"
+        android:src="@drawable/ic_new_docu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
