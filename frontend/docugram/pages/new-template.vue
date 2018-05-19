@@ -189,6 +189,35 @@ export default {
               fieldHeader.definitionId = id
               break
             }
+            case 'MARKDOWN': {
+              let markdownFieldDefinition = this.template.markdownFields.find(
+                tf => tf.id === fieldHeader.definitionId
+              )
+              if (!markdownFieldDefinition) {
+                throw new Error(
+                  'Jestes debilem, markdownFieldDefinition jest falsy'
+                )
+              }
+              let {
+                data: { createMarkdownField: { id } }
+              } = await this.$apollo.mutate({
+                mutation: gql`
+                  mutation createMarkdownField(
+                    $data: MarkdownFieldCreateInput!
+                  ) {
+                    createMarkdownField(data: $data) {
+                      id
+                    }
+                  }
+                `,
+                variables: {
+                  data: { ...markdownFieldDefinition, id: undefined }
+                }
+              })
+              markdownFieldDefinition.id = id
+              fieldHeader.definitionId = id
+              break
+            }
           }
         }
 
