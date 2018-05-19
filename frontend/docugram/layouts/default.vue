@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-toolbar fixed app :clipped-left="clipped">
       <v-btn flat to="/">Home</v-btn>
       <v-spacer></v-spacer>

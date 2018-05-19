@@ -1,13 +1,22 @@
 <template>
     <v-app>
         <v-toolbar>
-            <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-            <v-btn icon @click.stop="miniVariant = !miniVariant"></v-btn>
+            <v-btn
+        icon
+        @click.stop="rightDrawer = !rightDrawer"
+      >
+        <v-icon>menu</v-icon>
+      </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat to='/'>{{me && me.name}}</v-btn>
+            <v-btn flat>{{me && me.name}}</v-btn>
             <v-btn flat to='/'>Logout</v-btn>
         </v-toolbar>
-        <v-navigation-drawer app clipped permanent>
+        <v-navigation-drawer 
+        temporary
+        :left="left"
+        v-model="rightDrawer"
+        fixed
+        >
             <v-list>
                 <v-subheader>Document templates</v-subheader>
                 <v-divider></v-divider>
@@ -23,7 +32,7 @@
         </v-navigation-drawer>
         <v-content>
             <!--<v-container> -->
-            <nuxt />
+                <nuxt />
             <!-- </v-container> -->
         </v-content>
         <v-footer :fixed="fixed" app>
@@ -33,13 +42,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 export default {
-  data() {
-    return {
-      me: null
-    }
-  },
   apollo: {
     me: {
       query: gql`
@@ -58,10 +62,10 @@ export default {
       drawer: true,
       fixed: false,
       miniVariant: false,
-      right: true,
+      left: true,
       rightDrawer: false,
-      title: 'Docugram'
-    }
+      title: "Docugram"
+    };
   }
-}
+};
 </script>
