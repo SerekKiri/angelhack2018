@@ -25,6 +25,7 @@ export default {
     component: TerminatorNode,
     width: 100,
     height: 30,
+    propertiesModel: [],
     connectors: {
       out: {
         color: '#3498db', // peter river
@@ -36,6 +37,18 @@ export default {
   },
   NOTIFICATION: {
     name: 'Notification',
+    propertiesModel: [
+      {
+        type: String,
+        key: 'title',
+        label: 'Title'
+      },
+      {
+        type: 'LONG_STRING',
+        key: 'content',
+        label: 'Content'
+      }
+    ],
     color: '#1976D2',
     component: ActionNode,
     width: 100,

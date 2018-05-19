@@ -8,6 +8,7 @@
             :y="node.y"
             v-on="$listeners"
             style="filter:url(#dropshadow)"
+            :stroke="selected ? '#ff3d00' : null"
         />
         <text
             width="100"
@@ -25,7 +26,7 @@
 
 <script>
 export default {
-  props: ["node", "nodeType"]
+  props: ["node", "nodeType", "selected"]
 };
 </script>
 

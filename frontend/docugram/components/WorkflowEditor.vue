@@ -1,6 +1,9 @@
 <template>
     <v-card>
         <AddWorkflowNodeModal :open="!!addWorkflowNodeModal" @close="addWorkflowNodeModal = false" @nodeAdded="nodeAdded" />
+        <div v-if="selectedNodeIndex !== null">
+            <PropertyEditorDrawer :show="selectedNodeIndex !== null" :model="nodeTypes[nodes[selectedNodeIndex].type].propertiesModel" :value="{}" />
+        </div>
         <svg :style="rootStyles" @mouseover="diagramHovered" @mouseout="diagramMouseOut" @mousemove="diagramMouseMove" @mouseup="endDrag()" class="main-diagram" ref="svg">
             <defs>
                 <!-- <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -29,9 +32,25 @@
                     <!-- this contains the element that the filter is applied to -->
                 </feMerge>
             </filter>
+             <filter id="deepShadow" height="250%" width="250%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+                <!-- stdDeviation is how much to blur -->
+                <feOffset dx="8" dy="8" result="offsetblur" />
+                <!-- how much to offset -->
+                <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.2" />
+                    <!-- slope is the opacity of the shadow -->
+                </feComponentTransfer>
+                <feMerge>
+                    <feMergeNode/>
+                    <!-- this contains the offset blurred image -->
+                    <feMergeNode in="SourceGraphic" />
+                    <!-- this contains the element that the filter is applied to -->
+                </feMerge>
+            </filter>
 
             <g v-for="(node, i) in nodes" :key="i">
-                <component :is="nodeTypes[node.type].component" :node="node" :nodeType="nodeTypes[node.type]" @mouseover="nodeHovered(node)" @mouseout="nodeEndHover(node)" @mousedown="nodeDrag(node, $event)" />
+                <component :is="nodeTypes[node.type].component" :node="node" :nodeType="nodeTypes[node.type]" @mouseover="nodeHovered(node)" @mouseout="nodeEndHover(node)" @mousedown="nodeDrag(node, $event)" @click.prevent="selectedNodeIndex = i" :selected="selectedNodeIndex === i" />
                 <line v-for="(connection, ci) in node.connections" :key="ci" :x1="node.x + connection.sourceConnector.x" :y1="node.y + connection.sourceConnector.y" :x2="connection.targetNode.x + connection.targetConnector.x" :y2="connection.targetNode.y + connection.targetConnector.y" stroke-width="2" stroke="black" />
                 <template v-for="(connector, ci) in nodeTypes[node.type].connectors">
                     <circle :key="ci" :cx="node.x + connector.x" :cy="node.y + connector.y" :r="connectorSize(connector)" :fill="connector.color" style="filter:url(#dropshadow)" :class="{'connector-out': connector.type === 'OUT'}" @mousedown="connectorDrag(node, connector, $event)" @mouseup="connectorEndDrag(node, connector, $event)" />
@@ -57,6 +76,7 @@
 <script>
 import nodeTypes from '../lib/nodeTypes'
 import AddWorkflowNodeModal from './AddWorkflowNodeModal'
+import PropertyEditorDrawer from './PropertyEditorDrawer'
 
 const randId = _ =>
   Math.random()
@@ -76,6 +96,7 @@ export default {
       connectorDragSourceNode: null,
       connectorDragSourceConnector: null,
       addWorkflowNodeModal: false,
+      selectedNodeIndex: null,
       nodes: [
         {
           id: 'node_1',
@@ -102,7 +123,8 @@ export default {
     }
   },
   components: {
-    AddWorkflowNodeModal
+    AddWorkflowNodeModal,
+    PropertyEditorDrawer
   },
   methods: {
     nodeHovered() {
