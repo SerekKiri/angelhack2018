@@ -1,11 +1,13 @@
 package io.github.feelfree.docugram.di.modules
 
+import android.content.Context
 import com.apollographql.apollo.ApolloClient
 import dagger.Module
 import dagger.Provides
 import io.github.feelfree.docugram.DocugramApp
 import io.github.feelfree.docugram.base.ApplicationSchedulers
 import io.github.feelfree.docugram.base.Schedulers
+import io.github.feelfree.docugram.utils.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -47,6 +49,17 @@ class NetworkModule {
                 .serverUrl(DocugramApp.BASE_URL)
                 .okHttpClient(okHttpClient)
                 .build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideCredentialPreferences(context: Context) : CredentialPreferencesApi {
+        return CredentialPreferences(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserManagerApi(credentialPreferencesApi: CredentialPreferencesApi) : UserManagerApi {
+        return UserManager(credentialPreferencesApi)
     }
 }

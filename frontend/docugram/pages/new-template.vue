@@ -1,14 +1,26 @@
 <template>
     <div>
         <h1 class="subheader">Create a document template</h1>
-        <v-tabs v-model="active" >
+        <v-tabs v-model="activeTab">
             <v-tab :key="0" ripple>
                 Template
             </v-tab>
             <v-tab :key="2" ripple>
                 Workflow
             </v-tab>
-            <v-tab-item v-for="n in 2" :key="n">
+            <v-tab-item :key="0">
+                <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" />
+                <v-card flat>
+                    <v-card-text>
+                        <v-btn color="primary" block @click="addFieldModalOpen = true">
+                            <v-icon>
+                                add
+                            </v-icon>
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </v-tab-item>
+            <v-tab-item :key="1">
                 <v-card flat>
                     <v-card-text> dupa</v-card-text>
                 </v-card>
@@ -18,8 +30,16 @@
 </template>
 
 <script>
+import AddTemplateFieldModal from '../components/AddTemplateFieldModal'
+
 export default {
-  layout: 'dashboard'
+  data() {
+    return { activeTab: 0, addFieldModalOpen: false }
+  },
+  layout: 'dashboard',
+  components: {
+    AddTemplateFieldModal
+  }
 }
 </script>
 

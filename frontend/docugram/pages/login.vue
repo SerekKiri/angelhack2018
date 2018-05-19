@@ -18,7 +18,7 @@
 
 <script>
 import gql from 'graphql-tag'
-
+import { setCookie } from '../lib/cookieUtils.js'
 export default {
   data() {
     return {
@@ -52,7 +52,7 @@ export default {
               }
             `
           })
-          localStorage.setItem('token', data.login.token)
+          setCookie('token', data.login.token)
           this.$router.push({
             path: '/user'
           })

@@ -44,7 +44,6 @@ module.exports = {
           test: /\.graphql?$/,
           loader: 'graphql-tag/loader'
         })
-        console.log(config.module.rules)
       }
     }
   },

@@ -48,6 +48,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$versions.supportLibrary"
     implementation "com.android.support:cardview-v7:$versions.supportLibrary"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+    implementation "com.android.support:design:$versions.supportLibrary"
+
     // Dagger 2
     implementation "com.google.dagger:dagger:$versions.dagger2"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger2"

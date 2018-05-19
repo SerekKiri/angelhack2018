@@ -10,6 +10,6 @@ class DocugramApp : DaggerApplication() {
     }
 
     companion object {
-        val BASE_URL = "http://10.1.1.222:4466/"
+        val BASE_URL = "http://10.1.1.222:4000/"
     }
 }
