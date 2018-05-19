@@ -23,7 +23,7 @@
       </v-tab-item>
       <v-tab-item :key="1">
         <v-card flat>
-          <v-card-text> dupa</v-card-text>
+          <v-card-text>:)</v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs>
