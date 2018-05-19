@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <v-alert v-if="!!error" value="true" type="error">
+    {{error}}
+  </v-alert>
+  <div v-else>
     <!-- <h1 class="subheader">Create a document template</h1> -->
     <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]" :show="selectedFieldIndex !== null" :value="selectedFieldDefinition" @hide="selectedFieldIndex = null" @input="updateSelectedDefinition($event)" />
     <v-tabs v-model="activeTab">
@@ -32,7 +35,9 @@
       </v-tab-item>
       <v-tab-item :key="1">
         <v-card flat>
-          <v-card-text>:)</v-card-text>
+          <v-card-text>
+            <WorkflowEditor />
+          </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs>
@@ -46,6 +51,8 @@ import TextField from '../components/fields/TextField.vue'
 import CheckboxField from '../components/fields/CheckboxField.vue'
 import MarkdownField from '../components/fields/MarkdownField.vue'
 import PropertyEditorDrawer from '../components/PropertyEditorDrawer'
+import WorkflowEditor from '../components/WorkflowEditor'
+
 import gql from 'graphql-tag'
 
 const fieldComponents = {
@@ -103,6 +110,7 @@ const fieldProperties = {
 export default {
   data() {
     return {
+      error: null,
       activeTab: 0,
       addFieldModalOpen: false,
       selectedFieldIndex: null,
@@ -249,7 +257,9 @@ export default {
 
         await this.$apollo.mutate({
           mutation: gql`
-            mutation createDocumentTemplate($data: DocumentTemplateCreateInput!) {
+            mutation createDocumentTemplate(
+              $data: DocumentTemplateCreateInput!
+            ) {
               createDocumentTemplate(data: $data) {
                 id
               }
@@ -259,6 +269,7 @@ export default {
         })
       } catch (e) {
         console.log(e)
+        this.error = e.message
       }
     },
     updateSelectedDefinition(newDefinition) {
@@ -327,7 +338,8 @@ export default {
   layout: 'dashboard',
   components: {
     AddTemplateFieldModal,
-    PropertyEditorDrawer
+    PropertyEditorDrawer,
+    WorkflowEditor
   }
 }
 </script>
