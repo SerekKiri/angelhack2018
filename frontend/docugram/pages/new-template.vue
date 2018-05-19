@@ -55,6 +55,21 @@ const fieldDefinitionKeys = {
   MARKDOWN: 'markdownFields'
 }
 
+const fieldProperties = {
+  TEXT: [
+    {
+      type: String,
+      key: 'label',
+      label: 'Label'
+    },
+    {
+      type: String,
+      key: 'defaultValue',
+      label: 'Default value'
+    }
+  ]
+}
+
 export default {
   data() {
     return {
@@ -62,6 +77,7 @@ export default {
       addFieldModalOpen: false,
       fieldComponents,
       fieldDefinitionKeys,
+      fieldProperties,
       template: {
         fieldHeaders: [],
         textFields: [],
