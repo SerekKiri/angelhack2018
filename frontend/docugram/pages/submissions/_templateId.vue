@@ -1,6 +1,6 @@
 <template>
-    <div v-if="!!documentTemplate">
-        <h1>Create new submissioN: {{documentTemplate.name}}</h1>
+    <v-container v-if="!!documentTemplate">
+        <h1>Create new submission: {{documentTemplate.name}}</h1>
         <div v-for="(fieldHeader, fieldIndex) in documentTemplate.fieldHeaders"
              :key="fieldHeader.id"
              class="pa-2">
@@ -8,7 +8,7 @@
                        v-bind="fieldProps(fieldHeader)"
                        :editorMode="false" />
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -16,6 +16,7 @@ import templateById from '../../lib/templateById'
 import { fieldComponents, fieldDefinitionKeys } from '../../lib/fieldUtils'
 
 export default {
+    layout: "dashboard",
   data() {
     return {
       fieldComponents,
