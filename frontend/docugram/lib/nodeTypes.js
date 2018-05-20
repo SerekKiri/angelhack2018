@@ -68,6 +68,18 @@ export default {
   },
   EDIT_REQUEST: {
     name: 'Edit Request',
+    propertiesModel: [
+      {
+        type: String,
+        key: 'title',
+        label: 'Title'
+      },
+      {
+        type: 'LONG_STRING',
+        key: 'content',
+        label: 'Content'
+      }
+    ],
     color: '#1976D2',
     component: ActionNode,
     width: 100,
@@ -76,6 +88,18 @@ export default {
   },
   WAIT: {
     name: 'Wait',
+    propertiesModel: [
+      {
+        type: String,
+        key: 'title',
+        label: 'Title'
+      },
+      {
+        type: 'LONG_STRING',
+        key: 'content',
+        label: 'Content'
+      }
+    ],
     color: '#1976D2',
     component: ActionNode,
     width: 100,
@@ -84,6 +108,18 @@ export default {
   },
   EMAIL: {
     name: 'Email',
+    propertiesModel: [
+      {
+        type: String,
+        key: 'title',
+        label: 'Title'
+      },
+      {
+        type: 'LONG_STRING',
+        key: 'content',
+        label: 'Content'
+      }
+    ],
     color: '#1976D2',
     component: ActionNode,
     width: 100,
