@@ -13,14 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.modules.login.LoginActivity">
+        <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".ui.modules.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.modules.template.TemplateActivity">
+        <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:name=".ui.modules.template.TemplateActivity">
             <intent-filter android:label="Fill form in docugram">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
@@ -38,7 +43,9 @@
                     android:pathPrefix="/form" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.modules.mainactivity.MainActivity" />
+        <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".ui.modules.mainactivity.MainActivity" />
     </application>
 
 </manifest>

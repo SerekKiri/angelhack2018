@@ -27,5 +27,17 @@
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
+        <Button
+            app:layout_constraintTop_toBottomOf="@id/content"
+            android:id="@+id/dismiss"
+            android:text="Dismiss"
+            style="@style/AccentButton"
+            tools:text="Dismiss"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

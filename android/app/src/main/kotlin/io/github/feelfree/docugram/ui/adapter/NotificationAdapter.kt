@@ -20,7 +20,10 @@ class NotificationAdapter @Inject constructor(): RecyclerView.Adapter<RecyclerVi
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is EditRequestViewHolder -> holder.bind(notifications[position])
-            is NotificationViewHolder -> holder.bind(notifications[position])
+            is NotificationViewHolder -> holder.bind(notifications[position], {
+                notifications.removeAt(position)
+                notifyDataSetChanged()
+            })
             is ApprovalViewHolder -> holder.bind(notifications[position], {
                 notifications.removeAt(position)
                 notifyDataSetChanged()

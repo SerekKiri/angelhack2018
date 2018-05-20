@@ -11,9 +11,13 @@ class NotificationViewHolder(override val containerView: View) : RecyclerView.Vi
         val RAW_NOTIFICATION = "NOTIFICATION"
     }
 
-    fun bind(notifi : Notification) {
+    fun bind(notifi : Notification, dismissListener : () -> Unit) {
         title.text = notifi.title
         content.text = notifi.content
+
+        dismiss.setOnClickListener {
+            dismissListener()
+        }
     }
 
 }

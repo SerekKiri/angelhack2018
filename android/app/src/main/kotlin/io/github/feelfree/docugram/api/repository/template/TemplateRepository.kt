@@ -41,17 +41,14 @@ class TemplateRepository(val apolloClient : ApolloClient) : TemplateApi {
     }
 
     override fun createSubmission(templateId : String, checkBoxes : List<Boolean>, textFields : List<String>): Single<CreateSubmissionMutation.Data> {
-        return getStartNode(templateId)
-                .flatMap {
-                    createApolloCall(apolloClient.mutate(
+        return createApolloCall(apolloClient.mutate(
                             CreateSubmissionMutation.builder()
                                     .checkboxFields(checkBoxes.createInput())
                                     .textFields(textFields.createInput())
                                     .template(templateId)
-                                    .state(it)
+                                    .state("asdaisdoasfiasfu")
                                             .build())
                     )
-                }
     }
 
     fun List<Boolean>.createInput() : CheckboxFieldValueCreateManyInput {

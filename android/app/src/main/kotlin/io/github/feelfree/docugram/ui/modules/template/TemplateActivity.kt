@@ -3,10 +3,12 @@ package io.github.feelfree.docugram.ui.modules.template
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
 import io.github.feelfree.docugram.models.Template
 import io.github.feelfree.docugram.ui.adapter.TemplateAdapter
+import io.github.feelfree.docugram.ui.modules.NavigatorApi
 import io.github.feelfree.docugram.utils.isVisible
 import io.github.feelfree.docugram.utils.prepare
 import kotlinx.android.synthetic.main.activity_template.*
@@ -14,13 +16,26 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class TemplateActivity : BaseActivity(), TemplateView {
+    @Inject
+    lateinit var navigator : NavigatorApi
+
+    val alertDialog by lazy {
+        AlertDialog.Builder(this)
+                .setMessage("Exit app or go back to home screen?")
+                .setTitle("Form submitted")
+                .setCancelable(false)
+                .setNegativeButton("Exit", {_, _ -> finish()})
+                .setNeutralButton("Home screen", {_, _ ->
+                    navigator.openMainActivity(this)
+                    finish() })
+    }
+
     companion object {
         val EXTRA_ID = "EXTRA_ID"
         fun createIntent(context: Context, id : String): Intent {
             val intent = Intent(context, TemplateActivity::class.java)
             intent.putExtra(EXTRA_ID, id)
             return intent
-
         }
     }
 
@@ -32,7 +47,7 @@ class TemplateActivity : BaseActivity(), TemplateView {
     }
 
     override fun close() {
-        finish()
+        alertDialog.show()
     }
 
     @Inject

@@ -50,13 +50,16 @@ class NotificationFragment : BaseFragment(), NotificationView {
         recyclerView.prepare()
         recyclerView.adapter = adapter
 
-
+        swipeRefresh.setOnRefreshListener {
+            presenter.getNotifications(credentialPreferencesApi.email!!)
+        }
         // Load data
         loadingView.isVisible = true
         presenter.getNotifications(credentialPreferencesApi.email!!)
     }
 
     override fun showNotifications(notification: List<Notification>) {
+        swipeRefresh.isRefreshing = false
         adapter.showNotifications(notification)
         loadingView.isVisible = false
     }
