@@ -306,9 +306,9 @@ export default {
     },
     connectorSize(connector) {
       if (this.cursorState === 'CONNECTOR_DRAG') {
-        return connector.type === 'IN' ? 10 : 6
+        return connector.type === 'IN' ? 5 : 3
       }
-      return connector.type === 'OUT' ? 10 : 6
+      return connector.type === 'OUT' ? 5 : 3
     },
     getNodeInputConnector(node) {
       return nodeTypes[node.type].connectors[
