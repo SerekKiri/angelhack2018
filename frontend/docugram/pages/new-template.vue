@@ -1,33 +1,56 @@
 <template>
-  <v-alert v-if="!!error" value="true" type="error">
+  <v-alert v-if="!!error"
+           value="true"
+           type="error">
     {{error}}
   </v-alert>
   <div v-else>
     <!-- <h1 class="subheader">Create a document template</h1> -->
-    <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]" :show="selectedFieldIndex !== null" :value="selectedFieldDefinition" @hide="selectedFieldIndex = null" @input="updateSelectedDefinition($event)" />
+    <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]"
+                          :show="selectedFieldIndex !== null"
+                          :value="selectedFieldDefinition"
+                          @hide="selectedFieldIndex = null"
+                          @input="updateSelectedDefinition($event)" />
     <v-tabs v-model="activeTab">
-      <v-tab :key="0" ripple>
+      <v-tab :key="0"
+             ripple>
         Template
       </v-tab>
-      <v-tab :key="2" ripple>
+      <v-tab :key="2"
+             ripple>
         Workflow
       </v-tab>
       <v-spacer />
-      <v-btn right bottom class="mt-4" color="secondary" @click="save">Save</v-btn>
+      <v-btn right
+             bottom
+             class="mt-4"
+             color="secondary"
+             @click="save">Save</v-btn>
       <v-tab-item :key="0">
-        <AddTemplateFieldModal :open="addFieldModalOpen" @close="addFieldModalOpen = false" @fieldAdded="addField" />
+        <AddTemplateFieldModal :open="addFieldModalOpen"
+                               @close="addFieldModalOpen = false"
+                               @fieldAdded="addField" />
 
         <v-card flat>
           <v-card-text>
             <div class="force-height">
               <draggable v-model='draggableFields'>
-                <div v-for="(fieldHeader, fieldIndex) in draggableFields" :key="fieldHeader.id" :class="{'elevation-3': selectedFieldIndex === fieldIndex}" class="pa-2">
-                  <component :is="fieldComponents[fieldHeader.type]" v-bind="fieldProps(fieldHeader)" @click.prevent="selectField(fieldIndex)" :editorMode="true" />
-                  <v-btn color="error" @click="removeEvent(event)">Delete</v-btn>
+                <div v-for="(fieldHeader, fieldIndex) in draggableFields"
+                     :key="fieldHeader.id"
+                     :class="{'elevation-3': selectedFieldIndex === fieldIndex}"
+                     class="pa-2">
+                  <component :is="fieldComponents[fieldHeader.type]"
+                             v-bind="fieldProps(fieldHeader)"
+                             @click.prevent="selectField(fieldIndex)"
+                             :editorMode="true" />
+                  <v-btn color="error"
+                         @click="removeEvent(event)">Delete</v-btn>
                 </div>
               </draggable>
             </div>
-            <v-btn color="primary" block @click="addFieldModalOpen = true">
+            <v-btn color="primary"
+                   block
+                   @click="addFieldModalOpen = true">
               <v-icon>
                 add
               </v-icon>
@@ -39,7 +62,7 @@
       <v-tab-item :key="1">
         <v-card flat>
           <v-card-text>
-            <WorkflowEditor />
+            <WorkflowEditor @input="template.workflowNodes = $event" />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -125,7 +148,8 @@ export default {
         fieldHeaders: [],
         textFields: [],
         checkboxFields: [],
-        markdownFields: []
+        markdownFields: [],
+        workflowNodes: []
       }
     }
   },
@@ -149,7 +173,9 @@ export default {
       },
       set(newOrder) {
         for (let i = 0; i < newOrder.length; i++) {
-          this.template.fieldHeaders.find(fh => fh.id === newOrder[i].id).order = i
+          this.template.fieldHeaders.find(
+            fh => fh.id === newOrder[i].id
+          ).order = i
         }
       }
     }
@@ -243,6 +269,24 @@ export default {
               break
             }
           }
+        }
+
+        for (let node of this.template.workflowNodes) {
+          await this.$apollo.mutate({
+            mutation: gql`
+              mutation createWorkflowNode($data: WorkflowNodeCreateInput!) {
+                createWorkflowNode(data: $data) {
+                  id
+                }
+              }
+            `,
+            variables: {
+              data: {
+                ...node,
+                id: undefined
+              }
+            }
+          })
         }
 
         // now really create the template

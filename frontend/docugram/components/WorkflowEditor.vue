@@ -230,7 +230,7 @@ export default {
         id: undefined
       }))
       console.log(serializedData)
-      this.$emit('event', serializedData)
+      this.$emit('input', serializedData)
     },
     nodeHovered() {
       if (this.cursorState === 'IDLE') {
@@ -258,6 +258,7 @@ export default {
       this.draggedNode = null
       this.cursorState = 'IDLE'
       this.temporaryConnection = null
+      this.emitEvent()
     },
     diagramMouseMove(e) {
       let rect = this.$refs.svg.getBoundingClientRect()

@@ -58,14 +58,14 @@ export default {
     height: 30,
     connectors: simpleActionConnectors
   },
-  APPROVAL: {
+ /* APPROVAL: {
     name: 'Approval',
     color: '#1976D2',
     component: ActionNode,
     width: 100,
     height: 30,
     connectors: simpleActionConnectors
-  },
+  },*/
   EDIT_REQUEST: {
     name: 'Edit Request',
     color: '#1976D2',
@@ -90,8 +90,8 @@ export default {
     height: 30,
     connectors: simpleActionConnectors
   },
-  decision: {
-    name: 'Decision',
+  APPROVAL: {
+    name: 'Approval',
     component: DecisionNode,
     width: sq2 * 100,
     height: 100 * sq2,
