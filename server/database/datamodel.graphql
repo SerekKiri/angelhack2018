@@ -87,6 +87,8 @@ type UserActionRequest {
   type: UserActionRequestType!
   title: String!
   content: String!
+  submission: Submission!
+  workflowNode: WorkflowNode!
 }
 
 type WorkflowConnection {

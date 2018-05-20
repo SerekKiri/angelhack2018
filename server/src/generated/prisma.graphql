@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 04:56:07 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 05:24:01 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -1348,6 +1348,11 @@ input SubmissionCreateInput {
   textFields: TextFieldValueCreateManyInput
 }
 
+input SubmissionCreateOneInput {
+  create: SubmissionCreateInput
+  connect: SubmissionWhereUniqueInput
+}
+
 """An edge in a connection."""
 type SubmissionEdge {
   """The item at the end of the edge."""
@@ -1413,11 +1418,31 @@ input SubmissionSubscriptionWhereInput {
   node: SubmissionWhereInput
 }
 
+input SubmissionUpdateDataInput {
+  state: ID
+  template: DocumentTemplateUpdateOneInput
+  checkboxFields: CheckboxFieldValueUpdateManyInput
+  textFields: TextFieldValueUpdateManyInput
+}
+
 input SubmissionUpdateInput {
   state: ID
   template: DocumentTemplateUpdateOneInput
   checkboxFields: CheckboxFieldValueUpdateManyInput
   textFields: TextFieldValueUpdateManyInput
+}
+
+input SubmissionUpdateOneInput {
+  create: SubmissionCreateInput
+  connect: SubmissionWhereUniqueInput
+  delete: Boolean
+  update: SubmissionUpdateDataInput
+  upsert: SubmissionUpsertNestedInput
+}
+
+input SubmissionUpsertNestedInput {
+  update: SubmissionUpdateDataInput!
+  create: SubmissionCreateInput!
 }
 
 input SubmissionWhereInput {
@@ -2042,6 +2067,8 @@ type UserActionRequest implements Node {
   type: UserActionRequestType!
   title: String!
   content: String!
+  submission(where: SubmissionWhereInput): Submission!
+  workflowNode(where: WorkflowNodeWhereInput): WorkflowNode!
 }
 
 """A connection to a list of items."""
@@ -2059,6 +2086,8 @@ input UserActionRequestCreateInput {
   title: String!
   content: String!
   user: UserCreateOneInput!
+  submission: SubmissionCreateOneInput!
+  workflowNode: WorkflowNodeCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -2143,6 +2172,8 @@ input UserActionRequestUpdateInput {
   title: String
   content: String
   user: UserUpdateOneInput
+  submission: SubmissionUpdateOneInput
+  workflowNode: WorkflowNodeUpdateOneInput
 }
 
 input UserActionRequestWhereInput {
@@ -2307,6 +2338,8 @@ input UserActionRequestWhereInput {
   """All values not ending with the given string."""
   content_not_ends_with: String
   user: UserWhereInput
+  submission: SubmissionWhereInput
+  workflowNode: WorkflowNodeWhereInput
 }
 
 input UserActionRequestWhereUniqueInput {
@@ -2942,6 +2975,11 @@ input WorkflowNodeCreateManyInput {
   connect: [WorkflowNodeWhereUniqueInput!]
 }
 
+input WorkflowNodeCreateOneInput {
+  create: WorkflowNodeCreateInput
+  connect: WorkflowNodeWhereUniqueInput
+}
+
 """An edge in a connection."""
 type WorkflowNodeEdge {
   """The item at the end of the edge."""
@@ -3050,9 +3088,22 @@ input WorkflowNodeUpdateManyInput {
   upsert: [WorkflowNodeUpsertWithWhereUniqueNestedInput!]
 }
 
+input WorkflowNodeUpdateOneInput {
+  create: WorkflowNodeCreateInput
+  connect: WorkflowNodeWhereUniqueInput
+  delete: Boolean
+  update: WorkflowNodeUpdateDataInput
+  upsert: WorkflowNodeUpsertNestedInput
+}
+
 input WorkflowNodeUpdateWithWhereUniqueNestedInput {
   where: WorkflowNodeWhereUniqueInput!
   data: WorkflowNodeUpdateDataInput!
+}
+
+input WorkflowNodeUpsertNestedInput {
+  update: WorkflowNodeUpdateDataInput!
+  create: WorkflowNodeCreateInput!
 }
 
 input WorkflowNodeUpsertWithWhereUniqueNestedInput {
