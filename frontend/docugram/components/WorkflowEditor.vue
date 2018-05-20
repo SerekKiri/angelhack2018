@@ -191,24 +191,8 @@ export default {
           properties: {},
           id: 'node_1',
           type: 'ENTRY',
-          x: 20,
-          y: 20,
-          connections: []
-        },
-        {
-          properties: {},
-          id: 'node_2',
-          type: 'NOTIFICATION',
-          x: 100,
-          y: 100,
-          connections: []
-        },
-        {
-          properties: {},
-          id: 'node_3',
-          type: 'APPROVAL',
-          x: 300,
-          y: 100,
+          x: 200,
+          y: 200,
           connections: []
         }
       ]

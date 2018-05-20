@@ -38,6 +38,24 @@ export default {
       }
     }
   },
+  END: {
+    name: 'End',
+    color: '#D84315',
+    component: TerminatorNode,
+    width: 100,
+    height: 30,
+    propertiesModel: [],
+    connectors: {
+      out: {
+        color: '#3498db', // peter river
+        name: 'in',
+        type: 'IN',
+        x: 50,
+        y: 30
+      }
+    }
+  },
+
   NOTIFICATION: {
     name: 'Notification',
     propertiesModel: [
@@ -58,7 +76,7 @@ export default {
     height: 30,
     connectors: simpleActionConnectors
   },
- /* APPROVAL: {
+  /* APPROVAL: {
     name: 'Approval',
     color: '#1976D2',
     component: ActionNode,
