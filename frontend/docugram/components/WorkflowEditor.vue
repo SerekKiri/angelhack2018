@@ -1,28 +1,54 @@
 <template>
     <v-card>
-        <AddWorkflowNodeModal :open="!!addWorkflowNodeModal" @close="addWorkflowNodeModal = false" @nodeAdded="nodeAdded" />
+        <AddWorkflowNodeModal :open="!!addWorkflowNodeModal"
+                              @close="addWorkflowNodeModal = false"
+                              @nodeAdded="nodeAdded" />
         <div v-if="selectedNodeIndex !== null">
-            <PropertyEditorDrawer :show="selectedNodeIndex !== null" :model="nodeTypes[nodes[selectedNodeIndex].type].propertiesModel" :value="{}" />
+            <PropertyEditorDrawer :show="selectedNodeIndex !== null"
+                                  :model="nodeTypes[nodes[selectedNodeIndex].type].propertiesModel"
+                                  :value="{}" />
         </div>
-        <svg :style="rootStyles" @mouseover="diagramHovered" @mouseout="diagramMouseOut" @mousemove="diagramMouseMove" @mouseup="endDrag()" class="main-diagram" ref="svg">
+        <svg :style="rootStyles"
+             @mouseover="diagramHovered"
+             @mouseout="diagramMouseOut"
+             @mousemove="diagramMouseMove"
+             @mouseup="endDrag()"
+             class="main-diagram"
+             ref="svg">
             <defs>
                 <!-- <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
                     <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5" />
                 </pattern> -->
-                <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-                    <rect width="80" height="80" fill="url(#smallGrid)" />
-                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" />
+                <pattern id="grid"
+                         width="80"
+                         height="80"
+                         patternUnits="userSpaceOnUse">
+                    <rect width="80"
+                          height="80"
+                          fill="url(#smallGrid)" />
+                    <path d="M 80 0 L 0 0 0 80"
+                          fill="none"
+                          stroke="gray"
+                          stroke-width="1" />
                 </pattern>
             </defs>
 
-            <rect width="100%" height="100%" fill="url(#grid)" />
-            <filter id="dropshadow" height="250%" width="250%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <rect width="100%"
+                  height="100%"
+                  fill="url(#grid)" />
+            <filter id="dropshadow"
+                    height="250%"
+                    width="250%">
+                <feGaussianBlur in="SourceAlpha"
+                                stdDeviation="3" />
                 <!-- stdDeviation is how much to blur -->
-                <feOffset dx="2" dy="2" result="offsetblur" />
+                <feOffset dx="2"
+                          dy="2"
+                          result="offsetblur" />
                 <!-- how much to offset -->
                 <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.2" />
+                    <feFuncA type="linear"
+                             slope="0.2" />
                     <!-- slope is the opacity of the shadow -->
                 </feComponentTransfer>
                 <feMerge>
@@ -32,13 +58,19 @@
                     <!-- this contains the element that the filter is applied to -->
                 </feMerge>
             </filter>
-             <filter id="deepShadow" height="250%" width="250%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <filter id="deepShadow"
+                    height="250%"
+                    width="250%">
+                <feGaussianBlur in="SourceAlpha"
+                                stdDeviation="3" />
                 <!-- stdDeviation is how much to blur -->
-                <feOffset dx="8" dy="8" result="offsetblur" />
+                <feOffset dx="8"
+                          dy="8"
+                          result="offsetblur" />
                 <!-- how much to offset -->
                 <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.2" />
+                    <feFuncA type="linear"
+                             slope="0.2" />
                     <!-- slope is the opacity of the shadow -->
                 </feComponentTransfer>
                 <feMerge>
@@ -49,24 +81,82 @@
                 </feMerge>
             </filter>
 
-            <g v-for="(node, i) in nodes" :key="i">
-                <component :is="nodeTypes[node.type].component" :node="node" :nodeType="nodeTypes[node.type]" @mouseover="nodeHovered(node)" @mouseout="nodeEndHover(node)" @mousedown="nodeDrag(node, $event)" @click.prevent="selectedNodeIndex = i" :selected="selectedNodeIndex === i" />
-                <line v-for="(connection, ci) in node.connections" :key="ci" :x1="node.x + connection.sourceConnector.x" :y1="node.y + connection.sourceConnector.y" :x2="connection.targetNode.x + connection.targetConnector.x" :y2="connection.targetNode.y + connection.targetConnector.y" stroke-width="2" stroke="black" />
+            <g v-for="(node, i) in nodes"
+               :key="i">
+                <component :is="nodeTypes[node.type].component"
+                           :node="node"
+                           :nodeType="nodeTypes[node.type]"
+                           @mouseover="nodeHovered(node)"
+                           @mouseout="nodeEndHover(node)"
+                           @mousedown="nodeDrag(node, $event)"
+                           @click.prevent="selectedNodeIndex = i"
+                           :selected="selectedNodeIndex === i" />
+                <line v-for="(connection, ci) in node.connections"
+                      :key="ci"
+                      :x1="node.x + connection.sourceConnector.x"
+                      :y1="node.y + connection.sourceConnector.y"
+                      :x2="connection.targetNode.x + connection.targetConnector.x"
+                      :y2="connection.targetNode.y + connection.targetConnector.y"
+                      stroke-width="2"
+                      stroke="black" />
                 <template v-for="(connector, ci) in nodeTypes[node.type].connectors">
-                    <circle :key="ci" :cx="node.x + connector.x" :cy="node.y + connector.y" :r="connectorSize(connector)" :fill="connector.color" style="filter:url(#dropshadow)" :class="{'connector-out': connector.type === 'OUT'}" @mousedown="connectorDrag(node, connector, $event)" @mouseup="connectorEndDrag(node, connector, $event)" />
-                    <circle v-if="connector.type === 'IN' && cursorState === 'CONNECTOR_DRAG'" :key="ci + 'qqq'" :cx="node.x + connector.x" :cy="node.y + connector.y" :r="10" fill="transparent" stroke-width="2" :stroke="connector.color" style="filter:url(#dropshadow)" :class="{'connector-out': connector.type === 'OUT'}" @mousedown="connectorDrag(node, connector, $event)" @mouseup="connectorEndDrag(node, connector, $event)">
-                        <animate attributeType="XML" attributeName="r" from="0" to="20" dur="1s" repeatCount="indefinite" />
-                        <animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="1s" repeatCount="indefinite" />
+                    <!-- Actual connector -->
+                    <circle :key="ci"
+                            :cx="node.x + connector.x"
+                            :cy="node.y + connector.y"
+                            :r="connectorSize(connector)"
+                            :fill="connector.color"
+                            style="filter:url(#dropshadow)"
+                            :class="{'connector-out': connector.type === 'OUT'}"
+                            @mousedown="connectorDrag(node, connector, $event)"
+                            @mouseup="connectorEndDrag(node, connector, $event)" />
+                    <!-- RIPPLE -->
+                    <circle v-if="connector.type === 'IN' && cursorState === 'CONNECTOR_DRAG'"
+                            :key="ci + 'qqq'"
+                            :cx="node.x + connector.x"
+                            :cy="node.y + connector.y"
+                            :r="10"
+                            fill="transparent"
+                            stroke-width="2"
+                            :stroke="connector.color"
+                            style="filter:url(#dropshadow)"
+                            :class="{'connector-out': connector.type === 'OUT'}"
+                            @mousedown="connectorDrag(node, connector, $event)"
+                            @mouseup="connectorEndDrag(node, connector, $event)">
+                        <animate attributeType="XML"
+                                 attributeName="r"
+                                 from="0"
+                                 to="20"
+                                 dur="1s"
+                                 repeatCount="indefinite" />
+                        <animate attributeType="CSS"
+                                 attributeName="opacity"
+                                 from="1"
+                                 to="0"
+                                 dur="1s"
+                                 repeatCount="indefinite" />
                     </circle>
                 </template>
             </g>
-            <line v-if="temporaryConnection" :x1="temporaryConnection.x1" :y1="temporaryConnection.y1" :x2="temporaryConnection.x2" :y2="temporaryConnection.y2" stroke-width="2" stroke="black" />
+            <line v-if="temporaryConnection"
+                  :x1="temporaryConnection.x1"
+                  :y1="temporaryConnection.y1"
+                  :x2="temporaryConnection.x2"
+                  :y2="temporaryConnection.y2"
+                  stroke-width="2"
+                  stroke="black" />
         </svg>
         <!-- <button @click="add('entry')">Add entry</button>
         <button @click="add('action')">Add action</button>
         <button @click="add('decision')">Add decision</button> -->
         <v-fab-transition v-if="selectedNodeIndex === null">
-            <v-btn color="primary" dark absolute right fab class="add-node-fab" @click="addWorkflowNodeModal = true">
+            <v-btn color="primary"
+                   dark
+                   absolute
+                   right
+                   fab
+                   class="add-node-fab"
+                   @click="addWorkflowNodeModal = true">
                 <v-icon>add</v-icon>
             </v-btn>
         </v-fab-transition>
@@ -181,6 +271,7 @@ export default {
       this.connectorDragSourceConnector = connector
     },
     connectorEndDrag(node, connector, ev) {
+      console.log('Connector end drag')
       if (
         this.cursorState !== 'CONNECTOR_DRAG' ||
         node.id === this.connectorDragSourceNode.id ||
