@@ -89,7 +89,7 @@
                            @mouseover="nodeHovered(node)"
                            @mouseout="nodeEndHover(node)"
                            @mousedown="nodeDrag(node, $event)"
-                           @click.prevent="selectedNodeIndex = i"
+                           @click="selectedNodeIndex = i"
                            :selected="selectedNodeIndex === i" />
                 <line v-for="(connection, ci) in node.connections"
                       :key="ci"
@@ -144,7 +144,8 @@
                   :x2="temporaryConnection.x2"
                   :y2="temporaryConnection.y2"
                   stroke-width="2"
-                  stroke="black" />
+                  stroke="black"
+                  class="no-events" />
         </svg>
         <!-- <button @click="add('entry')">Add entry</button>
         <button @click="add('action')">Add action</button>
@@ -287,9 +288,9 @@ export default {
     },
     connectorSize(connector) {
       if (this.cursorState === 'CONNECTOR_DRAG') {
-        return connector.type === 'IN' ? 5 : 3
+        return connector.type === 'IN' ? 10 : 6
       }
-      return connector.type === 'OUT' ? 5 : 3
+      return connector.type === 'OUT' ? 10 : 6
     },
     getNodeInputConnector(node) {
       return nodeTypes[node.type].connectors[
@@ -337,5 +338,8 @@ export default {
 }
 .add-node-fab {
   bottom: 30px;
+}
+.no-events {
+  pointer-events: none;
 }
 </style>
