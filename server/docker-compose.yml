@@ -27,7 +27,7 @@ services:
       - mysql:/var/lib/mysql
   yoga:
     build:
-      context: server/
+      context: .
     restart: always
     depends_on:
       - prisma
@@ -35,7 +35,7 @@ services:
       GRAPHQL_ENDPOINT: http://prisma:4466
   nuxt:
     build:
-      context: frontend/docugram
+      context: ../frontend/docugram
     restart: always
     depends_on:
       - yoga
