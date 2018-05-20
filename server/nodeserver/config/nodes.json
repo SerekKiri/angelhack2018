@@ -1,0 +1,4 @@
+{
+	"HttpPort": 4136,
+	"GraphQLURL": "http://10.1.1.222:4466/"
+}
