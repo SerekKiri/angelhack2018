@@ -1,11 +1,13 @@
 <template>
     <v-container>
         <v-card>
-            <v-list>
-                <v-list-tile>
+            <v-list v-if="!!documentTemplates">
+                <v-list-tile v-for="template in documentTemplates"
+                             :key="template.id"
+                             nuxt
+                             :to="'/templates/'+template.id">
                     <v-list-tile-content>
-                        <v-list-tile-title>Profile photo</v-list-tile-title>
-                        <v-list-tile-sub-title>Change your Google+ profile photo</v-list-tile-sub-title>
+                        <v-list-tile-title>{{template.name}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -19,7 +21,7 @@ import gql from 'graphql-tag'
 export default {
   layout: 'dashboard',
   apollo: {
-    templates: gql`
+    documentTemplates: gql`
       query {
         documentTemplates {
           id
