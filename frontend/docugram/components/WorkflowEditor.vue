@@ -215,7 +215,6 @@ export default {
         })),
         id: undefined
       }))
-      console.log(serializedData)
       this.$emit('input', serializedData)
     },
     nodeHovered() {

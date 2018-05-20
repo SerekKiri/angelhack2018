@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 03:33:01 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 04:46:26 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -1281,6 +1281,7 @@ type Submission implements Node {
   createdAt: DateTime!
   checkboxFields(where: CheckboxFieldValueWhereInput, orderBy: CheckboxFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxFieldValue!]
   textFields(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextFieldValue!]
+  state: ID!
 }
 
 """A connection to a list of items."""
@@ -1294,6 +1295,7 @@ type SubmissionConnection {
 }
 
 input SubmissionCreateInput {
+  state: ID!
   template: DocumentTemplateCreateOneInput!
   checkboxFields: CheckboxFieldValueCreateManyInput
   textFields: TextFieldValueCreateManyInput
@@ -1313,6 +1315,8 @@ enum SubmissionOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  state_ASC
+  state_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -1320,6 +1324,7 @@ enum SubmissionOrderByInput {
 type SubmissionPreviousValues {
   id: ID!
   createdAt: DateTime!
+  state: ID!
 }
 
 type SubmissionSubscriptionPayload {
@@ -1362,6 +1367,7 @@ input SubmissionSubscriptionWhereInput {
 }
 
 input SubmissionUpdateInput {
+  state: ID
   template: DocumentTemplateUpdateOneInput
   checkboxFields: CheckboxFieldValueUpdateManyInput
   textFields: TextFieldValueUpdateManyInput
@@ -1438,6 +1444,46 @@ input SubmissionWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  state: ID
+
+  """All values that are not equal to given value."""
+  state_not: ID
+
+  """All values that are contained in given list."""
+  state_in: [ID!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [ID!]
+
+  """All values less than the given value."""
+  state_lt: ID
+
+  """All values less than or equal the given value."""
+  state_lte: ID
+
+  """All values greater than the given value."""
+  state_gt: ID
+
+  """All values greater than or equal the given value."""
+  state_gte: ID
+
+  """All values containing the given string."""
+  state_contains: ID
+
+  """All values not containing the given string."""
+  state_not_contains: ID
+
+  """All values starting with the given string."""
+  state_starts_with: ID
+
+  """All values not starting with the given string."""
+  state_not_starts_with: ID
+
+  """All values ending with the given string."""
+  state_ends_with: ID
+
+  """All values not ending with the given string."""
+  state_not_ends_with: ID
   template: DocumentTemplateWhereInput
   checkboxFields_every: CheckboxFieldValueWhereInput
   checkboxFields_some: CheckboxFieldValueWhereInput

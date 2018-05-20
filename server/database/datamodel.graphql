@@ -60,6 +60,7 @@ type Submission {
   createdAt: DateTime!
   checkboxFields: [CheckboxFieldValue!]!
   textFields: [TextFieldValue!]!
+  state: ID!
 }
 
 enum WorkflowNodeType {
