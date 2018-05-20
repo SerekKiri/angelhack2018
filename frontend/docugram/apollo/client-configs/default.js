@@ -4,7 +4,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { getCookie } from '../../lib/cookieUtils'
 export default ctx => {
   const httpLink = new HttpLink({
-    uri: 'http://10.1.1.222:4000', // Server URL (must be absolute)
+    uri: process.env.graphqlEndpoint, // Server URL (must be absolute)
     credentials: 'same-origin' // Additional fetch() options like `credentials` or `headers`
   })
 

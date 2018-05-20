@@ -25,5 +25,21 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
+  yoga:
+    build:
+      context: server/
+    restart: always
+    depends_on:
+      - prisma
+    environment:
+      GRAPHQL_ENDPOINT: http://prisma:4466
+  nuxt:
+    build:
+      context: frontend/docugram
+    restart: always
+    depends_on:
+      - yoga
+    environment:
+      GRAPHQL_ENDPOINT: http://alufers.nazwa.pl:4000/
 volumes:
   mysql:

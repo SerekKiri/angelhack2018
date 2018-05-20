@@ -39,7 +39,6 @@ module.exports = {
     */
     extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
-        
         config.module.rules.push({
           test: /\.graphql?$/,
           loader: 'graphql-tag/loader'
@@ -54,5 +53,8 @@ module.exports = {
     clientConfigs: {
       default: '~/apollo/client-configs/default.js'
     }
+  },
+  env: {
+    graphqlEndpoint: process.env.GRAPHQL_ENDPOINT || 'http://10.1.1.222:4000'
   }
 }
