@@ -6,13 +6,17 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.internal.NavigationMenuView
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
 import io.github.feelfree.docugram.ui.modules.NavigatorApi
+import io.github.feelfree.docugram.ui.modules.notifications.NotificationFragment
+import io.github.feelfree.docugram.utils.CredentialPreferencesApi
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.header_layout.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -22,6 +26,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             return Intent(context, MainActivity::class.java)
         }
     }
+
+    @Inject
+    lateinit var credentialPreferencesApi: CredentialPreferencesApi
 
     @Inject
     lateinit var navigator : NavigatorApi
@@ -48,6 +55,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         fab.setOnClickListener {
             navigator.openTemplateActivity(this, "ddd")
         }
+        navigationView.getHeaderView(0).email.text = credentialPreferencesApi.email
+
+        openFragment(NotificationFragment.newInstance())
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -79,17 +89,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navigationView.setNavigationItemSelectedListener(this)
     }
 
-    /*override fun openFragment(fragment: Fragment) {
+    fun openFragment(fragment: Fragment) {
         supportActionBar?.subtitle = null
-        fab.isVisible = false
-        fab.setOnClickListener(null)
-        fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
         val ft = supportFragmentManager.beginTransaction()
-        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         ft.replace(R.id.contentView, fragment)
         ft.commit()
         closeDrawer()
-    }*/
+    }
 
     fun closeDrawer() =
             drawer_layout.closeDrawers()

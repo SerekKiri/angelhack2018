@@ -12,4 +12,9 @@
         <item name="colorButtonNormal">@color/secondaryColor</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="PrimaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/primaryDarkColor</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>
