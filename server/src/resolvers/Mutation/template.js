@@ -18,6 +18,9 @@ const template = {
   },
   async createWorkflowNode(parent, args, ctx, info) {
     return await ctx.db.mutation.createWorkflowNode(args)
+  },
+  async updateWorkflowNode(parent, args, ctx, info) {
+    return await ctx.db.mutation.updateWorkflowNode(args)
   }
 }
 

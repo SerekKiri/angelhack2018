@@ -23,6 +23,10 @@ type Mutation {
   createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
   createSubmission(data: SubmissionCreateInput!): Submission!
   createWorkflowNode(data: WorkflowNodeCreateInput!): WorkflowNode!
+  updateWorkflowNode(
+    data: WorkflowNodeUpdateInput!
+    where: WorkflowNodeWhereUniqueInput!
+  ): WorkflowNode
 }
 
 #type Subscription {
