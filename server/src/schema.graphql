@@ -2,6 +2,15 @@
 
 type Query {
   me: User
+  documentTemplates(
+    where: DocumentTemplateWhereInput
+    orderBy: DocumentTemplateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [DocumentTemplate]!
   documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
   userActionRequests(
     where: UserActionRequestWhereInput

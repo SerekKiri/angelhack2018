@@ -8,6 +8,9 @@ const Query = {
   documentTemplate(parent, args, ctx, info) {
     return ctx.db.query.documentTemplate(args, info)
   },
+  documentTemplates(parent, args, ctx, info) {
+    return ctx.db.query.documentTemplates(args, info)
+  },
   userActionRequests(parent, args, ctx, info) {
     return ctx.db.query.userActionRequests(args, info)
   },

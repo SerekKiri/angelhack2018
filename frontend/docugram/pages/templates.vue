@@ -14,8 +14,20 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
-  layout: 'dashboard'
+  layout: 'dashboard',
+  apollo: {
+    templates: gql`
+      query {
+        documentTemplates {
+          id
+          name
+        }
+      }
+    `
+  }
 }
 </script>
 
