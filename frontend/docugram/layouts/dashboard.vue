@@ -1,37 +1,38 @@
 <template>
     <v-app>
         <v-toolbar>
-            <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>menu</v-icon>
-      </v-btn>
+            <v-btn icon
+                   @click.stop="rightDrawer = !rightDrawer">
+                <v-icon>menu</v-icon>
+            </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat to="/user">{{me && me.name}}</v-btn>
-            <v-btn flat to='/'>Logout</v-btn>
+            <v-btn flat
+                   to="/user">{{me && me.name}}</v-btn>
+            <v-btn flat
+                   to='/'>Logout</v-btn>
         </v-toolbar>
-        <v-navigation-drawer 
-        temporary
-        :left="left"
-        v-model="rightDrawer"
-        fixed
-        >
+        <v-navigation-drawer temporary
+                             :left="left"
+                             v-model="rightDrawer"
+                             fixed>
             <v-list>
                 <v-subheader>
-                    <v-btn
-                    icon
-                    @click.stop="rightDrawer = !rightDrawer"
-                    >
-                    <v-icon>arrow_left</v-icon>
+                    <v-btn icon
+                           @click.stop="rightDrawer = !rightDrawer">
+                        <v-icon>arrow_left</v-icon>
                     </v-btn>
                     Document templates
-                    </v-subheader>
+                </v-subheader>
                 <v-divider></v-divider>
-                <v-list-tile nuxt to="/new-template" color="primary">
+                <v-list-tile nuxt
+                             to="/new-template"
+                             color="primary">
                     <v-list-tile-title>New template</v-list-tile-title>
                     <v-list-tile-action>
-                        <v-btn fab small flat color="primary">
+                        <v-btn fab
+                               small
+                               flat
+                               color="primary">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-list-tile-action>
@@ -40,19 +41,24 @@
         </v-navigation-drawer>
         <v-content>
             <!--<v-container> -->
-                <nuxt />
+            <nuxt />
             <!-- </v-container> -->
         </v-content>
-        <v-footer :fixed="fixed" app>
+        <v-footer :fixed="fixed"
+                  app>
             <v-card-text>
-                <p class="text-md-center">Docugram &copy; 2018</p>
+                <p class="text-md-center footer-text">Docugram &copy; 2018</p>
             </v-card-text>
         </v-footer>
     </v-app>
 </template>
-
+<style scoped>
+.footer-text {
+  user-select: none;
+}
+</style>
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 export default {
   apollo: {
     me: {
@@ -74,8 +80,8 @@ export default {
       miniVariant: false,
       left: true,
       rightDrawer: false,
-      title: "Docugram"
-    };
+      title: 'Docugram'
+    }
   }
-};
+}
 </script>
