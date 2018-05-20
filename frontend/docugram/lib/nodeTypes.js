@@ -150,14 +150,7 @@ export default {
     width: sq2 * 100,
     height: 100 * sq2,
     connectors: {
-    in: {
-        color: '#3498db', // peter river
-        name: 'in',
-        type: 'IN',
-        x: 50,
-        y: sq2 * 100
-      },
-      in1: {
+      in: {
         color: '#34495e', // dark blue
         name: 'in',
         type: 'IN',
