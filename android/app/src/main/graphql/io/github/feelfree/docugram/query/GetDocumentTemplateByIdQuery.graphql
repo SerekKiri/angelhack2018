@@ -4,6 +4,17 @@ query getDocumentTemplateById($id:ID!) {
   }
 }
 
+query getDocumentWorkflowTemplateById($id:ID!) {
+  documentTemplate(where: { id: $id }) {
+    id,
+    workflowNodes {
+      id
+      type
+    }
+  }
+}
+
+
 fragment DocumentTemplateFragment on DocumentTemplate {
   id
   fieldHeaders: fieldHeaders(orderBy: order_ASC) {

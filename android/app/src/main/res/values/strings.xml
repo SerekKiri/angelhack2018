@@ -10,4 +10,5 @@
     <string name="edit">EDIT</string>
     <string name="approve">Approve</string>
     <string name="disapprove">Disapprove</string>
+    <string name="submit">Submit</string>
 </resources>

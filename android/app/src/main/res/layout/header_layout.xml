@@ -18,7 +18,7 @@
         android:id="@+id/email"
         tools:text="test@test.pl"
         android:textStyle="bold"
-        android:textSize=bn "36sp"
+        android:textSize="36sp"
         android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

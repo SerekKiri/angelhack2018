@@ -1,0 +1,10 @@
+mutation CreateSubmissionMutation($state:ID!, $template:ID!, $textFields:TextFieldValueCreateManyInput!, $checkboxFields:CheckboxFieldValueCreateManyInput!) {
+  createSubmission(data:{
+    state: $state
+    template: {connect : {id: $template}}
+    textFields: $textFields
+    checkboxFields: $checkboxFields
+  }) {
+    id
+  }
+}

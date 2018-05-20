@@ -23,9 +23,16 @@ class TemplateActivity : BaseActivity(), TemplateView {
 
         }
     }
+
+    lateinit var id : String
+
     override fun showFields(template : Template) {
         loadingView.isVisible = false
         adapter.showFields(template.fields)
+    }
+
+    override fun close() {
+        finish()
     }
 
     @Inject
@@ -35,17 +42,28 @@ class TemplateActivity : BaseActivity(), TemplateView {
     @Inject lateinit var presenter : TemplatePresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_template)
         setSupportActionBar(toolbar)
+
+        val intent = intent
+        val action = intent.action
+        if (action != null) {
+            id = intent.data.toString().substringAfter("/form/").removeSuffix("/")
+        } else {
+            id = intent.getStringExtra(EXTRA_ID)
+        }
+        adapter.submitListener = {
+            presenter.sendSubmission(id, adapter.fields)
+        }
         presenter.subscribe(this)
         // Setup RecyclerView
         recyclerView.prepare()
         recyclerView.adapter = adapter
 
-
         // Load data
         loadingView.isVisible = true
-        presenter.loadTemplate("cjhdz6iwu00t60826kv1myw9e")
+        presenter.loadTemplate(id)
     }
 
     override fun onDestroy() {

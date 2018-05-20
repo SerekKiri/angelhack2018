@@ -20,7 +20,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.modules.template.TemplateActivity" />
+        <activity android:name=".ui.modules.template.TemplateActivity">
+            <intent-filter android:label="Fill form in docugram">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http"
+                android:host="www.docugram.xyz"
+                android:pathPrefix="/form" />
+        </intent-filter>
+            <intent-filter android:label="Fill form in docugram">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="www.docugram.xyz"
+                    android:pathPrefix="/form" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.modules.mainactivity.MainActivity" />
     </application>
 

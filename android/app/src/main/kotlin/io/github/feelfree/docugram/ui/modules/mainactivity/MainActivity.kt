@@ -13,8 +13,11 @@ import android.view.MenuItem
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
 import io.github.feelfree.docugram.ui.modules.NavigatorApi
+import io.github.feelfree.docugram.ui.modules.login.LoginActivity
 import io.github.feelfree.docugram.ui.modules.notifications.NotificationFragment
 import io.github.feelfree.docugram.utils.CredentialPreferencesApi
+import io.github.feelfree.docugram.utils.UserManagerApi
+import io.github.feelfree.docugram.utils.isVisible
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_layout.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -27,12 +30,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    @Inject lateinit var userManagerApi: UserManagerApi
+
     @Inject
     lateinit var credentialPreferencesApi: CredentialPreferencesApi
 
     @Inject
     lateinit var navigator : NavigatorApi
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.nav_logout) {
+            userManagerApi.logoutUser()
+            startActivity(LoginActivity.createIntent(this))
+            finish()
+        }
         return true
     }
 
@@ -52,9 +62,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
-        fab.setOnClickListener {
-            navigator.openTemplateActivity(this, "ddd")
-        }
+        fab.isVisible = false
         navigationView.getHeaderView(0).email.text = credentialPreferencesApi.email
 
         openFragment(NotificationFragment.newInstance())

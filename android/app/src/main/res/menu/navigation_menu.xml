@@ -8,7 +8,7 @@
         android:checkableBehavior="none">
 
         <item
-            android:id="@+id/nav_settings"
-            android:title="Wyloguj się"/>
+            android:id="@+id/nav_logout"
+            android:title="Logout"/>
     </group>
 </menu>
