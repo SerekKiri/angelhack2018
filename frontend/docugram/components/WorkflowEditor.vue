@@ -206,7 +206,7 @@ export default {
         {
           properties: {},
           id: 'node_3',
-          type: 'decision',
+          type: 'APPROVAL',
           x: 300,
           y: 100,
           connections: []
