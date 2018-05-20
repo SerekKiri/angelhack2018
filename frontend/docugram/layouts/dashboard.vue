@@ -38,7 +38,8 @@
                     </v-list-tile-action>
                 </v-list-tile>
                  <v-list-tile nuxt
-                             to="/templates">
+                             to="/templates"
+                             color="primary">
                     <v-list-tile-title>All templates</v-list-tile-title>
                     <v-list-tile-action>
                         <v-btn fab
@@ -70,7 +71,7 @@
 }
 </style>
 <script>
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 export default {
   apollo: {
     me: {
@@ -92,8 +93,8 @@ export default {
       miniVariant: false,
       left: true,
       rightDrawer: false,
-      title: 'Docugram'
-    }
+      title: "Docugram"
+    };
   }
-}
+};
 </script>

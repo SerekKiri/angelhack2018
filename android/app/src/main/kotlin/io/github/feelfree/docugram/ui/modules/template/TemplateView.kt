@@ -6,4 +6,5 @@ import io.github.feelfree.docugram.models.fields.Field
 
 interface TemplateView : BaseView {
     fun showFields(template : Template)
+    fun close()
 }

@@ -2,6 +2,7 @@ package io.github.feelfree.docugram.api.mappers.mutations
 
 import io.github.feelfree.docugram.api.mappers.FieldMapper
 import io.github.feelfree.docugram.api.mappers.Mapper
+import io.github.feelfree.docugram.fragment.DocumentTemplateFragment
 import io.github.feelfree.docugram.models.Template
 import io.github.feelfree.docugram.models.fields.CheckboxField
 import io.github.feelfree.docugram.models.fields.Field
@@ -11,7 +12,7 @@ import io.github.feelfree.docugram.query.GetDocumentTemplateByIdQuery
 
 class GetDocumentTemplateByIdMapper {
     companion object {
-        val templateMapper : Mapper<GetDocumentTemplateByIdQuery.Data, Template> = {
+        val templateMapper : Mapper<GetDocumentTemplateByIdQuery.Data, Pair<Template, DocumentTemplateFragment>> = {
             val documentTemplateFragment = it.documentTemplate()!!.fragments().documentTemplateFragment()
 
             val checkBoxes = documentTemplateFragment.checkboxFields()!!.map { FieldMapper.checkboxMapper(it.fragments().checkboxFieldFragment()) }
@@ -31,7 +32,7 @@ class GetDocumentTemplateByIdMapper {
                 }
                 predict!!
             }
-            Template(documentTemplateFragment.id(), fields ?: emptyList<Field>())
+            Pair(Template(documentTemplateFragment.id(), fields ?: emptyList<Field>()), documentTemplateFragment)
         }
     }
 }

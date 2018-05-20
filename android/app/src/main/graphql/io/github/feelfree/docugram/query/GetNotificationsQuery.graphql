@@ -9,4 +9,7 @@ fragment UserActionRequestFragment on UserActionRequest {
   type
   title
   content
+  submission {
+    id
+  }
 }

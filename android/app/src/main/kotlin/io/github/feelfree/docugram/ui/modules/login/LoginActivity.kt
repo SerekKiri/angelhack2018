@@ -1,6 +1,8 @@
 package io.github.feelfree.docugram.ui.modules.login
 
+import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import io.github.feelfree.docugram.R
 import io.github.feelfree.docugram.base.BaseActivity
@@ -11,6 +13,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity(), LoginView {
+    companion object {
+        fun createIntent(activity: Activity) : Intent {
+            return Intent(activity, LoginActivity::class.java)
+        }
+    }
     @Inject
     lateinit var presenter : LoginPresenter
 
