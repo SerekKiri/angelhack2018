@@ -37,6 +37,7 @@ type MarkdownField {
 
 type DocumentTemplate {
   id: ID! @unique
+  name: String! @default(value: "Unnamed template")
   fieldHeaders: [FieldHeader!]!
   checkboxFields: [CheckboxField!]!
   textFields: [TextField!]!

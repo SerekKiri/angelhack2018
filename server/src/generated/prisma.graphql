@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 04:46:26 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 04:56:07 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -455,6 +455,7 @@ scalar DateTime
 
 type DocumentTemplate implements Node {
   id: ID!
+  name: String!
   fieldHeaders(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldHeader!]
   checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField!]
   textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField!]
@@ -473,6 +474,7 @@ type DocumentTemplateConnection {
 }
 
 input DocumentTemplateCreateInput {
+  name: String
   fieldHeaders: FieldHeaderCreateManyInput
   checkboxFields: CheckboxFieldCreateManyInput
   textFields: TextFieldCreateManyInput
@@ -497,6 +499,8 @@ type DocumentTemplateEdge {
 enum DocumentTemplateOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -505,6 +509,7 @@ enum DocumentTemplateOrderByInput {
 
 type DocumentTemplatePreviousValues {
   id: ID!
+  name: String!
 }
 
 type DocumentTemplateSubscriptionPayload {
@@ -547,6 +552,7 @@ input DocumentTemplateSubscriptionWhereInput {
 }
 
 input DocumentTemplateUpdateDataInput {
+  name: String
   fieldHeaders: FieldHeaderUpdateManyInput
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
@@ -555,6 +561,7 @@ input DocumentTemplateUpdateDataInput {
 }
 
 input DocumentTemplateUpdateInput {
+  name: String
   fieldHeaders: FieldHeaderUpdateManyInput
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
@@ -624,6 +631,46 @@ input DocumentTemplateWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   fieldHeaders_every: FieldHeaderWhereInput
   fieldHeaders_some: FieldHeaderWhereInput
   fieldHeaders_none: FieldHeaderWhereInput

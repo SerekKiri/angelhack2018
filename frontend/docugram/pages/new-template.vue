@@ -6,6 +6,11 @@
   </v-alert>
   <div v-else>
     <!-- <h1 class="subheader">Create a document template</h1> -->
+    <div class="pa-3">
+      <v-text-field :label="Name"
+                    v-model="name"
+                    solo />
+    </div>
     <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]"
                           :show="selectedFieldIndex !== null"
                           :value="selectedFieldDefinition"
@@ -138,6 +143,7 @@ export default {
   data() {
     return {
       error: null,
+      name: 'New template',
       activeTab: 0,
       addFieldModalOpen: false,
       selectedFieldIndex: null,
@@ -327,6 +333,7 @@ export default {
 
         // now really create the template
         let templateCreateData = {
+          name: this.name,
           fieldHeaders: {
             create: this.template.fieldHeaders.map(fh => ({
               ...fh,
@@ -450,6 +457,6 @@ export default {
 
 <style scoped>
 .force-height {
-  min-height: 70vh;
+  min-height: 60vh;
 }
 </style>

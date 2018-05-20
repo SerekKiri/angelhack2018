@@ -37,6 +37,18 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
+                 <v-list-tile nuxt
+                             to="/templates">
+                    <v-list-tile-title>All templates</v-list-tile-title>
+                    <v-list-tile-action>
+                        <v-btn fab
+                               small
+                               flat
+                               color="primary">
+                            <v-icon>list</v-icon>
+                        </v-btn>
+                    </v-list-tile-action>
+                </v-list-tile>
             </v-list>
         </v-navigation-drawer>
         <v-content>
