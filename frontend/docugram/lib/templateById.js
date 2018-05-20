@@ -1,43 +1,43 @@
-import gql from "graphql-tag"
+import gql from 'graphql-tag'
 
 export default gql`
-query dtById($id: ID!) {
-  documentTemplate(where: { id: $id }) {
-    id
-    name
-    fieldHeaders {
+  query dtById($id: ID!) {
+    documentTemplate(where: { id: $id }) {
       id
-      type
-      order
-      definitionId
-    }
-    checkboxFields {
-      id
-      label
-      defaultValue
-    }
-    textFields {
-      id
-      label
-      defaultValue
-    }
-    markdownFields {
-      id
-      content
-    }
-    workflowNodes {
-      id
-      x
-      y
-      type
-      properties
-      connections {
+      name
+      fieldHeaders {
         id
-        targetNodeId
-        targetConnector
-        sourceConnector
+        type
+        order
+        definitionId
+      }
+      checkboxFields {
+        id
+        label
+        defaultValue
+      }
+      textFields {
+        id
+        label
+        defaultValue
+      }
+      markdownFields {
+        id
+        content
+      }
+      workflowNodes {
+        id
+        x
+        y
+        type
+        properties
+        connections {
+          id
+          targetNodeId
+          targetConnector
+          sourceConnector
+        }
       }
     }
   }
-}
 `

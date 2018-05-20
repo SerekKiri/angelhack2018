@@ -5,7 +5,7 @@
                 <v-list-tile v-for="template in documentTemplates"
                              :key="template.id"
                              nuxt
-                             :to="'/templates/'+template.id">
+                             :to="'/submissions/'+template.id">
                     <v-list-tile-content>
                         <v-list-tile-title>{{template.name}}</v-list-tile-title>
                     </v-list-tile-content>
