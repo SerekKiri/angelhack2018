@@ -50,6 +50,7 @@
                              @click.prevent="selectField(fieldIndex)"
                              :editorMode="true" />
                   <v-btn color="error"
+                         flat
                          @click="removeEvent(event)">Delete</v-btn>
                 </div>
               </draggable>
@@ -178,7 +179,7 @@ export default {
   },
   methods: {
     usePreset(preset) {
-      for(let i in preset) {
+      for (let i in preset) {
         this.template[i] = preset[i]
       }
     },
