@@ -4,12 +4,9 @@
 
 To run this app you need:
 
-Go to folders:
+Go to folder:
 ```
-cd frontend
-```
-```
-cd docugram
+cd frontend/docugram
 ```
 Install dependencies
 ```
