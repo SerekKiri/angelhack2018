@@ -17,6 +17,20 @@
                           :value="selectedFieldDefinition"
                           @hide="selectedFieldIndex = null"
                           @input="updateSelectedDefinition($event)" />
+    <v-dialog v-model="finalModalShown">
+      <v-card>
+        <v-card-title class="headline">Your template has been saved!</v-card-title>
+        <v-card-text>
+          <v-text-field :value="'http://www.docugram.xyz/form/' + finalTemplateId" ref=""/>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary"
+                 flat
+                 @click.native="$router.push({path: '/user'})">Ok</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-tabs v-model="activeTab">
       <v-tab :key="0"
              ripple>
@@ -134,6 +148,8 @@ export default {
   data() {
     return {
       error: null,
+      finalModalShown: false,
+      finalTemplateId: '',
       name: 'New template',
       activeTab: 0,
       addFieldModalOpen: false,
@@ -357,7 +373,7 @@ export default {
           }
         }
 
-        await this.$apollo.mutate({
+        let { data: { createDocumentTemplate } } = await this.$apollo.mutate({
           mutation: gql`
             mutation createDocumentTemplate(
               $data: DocumentTemplateCreateInput!
@@ -369,6 +385,8 @@ export default {
           `,
           variables: { data: templateCreateData }
         })
+        this.finalModalShown = true
+        this.finalTemplateId = createDocumentTemplate.id
       } catch (e) {
         console.log(e)
         this.error = e.message

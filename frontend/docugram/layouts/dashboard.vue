@@ -21,12 +21,25 @@
                            @click.stop="rightDrawer = !rightDrawer">
                         <v-icon>arrow_left</v-icon>
                     </v-btn>
-                    Document templates
+                    docugram
                 </v-subheader>
                 <v-divider></v-divider>
                 <v-list-tile nuxt
+                             to="/notifications"
+                             >
+                    <v-list-tile-title>Notifications</v-list-tile-title>
+                    <v-list-tile-action>
+                        <v-btn fab
+                               small
+                               flat
+                               color="primary">
+                            <v-icon>bell</v-icon>
+                        </v-btn>
+                    </v-list-tile-action>
+                </v-list-tile>
+                <v-list-tile nuxt
                              to="/new-template"
-                             color="primary">
+                             >
                     <v-list-tile-title>New template</v-list-tile-title>
                     <v-list-tile-action>
                         <v-btn fab
@@ -39,7 +52,7 @@
                 </v-list-tile>
                  <v-list-tile nuxt
                              to="/templates"
-                             color="primary">
+                            >
                     <v-list-tile-title>All templates</v-list-tile-title>
                     <v-list-tile-action>
                         <v-btn fab

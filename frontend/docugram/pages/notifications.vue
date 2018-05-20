@@ -38,12 +38,12 @@ export default {
           mutation createNotif {
             createUserActionRequest(
               data: {
-                type: APPROVAL
-                title: "John Smith has created this document"
+                type: NOTIFICATION,
+                title: "Albert has created this document"
                 content: "Please review this document."
                 user: { connect: { id: "cjhdb68xd000a0826atfvzox3" } }
-                workflowNode: { connect: { id: "cjheamgcf01ym08265cuyj4yt" } }
-                submission: { connect: { id: "cjheegjkn02ds0826xbvknc76" } }
+                workflowNode: { connect: { id: "cjhenfjey03990826x7dhfeaz" } }
+                submission: { connect: { id: "cjhenfr8p03aq0826xbphswri" } }
               }
             ) {
               id
