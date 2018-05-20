@@ -86,10 +86,18 @@ type UserActionRequest {
   content: String!
 }
 
+type WorkflowConnection {
+  id: ID! @unique
+  targetNodeId: ID!
+  targetConnector: String!
+  sourceConnector: String!
+}
+
 type WorkflowNode {
   id: ID! @unique
   x: Int!
   y: Int!
   type: WorkflowNodeType!
   properties: Json!
+  connections: [WorkflowConnection!]!
 }

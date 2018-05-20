@@ -5,8 +5,10 @@
                               @nodeAdded="nodeAdded" />
         <div v-if="selectedNodeIndex !== null">
             <PropertyEditorDrawer :show="selectedNodeIndex !== null"
+                                  @hide="selectedNodeIndex = null"
                                   :model="nodeTypes[nodes[selectedNodeIndex].type].propertiesModel"
-                                  :value="{}" />
+                                  v-model="nodes[selectedNodeIndex].properties"
+                                  @input="emitEvent" />
         </div>
         <svg :style="rootStyles"
              @mouseover="diagramHovered"
@@ -170,7 +172,6 @@ import AddWorkflowNodeModal from './AddWorkflowNodeModal'
 import PropertyEditorDrawer from './PropertyEditorDrawer'
 import cuid from 'cuid'
 
-
 export default {
   name: 'WorkflowEditor',
   data() {
@@ -187,6 +188,7 @@ export default {
       selectedNodeIndex: null,
       nodes: [
         {
+          properties: {},
           id: 'node_1',
           type: 'ENTRY',
           x: 20,
@@ -194,6 +196,7 @@ export default {
           connections: []
         },
         {
+          properties: {},
           id: 'node_2',
           type: 'NOTIFICATION',
           x: 100,
@@ -201,6 +204,7 @@ export default {
           connections: []
         },
         {
+          properties: {},
           id: 'node_3',
           type: 'decision',
           x: 300,
@@ -215,6 +219,19 @@ export default {
     PropertyEditorDrawer
   },
   methods: {
+    emitEvent() {
+      let serializedData = this.nodes.map(n => ({
+        ...n,
+        connections: n.connections.map(c => ({
+          targetNodeId: c.targetNode.id,
+          targetConnector: c.targetConnector.name,
+          sourceConnector: c.sourceConnector.name
+        })),
+        id: undefined
+      }))
+      console.log(serializedData)
+      this.$emit('event', serializedData)
+    },
     nodeHovered() {
       if (this.cursorState === 'IDLE') {
         this.cursorState = 'NODE_HOVER'
@@ -282,6 +299,7 @@ export default {
         targetConnector: connector
       })
       this.cursorState = 'IDLE'
+      this.emitEvent()
     },
     connectorSize(connector) {
       if (this.cursorState === 'CONNECTOR_DRAG') {
@@ -300,11 +318,13 @@ export default {
       this.addWorkflowNodeModal = false
       this.nodes.push({
         id: cuid(),
+        properties: {},
         type: type,
         x: 400,
         y: 400,
         connections: []
       })
+      this.emitEvent()
     }
   },
   computed: {

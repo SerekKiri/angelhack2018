@@ -6,12 +6,14 @@ const sq2 = Math.sqrt(2)
 
 const simpleActionConnectors = {
   out: {
+    name: 'out',
     color: '#3498db',
     type: 'OUT',
     x: 50,
     y: 0
   },
   in: {
+    name: 'in',
     color: '#34495e',
     type: 'IN',
     x: 50,
@@ -29,6 +31,7 @@ export default {
     connectors: {
       out: {
         color: '#3498db', // peter river
+        name: 'out',
         type: 'OUT',
         x: 50,
         y: 0
@@ -95,18 +98,21 @@ export default {
     connectors: {
       in: {
         color: '#34495e', // dark blue
+        name: 'in',
         type: 'IN',
         x: 50,
         y: sq2 * 100
       },
       approved: {
         color: '#2ecc71', // green
+        name: 'approved',
         type: 'OUT',
         x: -20,
         y: sq2 * 50
       },
       rejected: {
         color: '#e74c3c', // red
+        name: 'rejected',
         type: 'OUT',
         x: 120,
         y: sq2 * 50
