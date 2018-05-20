@@ -168,11 +168,8 @@
 import nodeTypes from '../lib/nodeTypes'
 import AddWorkflowNodeModal from './AddWorkflowNodeModal'
 import PropertyEditorDrawer from './PropertyEditorDrawer'
+import cuid from 'cuid'
 
-const randId = _ =>
-  Math.random()
-    .toString(36)
-    .substring(7)
 
 export default {
   name: 'WorkflowEditor',
@@ -302,7 +299,7 @@ export default {
     nodeAdded(type) {
       this.addWorkflowNodeModal = false
       this.nodes.push({
-        id: randId(),
+        id: cuid(),
         type: type,
         x: 400,
         y: 400,
