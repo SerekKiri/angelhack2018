@@ -65,7 +65,7 @@
         <!-- <button @click="add('entry')">Add entry</button>
         <button @click="add('action')">Add action</button>
         <button @click="add('decision')">Add decision</button> -->
-        <v-fab-transition>
+        <v-fab-transition v-if="selectedNodeIndex === null">
             <v-btn color="primary" dark absolute right fab class="add-node-fab" @click="addWorkflowNodeModal = true">
                 <v-icon>add</v-icon>
             </v-btn>
