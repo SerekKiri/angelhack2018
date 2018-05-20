@@ -46,7 +46,7 @@ export default {
     height: 30,
     propertiesModel: [],
     connectors: {
-      out: {
+      in: {
         color: '#3498db', // peter river
         name: 'in',
         type: 'IN',

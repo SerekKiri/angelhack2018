@@ -36,6 +36,9 @@ type Mutation {
     data: WorkflowNodeUpdateInput!
     where: WorkflowNodeWhereUniqueInput!
   ): WorkflowNode
+  createUserActionRequest(
+    data: UserActionRequestCreateInput!
+  ): UserActionRequest!
 }
 
 #type Subscription {

@@ -87,9 +87,9 @@ export default {
             id: this.id
           }
         },
-        state: this.documentTemplate.workflowNodes.find(
+        state: "not real xD"/* this.documentTemplate.workflowNodes.find(
           wn => wn.type === 'ENTRY'
-        ).id
+        ).id*/
         //checkboxFields:
       }
       await this.$apollo.mutate({

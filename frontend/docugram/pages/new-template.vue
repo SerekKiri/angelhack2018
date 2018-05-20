@@ -11,6 +11,7 @@
                     v-model="name"
                     solo />
     </div>
+    <SelectPresetModal @usePreset="usePreset" />
     <PropertyEditorDrawer :model="selectedField && fieldProperties[selectedField.type]"
                           :show="selectedFieldIndex !== null"
                           :value="selectedFieldDefinition"
@@ -86,6 +87,7 @@ import WorkflowEditor from '../components/WorkflowEditor'
 import draggable from 'vuedraggable'
 import gql from 'graphql-tag'
 import { fieldComponents, fieldDefinitionKeys } from '../lib/fieldUtils'
+import SelectPresetModal from '../components/SelectPresetModal'
 
 /*const fieldMockProps = {
     TEXT: {
@@ -175,6 +177,11 @@ export default {
     }
   },
   methods: {
+    usePreset(preset) {
+      for(let i in preset) {
+        this.template[i] = preset[i]
+      }
+    },
     async save() {
       try {
         for (let fieldHeader of this.template.fieldHeaders) {
@@ -438,7 +445,8 @@ export default {
     AddTemplateFieldModal,
     PropertyEditorDrawer,
     WorkflowEditor,
-    draggable
+    draggable,
+    SelectPresetModal
   }
 }
 </script>
