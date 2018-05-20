@@ -1,20 +1,19 @@
-FROM node:9.11.1-alpine
+FROM node:carbon
 
 # Create app directory
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-RUN apk update && apk upgrade && apk add git
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-ONBUILD COPY . /usr/src/app/
-ONBUILD RUN ls && npm install
+RUN npm install && npm run build
+# If you are building your code for production
+# RUN npm install --only=production
 
-# Build app
-ONBUILD RUN npm run build
+# Bundle app source
+COPY . .
 
-ENV HOST 0.0.0.0
 EXPOSE 3000
-
-# start command
 CMD [ "npm", "start" ]
