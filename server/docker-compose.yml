@@ -31,12 +31,16 @@ services:
     restart: always
     depends_on:
       - prisma
+    ports:
+    - "4000:4000"
     environment:
       GRAPHQL_ENDPOINT: http://prisma:4466
   nuxt:
     build:
       context: ../frontend/docugram
     restart: always
+    ports:
+    - "4000:4000"
     depends_on:
       - yoga
     environment:
