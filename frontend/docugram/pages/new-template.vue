@@ -271,8 +271,9 @@ export default {
           }
         }
 
+        // workflow saving
         for (let node of this.template.workflowNodes) {
-          await this.$apollo.mutate({
+          let { data: { createWorkflowNode } } = await this.$apollo.mutate({
             mutation: gql`
               mutation createWorkflowNode($data: WorkflowNodeCreateInput!) {
                 createWorkflowNode(data: $data) {
@@ -283,7 +284,42 @@ export default {
             variables: {
               data: {
                 ...node,
-                id: undefined
+                id: undefined,
+                connections: undefined
+              }
+            }
+          })
+
+          let newNodeId = createWorkflowNode.id
+          let oldNodeId = node.id
+          node.id = newNodeId
+          this.template.workflowNodes.forEach(wn =>
+            wn.connections.forEach(c => {
+              if (c.targetNodeId === oldNodeId) {
+                c.targetNodeId = newNodeId
+              }
+            })
+          )
+        }
+
+        for (let node of this.template.workflowNodes) {
+          await this.$apollo.mutate({
+            mutation: gql`
+              mutation updateWorkflowNode(
+                $data: WorkflowNodeUpdateInput!
+                $id: ID!
+              ) {
+                updateWorkflowNode(data: $data, where: { id: $id }) {
+                  id
+                }
+              }
+            `,
+            variables: {
+              id: node.id,
+              data: {
+                connections: {
+                  create: node.connections
+                }
               }
             }
           })
@@ -296,6 +332,9 @@ export default {
               ...fh,
               id: undefined
             }))
+          },
+          workflowNodes: {
+            connect: this.template.workflowNodes.map(wn => ({ id: wn.id }))
           },
           textFields: {
             connect: this.template.textFields.map(tf => ({
