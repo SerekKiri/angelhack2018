@@ -9,8 +9,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/machinebox/graphql"
 	"github.com/pkg/errors"
-	"github.com/shurcooL/graphql"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -47,7 +47,7 @@ func (app *Application) Prepare() {
 	log.Info("Initializing router")
 	app.initRouter()
 	log.Info("Connecting to database")
-	app.GraphQL = graphql.NewClient(app.Config.GraphQLURL, nil)
+	app.GraphQL = graphql.NewClient(app.Config.GraphQLURL)
 }
 
 /*
