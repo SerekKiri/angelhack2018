@@ -21,6 +21,7 @@ type Mutation {
   createTextField(data: TextFieldCreateInput!): TextField!
   createMarkdownField(data: MarkdownFieldCreateInput!): MarkdownField!
   createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
+  createSubmission(data: SubmissionCreateInput!): Submission!
 }
 
 #type Subscription {

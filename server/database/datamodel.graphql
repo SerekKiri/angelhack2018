@@ -43,6 +43,24 @@ type DocumentTemplate {
   markdownFields: [MarkdownField!]!
 }
 
+type CheckboxFieldValue {
+  id: ID! @unique
+  value: Boolean!
+}
+
+type TextFieldValue {
+  id: ID! @unique
+  value: String!
+}
+
+type Submission {
+  id: ID! @unique
+  template: DocumentTemplate!
+  createdAt: DateTime!
+  checkboxFields: [CheckboxFieldValue!]!
+  textFields: [TextFieldValue!]!
+}
+
 enum WorkflowNodeType {
   ENTRY
   END

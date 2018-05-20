@@ -1,7 +1,11 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 00:13:45 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 02:31:36 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
+  count: Int!
+}
+
+type AggregateCheckboxFieldValue {
   count: Int!
 }
 
@@ -17,7 +21,15 @@ type AggregateMarkdownField {
   count: Int!
 }
 
+type AggregateSubmission {
+  count: Int!
+}
+
 type AggregateTextField {
+  count: Int!
+}
+
+type AggregateTextFieldValue {
   count: Int!
 }
 
@@ -161,6 +173,181 @@ input CheckboxFieldUpsertWithWhereUniqueNestedInput {
   create: CheckboxFieldCreateInput!
 }
 
+type CheckboxFieldValue implements Node {
+  id: ID!
+  value: Boolean!
+}
+
+"""A connection to a list of items."""
+type CheckboxFieldValueConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CheckboxFieldValueEdge]!
+  aggregate: AggregateCheckboxFieldValue!
+}
+
+input CheckboxFieldValueCreateInput {
+  value: Boolean!
+}
+
+input CheckboxFieldValueCreateManyInput {
+  create: [CheckboxFieldValueCreateInput!]
+  connect: [CheckboxFieldValueWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type CheckboxFieldValueEdge {
+  """The item at the end of the edge."""
+  node: CheckboxFieldValue!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CheckboxFieldValueOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CheckboxFieldValuePreviousValues {
+  id: ID!
+  value: Boolean!
+}
+
+type CheckboxFieldValueSubscriptionPayload {
+  mutation: MutationType!
+  node: CheckboxFieldValue
+  updatedFields: [String!]
+  previousValues: CheckboxFieldValuePreviousValues
+}
+
+input CheckboxFieldValueSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CheckboxFieldValueSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CheckboxFieldValueSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CheckboxFieldValueSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CheckboxFieldValueWhereInput
+}
+
+input CheckboxFieldValueUpdateDataInput {
+  value: Boolean
+}
+
+input CheckboxFieldValueUpdateInput {
+  value: Boolean
+}
+
+input CheckboxFieldValueUpdateManyInput {
+  create: [CheckboxFieldValueCreateInput!]
+  connect: [CheckboxFieldValueWhereUniqueInput!]
+  disconnect: [CheckboxFieldValueWhereUniqueInput!]
+  delete: [CheckboxFieldValueWhereUniqueInput!]
+  update: [CheckboxFieldValueUpdateWithWhereUniqueNestedInput!]
+  upsert: [CheckboxFieldValueUpsertWithWhereUniqueNestedInput!]
+}
+
+input CheckboxFieldValueUpdateWithWhereUniqueNestedInput {
+  where: CheckboxFieldValueWhereUniqueInput!
+  data: CheckboxFieldValueUpdateDataInput!
+}
+
+input CheckboxFieldValueUpsertWithWhereUniqueNestedInput {
+  where: CheckboxFieldValueWhereUniqueInput!
+  update: CheckboxFieldValueUpdateDataInput!
+  create: CheckboxFieldValueCreateInput!
+}
+
+input CheckboxFieldValueWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CheckboxFieldValueWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CheckboxFieldValueWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CheckboxFieldValueWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: Boolean
+
+  """All values that are not equal to given value."""
+  value_not: Boolean
+}
+
+input CheckboxFieldValueWhereUniqueInput {
+  id: ID
+}
+
 input CheckboxFieldWhereInput {
   """Logical AND on all given filters."""
   AND: [CheckboxFieldWhereInput!]
@@ -287,6 +474,11 @@ input DocumentTemplateCreateInput {
   markdownFields: MarkdownFieldCreateManyInput
 }
 
+input DocumentTemplateCreateOneInput {
+  create: DocumentTemplateCreateInput
+  connect: DocumentTemplateWhereUniqueInput
+}
+
 """An edge in a connection."""
 type DocumentTemplateEdge {
   """The item at the end of the edge."""
@@ -348,11 +540,31 @@ input DocumentTemplateSubscriptionWhereInput {
   node: DocumentTemplateWhereInput
 }
 
+input DocumentTemplateUpdateDataInput {
+  fieldHeaders: FieldHeaderUpdateManyInput
+  checkboxFields: CheckboxFieldUpdateManyInput
+  textFields: TextFieldUpdateManyInput
+  markdownFields: MarkdownFieldUpdateManyInput
+}
+
 input DocumentTemplateUpdateInput {
   fieldHeaders: FieldHeaderUpdateManyInput
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
   markdownFields: MarkdownFieldUpdateManyInput
+}
+
+input DocumentTemplateUpdateOneInput {
+  create: DocumentTemplateCreateInput
+  connect: DocumentTemplateWhereUniqueInput
+  delete: Boolean
+  update: DocumentTemplateUpdateDataInput
+  upsert: DocumentTemplateUpsertNestedInput
+}
+
+input DocumentTemplateUpsertNestedInput {
+  update: DocumentTemplateUpdateDataInput!
+  create: DocumentTemplateCreateInput!
 }
 
 input DocumentTemplateWhereInput {
@@ -912,6 +1124,9 @@ type Mutation {
   createTextField(data: TextFieldCreateInput!): TextField!
   createMarkdownField(data: MarkdownFieldCreateInput!): MarkdownField!
   createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
+  createCheckboxFieldValue(data: CheckboxFieldValueCreateInput!): CheckboxFieldValue!
+  createTextFieldValue(data: TextFieldValueCreateInput!): TextFieldValue!
+  createSubmission(data: SubmissionCreateInput!): Submission!
   createUserActionRequest(data: UserActionRequestCreateInput!): UserActionRequest!
   createWorkflowNode(data: WorkflowNodeCreateInput!): WorkflowNode!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
@@ -920,6 +1135,9 @@ type Mutation {
   updateTextField(data: TextFieldUpdateInput!, where: TextFieldWhereUniqueInput!): TextField
   updateMarkdownField(data: MarkdownFieldUpdateInput!, where: MarkdownFieldWhereUniqueInput!): MarkdownField
   updateDocumentTemplate(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  updateCheckboxFieldValue(data: CheckboxFieldValueUpdateInput!, where: CheckboxFieldValueWhereUniqueInput!): CheckboxFieldValue
+  updateTextFieldValue(data: TextFieldValueUpdateInput!, where: TextFieldValueWhereUniqueInput!): TextFieldValue
+  updateSubmission(data: SubmissionUpdateInput!, where: SubmissionWhereUniqueInput!): Submission
   updateUserActionRequest(data: UserActionRequestUpdateInput!, where: UserActionRequestWhereUniqueInput!): UserActionRequest
   updateWorkflowNode(data: WorkflowNodeUpdateInput!, where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   deleteUser(where: UserWhereUniqueInput!): User
@@ -928,6 +1146,9 @@ type Mutation {
   deleteTextField(where: TextFieldWhereUniqueInput!): TextField
   deleteMarkdownField(where: MarkdownFieldWhereUniqueInput!): MarkdownField
   deleteDocumentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  deleteCheckboxFieldValue(where: CheckboxFieldValueWhereUniqueInput!): CheckboxFieldValue
+  deleteTextFieldValue(where: TextFieldValueWhereUniqueInput!): TextFieldValue
+  deleteSubmission(where: SubmissionWhereUniqueInput!): Submission
   deleteUserActionRequest(where: UserActionRequestWhereUniqueInput!): UserActionRequest
   deleteWorkflowNode(where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
@@ -936,6 +1157,9 @@ type Mutation {
   upsertTextField(where: TextFieldWhereUniqueInput!, create: TextFieldCreateInput!, update: TextFieldUpdateInput!): TextField!
   upsertMarkdownField(where: MarkdownFieldWhereUniqueInput!, create: MarkdownFieldCreateInput!, update: MarkdownFieldUpdateInput!): MarkdownField!
   upsertDocumentTemplate(where: DocumentTemplateWhereUniqueInput!, create: DocumentTemplateCreateInput!, update: DocumentTemplateUpdateInput!): DocumentTemplate!
+  upsertCheckboxFieldValue(where: CheckboxFieldValueWhereUniqueInput!, create: CheckboxFieldValueCreateInput!, update: CheckboxFieldValueUpdateInput!): CheckboxFieldValue!
+  upsertTextFieldValue(where: TextFieldValueWhereUniqueInput!, create: TextFieldValueCreateInput!, update: TextFieldValueUpdateInput!): TextFieldValue!
+  upsertSubmission(where: SubmissionWhereUniqueInput!, create: SubmissionCreateInput!, update: SubmissionUpdateInput!): Submission!
   upsertUserActionRequest(where: UserActionRequestWhereUniqueInput!, create: UserActionRequestCreateInput!, update: UserActionRequestUpdateInput!): UserActionRequest!
   upsertWorkflowNode(where: WorkflowNodeWhereUniqueInput!, create: WorkflowNodeCreateInput!, update: WorkflowNodeUpdateInput!): WorkflowNode!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
@@ -944,6 +1168,9 @@ type Mutation {
   updateManyTextFields(data: TextFieldUpdateInput!, where: TextFieldWhereInput): BatchPayload!
   updateManyMarkdownFields(data: MarkdownFieldUpdateInput!, where: MarkdownFieldWhereInput): BatchPayload!
   updateManyDocumentTemplates(data: DocumentTemplateUpdateInput!, where: DocumentTemplateWhereInput): BatchPayload!
+  updateManyCheckboxFieldValues(data: CheckboxFieldValueUpdateInput!, where: CheckboxFieldValueWhereInput): BatchPayload!
+  updateManyTextFieldValues(data: TextFieldValueUpdateInput!, where: TextFieldValueWhereInput): BatchPayload!
+  updateManySubmissions(data: SubmissionUpdateInput!, where: SubmissionWhereInput): BatchPayload!
   updateManyUserActionRequests(data: UserActionRequestUpdateInput!, where: UserActionRequestWhereInput): BatchPayload!
   updateManyWorkflowNodes(data: WorkflowNodeUpdateInput!, where: WorkflowNodeWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -952,6 +1179,9 @@ type Mutation {
   deleteManyTextFields(where: TextFieldWhereInput): BatchPayload!
   deleteManyMarkdownFields(where: MarkdownFieldWhereInput): BatchPayload!
   deleteManyDocumentTemplates(where: DocumentTemplateWhereInput): BatchPayload!
+  deleteManyCheckboxFieldValues(where: CheckboxFieldValueWhereInput): BatchPayload!
+  deleteManyTextFieldValues(where: TextFieldValueWhereInput): BatchPayload!
+  deleteManySubmissions(where: SubmissionWhereInput): BatchPayload!
   deleteManyUserActionRequests(where: UserActionRequestWhereInput): BatchPayload!
   deleteManyWorkflowNodes(where: WorkflowNodeWhereInput): BatchPayload!
 }
@@ -990,6 +1220,9 @@ type Query {
   textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField]!
   markdownFields(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MarkdownField]!
   documentTemplates(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DocumentTemplate]!
+  checkboxFieldValues(where: CheckboxFieldValueWhereInput, orderBy: CheckboxFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxFieldValue]!
+  textFieldValues(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextFieldValue]!
+  submissions(where: SubmissionWhereInput, orderBy: SubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Submission]!
   userActionRequests(where: UserActionRequestWhereInput, orderBy: UserActionRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionRequest]!
   workflowNodes(where: WorkflowNodeWhereInput, orderBy: WorkflowNodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WorkflowNode]!
   user(where: UserWhereUniqueInput!): User
@@ -998,6 +1231,9 @@ type Query {
   textField(where: TextFieldWhereUniqueInput!): TextField
   markdownField(where: MarkdownFieldWhereUniqueInput!): MarkdownField
   documentTemplate(where: DocumentTemplateWhereUniqueInput!): DocumentTemplate
+  checkboxFieldValue(where: CheckboxFieldValueWhereUniqueInput!): CheckboxFieldValue
+  textFieldValue(where: TextFieldValueWhereUniqueInput!): TextFieldValue
+  submission(where: SubmissionWhereUniqueInput!): Submission
   userActionRequest(where: UserActionRequestWhereUniqueInput!): UserActionRequest
   workflowNode(where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1006,6 +1242,9 @@ type Query {
   textFieldsConnection(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TextFieldConnection!
   markdownFieldsConnection(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MarkdownFieldConnection!
   documentTemplatesConnection(where: DocumentTemplateWhereInput, orderBy: DocumentTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentTemplateConnection!
+  checkboxFieldValuesConnection(where: CheckboxFieldValueWhereInput, orderBy: CheckboxFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckboxFieldValueConnection!
+  textFieldValuesConnection(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TextFieldValueConnection!
+  submissionsConnection(where: SubmissionWhereInput, orderBy: SubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubmissionConnection!
   userActionRequestsConnection(where: UserActionRequestWhereInput, orderBy: UserActionRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserActionRequestConnection!
   workflowNodesConnection(where: WorkflowNodeWhereInput, orderBy: WorkflowNodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkflowNodeConnection!
 
@@ -1016,6 +1255,182 @@ type Query {
   ): Node
 }
 
+type Submission implements Node {
+  id: ID!
+  template(where: DocumentTemplateWhereInput): DocumentTemplate!
+  createdAt: DateTime!
+  checkboxFields(where: CheckboxFieldValueWhereInput, orderBy: CheckboxFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxFieldValue!]
+  textFields(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextFieldValue!]
+}
+
+"""A connection to a list of items."""
+type SubmissionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubmissionEdge]!
+  aggregate: AggregateSubmission!
+}
+
+input SubmissionCreateInput {
+  template: DocumentTemplateCreateOneInput!
+  checkboxFields: CheckboxFieldValueCreateManyInput
+  textFields: TextFieldValueCreateManyInput
+}
+
+"""An edge in a connection."""
+type SubmissionEdge {
+  """The item at the end of the edge."""
+  node: Submission!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SubmissionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SubmissionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+}
+
+type SubmissionSubscriptionPayload {
+  mutation: MutationType!
+  node: Submission
+  updatedFields: [String!]
+  previousValues: SubmissionPreviousValues
+}
+
+input SubmissionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubmissionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubmissionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubmissionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SubmissionWhereInput
+}
+
+input SubmissionUpdateInput {
+  template: DocumentTemplateUpdateOneInput
+  checkboxFields: CheckboxFieldValueUpdateManyInput
+  textFields: TextFieldValueUpdateManyInput
+}
+
+input SubmissionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SubmissionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SubmissionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SubmissionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  template: DocumentTemplateWhereInput
+  checkboxFields_every: CheckboxFieldValueWhereInput
+  checkboxFields_some: CheckboxFieldValueWhereInput
+  checkboxFields_none: CheckboxFieldValueWhereInput
+  textFields_every: TextFieldValueWhereInput
+  textFields_some: TextFieldValueWhereInput
+  textFields_none: TextFieldValueWhereInput
+}
+
+input SubmissionWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   fieldHeader(where: FieldHeaderSubscriptionWhereInput): FieldHeaderSubscriptionPayload
@@ -1023,6 +1438,9 @@ type Subscription {
   textField(where: TextFieldSubscriptionWhereInput): TextFieldSubscriptionPayload
   markdownField(where: MarkdownFieldSubscriptionWhereInput): MarkdownFieldSubscriptionPayload
   documentTemplate(where: DocumentTemplateSubscriptionWhereInput): DocumentTemplateSubscriptionPayload
+  checkboxFieldValue(where: CheckboxFieldValueSubscriptionWhereInput): CheckboxFieldValueSubscriptionPayload
+  textFieldValue(where: TextFieldValueSubscriptionWhereInput): TextFieldValueSubscriptionPayload
+  submission(where: SubmissionSubscriptionWhereInput): SubmissionSubscriptionPayload
   userActionRequest(where: UserActionRequestSubscriptionWhereInput): UserActionRequestSubscriptionPayload
   workflowNode(where: WorkflowNodeSubscriptionWhereInput): WorkflowNodeSubscriptionPayload
 }
@@ -1148,6 +1566,217 @@ input TextFieldUpsertWithWhereUniqueNestedInput {
   where: TextFieldWhereUniqueInput!
   update: TextFieldUpdateDataInput!
   create: TextFieldCreateInput!
+}
+
+type TextFieldValue implements Node {
+  id: ID!
+  value: String!
+}
+
+"""A connection to a list of items."""
+type TextFieldValueConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TextFieldValueEdge]!
+  aggregate: AggregateTextFieldValue!
+}
+
+input TextFieldValueCreateInput {
+  value: String!
+}
+
+input TextFieldValueCreateManyInput {
+  create: [TextFieldValueCreateInput!]
+  connect: [TextFieldValueWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TextFieldValueEdge {
+  """The item at the end of the edge."""
+  node: TextFieldValue!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TextFieldValueOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TextFieldValuePreviousValues {
+  id: ID!
+  value: String!
+}
+
+type TextFieldValueSubscriptionPayload {
+  mutation: MutationType!
+  node: TextFieldValue
+  updatedFields: [String!]
+  previousValues: TextFieldValuePreviousValues
+}
+
+input TextFieldValueSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TextFieldValueSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TextFieldValueSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TextFieldValueSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TextFieldValueWhereInput
+}
+
+input TextFieldValueUpdateDataInput {
+  value: String
+}
+
+input TextFieldValueUpdateInput {
+  value: String
+}
+
+input TextFieldValueUpdateManyInput {
+  create: [TextFieldValueCreateInput!]
+  connect: [TextFieldValueWhereUniqueInput!]
+  disconnect: [TextFieldValueWhereUniqueInput!]
+  delete: [TextFieldValueWhereUniqueInput!]
+  update: [TextFieldValueUpdateWithWhereUniqueNestedInput!]
+  upsert: [TextFieldValueUpsertWithWhereUniqueNestedInput!]
+}
+
+input TextFieldValueUpdateWithWhereUniqueNestedInput {
+  where: TextFieldValueWhereUniqueInput!
+  data: TextFieldValueUpdateDataInput!
+}
+
+input TextFieldValueUpsertWithWhereUniqueNestedInput {
+  where: TextFieldValueWhereUniqueInput!
+  update: TextFieldValueUpdateDataInput!
+  create: TextFieldValueCreateInput!
+}
+
+input TextFieldValueWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TextFieldValueWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TextFieldValueWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TextFieldValueWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+input TextFieldValueWhereUniqueInput {
+  id: ID
 }
 
 input TextFieldWhereInput {

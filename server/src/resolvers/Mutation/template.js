@@ -12,6 +12,9 @@ const template = {
   },
   async createDocumentTemplate(parent, args, ctx, info) {
     return await ctx.db.mutation.createDocumentTemplate(args)
+  },
+  async createSubmission(parent, args, ctx, info) {
+    return await ctx.db.mutation.createSubmission(args)
   }
 }
 
