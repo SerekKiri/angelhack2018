@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install && npm run prisma-deploy
+RUN npm install && cd database && npm run prisma-deploy
 # If you are building your code for production
 # RUN npm install --only=production
 
