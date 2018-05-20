@@ -5,17 +5,17 @@ import DecisionNode from '../components/nodes/DecisionNode'
 const sq2 = Math.sqrt(2)
 
 const simpleActionConnectors = {
-  out: {
-    name: 'out',
+  in: {
+    name: 'in',
     color: '#3498db',
-    type: 'OUT',
+    type: 'IN',
     x: 50,
     y: 0
   },
-  in: {
-    name: 'in',
+  out: {
+    name: 'out',
     color: '#34495e',
-    type: 'IN',
+    type: 'OUT',
     x: 50,
     y: 30
   }
@@ -34,7 +34,7 @@ export default {
         name: 'out',
         type: 'OUT',
         x: 50,
-        y: 0
+        y: 30
       }
     }
   },
@@ -51,7 +51,7 @@ export default {
         name: 'in',
         type: 'IN',
         x: 50,
-        y: 30
+        y: 0
       }
     }
   },
@@ -150,12 +150,19 @@ export default {
     width: sq2 * 100,
     height: 100 * sq2,
     connectors: {
-      in: {
-        color: '#34495e', // dark blue
+    in: {
+        color: '#3498db', // peter river
         name: 'in',
         type: 'IN',
         x: 50,
         y: sq2 * 100
+      },
+      in1: {
+        color: '#34495e', // dark blue
+        name: 'in',
+        type: 'IN',
+        x: 50,
+        y: 0
       },
       approved: {
         color: '#2ecc71', // green
