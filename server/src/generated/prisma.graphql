@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun May 20 2018 02:31:36 GMT+0200 (CEST)
+# timestamp: Sun May 20 2018 03:33:01 GMT+0200 (CEST)
 
 type AggregateCheckboxField {
   count: Int!
@@ -38,6 +38,10 @@ type AggregateUser {
 }
 
 type AggregateUserActionRequest {
+  count: Int!
+}
+
+type AggregateWorkflowConnection {
   count: Int!
 }
 
@@ -455,6 +459,7 @@ type DocumentTemplate implements Node {
   checkboxFields(where: CheckboxFieldWhereInput, orderBy: CheckboxFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckboxField!]
   textFields(where: TextFieldWhereInput, orderBy: TextFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextField!]
   markdownFields(where: MarkdownFieldWhereInput, orderBy: MarkdownFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MarkdownField!]
+  workflowNodes(where: WorkflowNodeWhereInput, orderBy: WorkflowNodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WorkflowNode!]
 }
 
 """A connection to a list of items."""
@@ -472,6 +477,7 @@ input DocumentTemplateCreateInput {
   checkboxFields: CheckboxFieldCreateManyInput
   textFields: TextFieldCreateManyInput
   markdownFields: MarkdownFieldCreateManyInput
+  workflowNodes: WorkflowNodeCreateManyInput
 }
 
 input DocumentTemplateCreateOneInput {
@@ -545,6 +551,7 @@ input DocumentTemplateUpdateDataInput {
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
   markdownFields: MarkdownFieldUpdateManyInput
+  workflowNodes: WorkflowNodeUpdateManyInput
 }
 
 input DocumentTemplateUpdateInput {
@@ -552,6 +559,7 @@ input DocumentTemplateUpdateInput {
   checkboxFields: CheckboxFieldUpdateManyInput
   textFields: TextFieldUpdateManyInput
   markdownFields: MarkdownFieldUpdateManyInput
+  workflowNodes: WorkflowNodeUpdateManyInput
 }
 
 input DocumentTemplateUpdateOneInput {
@@ -628,6 +636,9 @@ input DocumentTemplateWhereInput {
   markdownFields_every: MarkdownFieldWhereInput
   markdownFields_some: MarkdownFieldWhereInput
   markdownFields_none: MarkdownFieldWhereInput
+  workflowNodes_every: WorkflowNodeWhereInput
+  workflowNodes_some: WorkflowNodeWhereInput
+  workflowNodes_none: WorkflowNodeWhereInput
 }
 
 input DocumentTemplateWhereUniqueInput {
@@ -1128,6 +1139,7 @@ type Mutation {
   createTextFieldValue(data: TextFieldValueCreateInput!): TextFieldValue!
   createSubmission(data: SubmissionCreateInput!): Submission!
   createUserActionRequest(data: UserActionRequestCreateInput!): UserActionRequest!
+  createWorkflowConnection(data: WorkflowConnectionCreateInput!): WorkflowConnection!
   createWorkflowNode(data: WorkflowNodeCreateInput!): WorkflowNode!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateFieldHeader(data: FieldHeaderUpdateInput!, where: FieldHeaderWhereUniqueInput!): FieldHeader
@@ -1139,6 +1151,7 @@ type Mutation {
   updateTextFieldValue(data: TextFieldValueUpdateInput!, where: TextFieldValueWhereUniqueInput!): TextFieldValue
   updateSubmission(data: SubmissionUpdateInput!, where: SubmissionWhereUniqueInput!): Submission
   updateUserActionRequest(data: UserActionRequestUpdateInput!, where: UserActionRequestWhereUniqueInput!): UserActionRequest
+  updateWorkflowConnection(data: WorkflowConnectionUpdateInput!, where: WorkflowConnectionWhereUniqueInput!): WorkflowConnection
   updateWorkflowNode(data: WorkflowNodeUpdateInput!, where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   deleteUser(where: UserWhereUniqueInput!): User
   deleteFieldHeader(where: FieldHeaderWhereUniqueInput!): FieldHeader
@@ -1150,6 +1163,7 @@ type Mutation {
   deleteTextFieldValue(where: TextFieldValueWhereUniqueInput!): TextFieldValue
   deleteSubmission(where: SubmissionWhereUniqueInput!): Submission
   deleteUserActionRequest(where: UserActionRequestWhereUniqueInput!): UserActionRequest
+  deleteWorkflowConnection(where: WorkflowConnectionWhereUniqueInput!): WorkflowConnection
   deleteWorkflowNode(where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertFieldHeader(where: FieldHeaderWhereUniqueInput!, create: FieldHeaderCreateInput!, update: FieldHeaderUpdateInput!): FieldHeader!
@@ -1161,6 +1175,7 @@ type Mutation {
   upsertTextFieldValue(where: TextFieldValueWhereUniqueInput!, create: TextFieldValueCreateInput!, update: TextFieldValueUpdateInput!): TextFieldValue!
   upsertSubmission(where: SubmissionWhereUniqueInput!, create: SubmissionCreateInput!, update: SubmissionUpdateInput!): Submission!
   upsertUserActionRequest(where: UserActionRequestWhereUniqueInput!, create: UserActionRequestCreateInput!, update: UserActionRequestUpdateInput!): UserActionRequest!
+  upsertWorkflowConnection(where: WorkflowConnectionWhereUniqueInput!, create: WorkflowConnectionCreateInput!, update: WorkflowConnectionUpdateInput!): WorkflowConnection!
   upsertWorkflowNode(where: WorkflowNodeWhereUniqueInput!, create: WorkflowNodeCreateInput!, update: WorkflowNodeUpdateInput!): WorkflowNode!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyFieldHeaders(data: FieldHeaderUpdateInput!, where: FieldHeaderWhereInput): BatchPayload!
@@ -1172,6 +1187,7 @@ type Mutation {
   updateManyTextFieldValues(data: TextFieldValueUpdateInput!, where: TextFieldValueWhereInput): BatchPayload!
   updateManySubmissions(data: SubmissionUpdateInput!, where: SubmissionWhereInput): BatchPayload!
   updateManyUserActionRequests(data: UserActionRequestUpdateInput!, where: UserActionRequestWhereInput): BatchPayload!
+  updateManyWorkflowConnections(data: WorkflowConnectionUpdateInput!, where: WorkflowConnectionWhereInput): BatchPayload!
   updateManyWorkflowNodes(data: WorkflowNodeUpdateInput!, where: WorkflowNodeWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyFieldHeaders(where: FieldHeaderWhereInput): BatchPayload!
@@ -1183,6 +1199,7 @@ type Mutation {
   deleteManyTextFieldValues(where: TextFieldValueWhereInput): BatchPayload!
   deleteManySubmissions(where: SubmissionWhereInput): BatchPayload!
   deleteManyUserActionRequests(where: UserActionRequestWhereInput): BatchPayload!
+  deleteManyWorkflowConnections(where: WorkflowConnectionWhereInput): BatchPayload!
   deleteManyWorkflowNodes(where: WorkflowNodeWhereInput): BatchPayload!
 }
 
@@ -1224,6 +1241,7 @@ type Query {
   textFieldValues(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TextFieldValue]!
   submissions(where: SubmissionWhereInput, orderBy: SubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Submission]!
   userActionRequests(where: UserActionRequestWhereInput, orderBy: UserActionRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionRequest]!
+  workflowConnections(where: WorkflowConnectionWhereInput, orderBy: WorkflowConnectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WorkflowConnection]!
   workflowNodes(where: WorkflowNodeWhereInput, orderBy: WorkflowNodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WorkflowNode]!
   user(where: UserWhereUniqueInput!): User
   fieldHeader(where: FieldHeaderWhereUniqueInput!): FieldHeader
@@ -1235,6 +1253,7 @@ type Query {
   textFieldValue(where: TextFieldValueWhereUniqueInput!): TextFieldValue
   submission(where: SubmissionWhereUniqueInput!): Submission
   userActionRequest(where: UserActionRequestWhereUniqueInput!): UserActionRequest
+  workflowConnection(where: WorkflowConnectionWhereUniqueInput!): WorkflowConnection
   workflowNode(where: WorkflowNodeWhereUniqueInput!): WorkflowNode
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   fieldHeadersConnection(where: FieldHeaderWhereInput, orderBy: FieldHeaderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldHeaderConnection!
@@ -1246,6 +1265,7 @@ type Query {
   textFieldValuesConnection(where: TextFieldValueWhereInput, orderBy: TextFieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TextFieldValueConnection!
   submissionsConnection(where: SubmissionWhereInput, orderBy: SubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubmissionConnection!
   userActionRequestsConnection(where: UserActionRequestWhereInput, orderBy: UserActionRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserActionRequestConnection!
+  workflowConnectionsConnection(where: WorkflowConnectionWhereInput, orderBy: WorkflowConnectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkflowConnectionConnection!
   workflowNodesConnection(where: WorkflowNodeWhereInput, orderBy: WorkflowNodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkflowNodeConnection!
 
   """Fetches an object given its ID"""
@@ -1442,6 +1462,7 @@ type Subscription {
   textFieldValue(where: TextFieldValueSubscriptionWhereInput): TextFieldValueSubscriptionPayload
   submission(where: SubmissionSubscriptionWhereInput): SubmissionSubscriptionPayload
   userActionRequest(where: UserActionRequestSubscriptionWhereInput): UserActionRequestSubscriptionPayload
+  workflowConnection(where: WorkflowConnectionSubscriptionWhereInput): WorkflowConnectionSubscriptionPayload
   workflowNode(where: WorkflowNodeSubscriptionWhereInput): WorkflowNodeSubscriptionPayload
 }
 
@@ -2491,12 +2512,318 @@ input UserWhereUniqueInput {
   email: String
 }
 
+type WorkflowConnection implements Node {
+  id: ID!
+  targetNodeId: ID!
+  targetConnector: String!
+  sourceConnector: String!
+}
+
+"""A connection to a list of items."""
+type WorkflowConnectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WorkflowConnectionEdge]!
+  aggregate: AggregateWorkflowConnection!
+}
+
+input WorkflowConnectionCreateInput {
+  targetNodeId: ID!
+  targetConnector: String!
+  sourceConnector: String!
+}
+
+input WorkflowConnectionCreateManyInput {
+  create: [WorkflowConnectionCreateInput!]
+  connect: [WorkflowConnectionWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type WorkflowConnectionEdge {
+  """The item at the end of the edge."""
+  node: WorkflowConnection!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WorkflowConnectionOrderByInput {
+  id_ASC
+  id_DESC
+  targetNodeId_ASC
+  targetNodeId_DESC
+  targetConnector_ASC
+  targetConnector_DESC
+  sourceConnector_ASC
+  sourceConnector_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type WorkflowConnectionPreviousValues {
+  id: ID!
+  targetNodeId: ID!
+  targetConnector: String!
+  sourceConnector: String!
+}
+
+type WorkflowConnectionSubscriptionPayload {
+  mutation: MutationType!
+  node: WorkflowConnection
+  updatedFields: [String!]
+  previousValues: WorkflowConnectionPreviousValues
+}
+
+input WorkflowConnectionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WorkflowConnectionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WorkflowConnectionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WorkflowConnectionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WorkflowConnectionWhereInput
+}
+
+input WorkflowConnectionUpdateDataInput {
+  targetNodeId: ID
+  targetConnector: String
+  sourceConnector: String
+}
+
+input WorkflowConnectionUpdateInput {
+  targetNodeId: ID
+  targetConnector: String
+  sourceConnector: String
+}
+
+input WorkflowConnectionUpdateManyInput {
+  create: [WorkflowConnectionCreateInput!]
+  connect: [WorkflowConnectionWhereUniqueInput!]
+  disconnect: [WorkflowConnectionWhereUniqueInput!]
+  delete: [WorkflowConnectionWhereUniqueInput!]
+  update: [WorkflowConnectionUpdateWithWhereUniqueNestedInput!]
+  upsert: [WorkflowConnectionUpsertWithWhereUniqueNestedInput!]
+}
+
+input WorkflowConnectionUpdateWithWhereUniqueNestedInput {
+  where: WorkflowConnectionWhereUniqueInput!
+  data: WorkflowConnectionUpdateDataInput!
+}
+
+input WorkflowConnectionUpsertWithWhereUniqueNestedInput {
+  where: WorkflowConnectionWhereUniqueInput!
+  update: WorkflowConnectionUpdateDataInput!
+  create: WorkflowConnectionCreateInput!
+}
+
+input WorkflowConnectionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WorkflowConnectionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WorkflowConnectionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WorkflowConnectionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  targetNodeId: ID
+
+  """All values that are not equal to given value."""
+  targetNodeId_not: ID
+
+  """All values that are contained in given list."""
+  targetNodeId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  targetNodeId_not_in: [ID!]
+
+  """All values less than the given value."""
+  targetNodeId_lt: ID
+
+  """All values less than or equal the given value."""
+  targetNodeId_lte: ID
+
+  """All values greater than the given value."""
+  targetNodeId_gt: ID
+
+  """All values greater than or equal the given value."""
+  targetNodeId_gte: ID
+
+  """All values containing the given string."""
+  targetNodeId_contains: ID
+
+  """All values not containing the given string."""
+  targetNodeId_not_contains: ID
+
+  """All values starting with the given string."""
+  targetNodeId_starts_with: ID
+
+  """All values not starting with the given string."""
+  targetNodeId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  targetNodeId_ends_with: ID
+
+  """All values not ending with the given string."""
+  targetNodeId_not_ends_with: ID
+  targetConnector: String
+
+  """All values that are not equal to given value."""
+  targetConnector_not: String
+
+  """All values that are contained in given list."""
+  targetConnector_in: [String!]
+
+  """All values that are not contained in given list."""
+  targetConnector_not_in: [String!]
+
+  """All values less than the given value."""
+  targetConnector_lt: String
+
+  """All values less than or equal the given value."""
+  targetConnector_lte: String
+
+  """All values greater than the given value."""
+  targetConnector_gt: String
+
+  """All values greater than or equal the given value."""
+  targetConnector_gte: String
+
+  """All values containing the given string."""
+  targetConnector_contains: String
+
+  """All values not containing the given string."""
+  targetConnector_not_contains: String
+
+  """All values starting with the given string."""
+  targetConnector_starts_with: String
+
+  """All values not starting with the given string."""
+  targetConnector_not_starts_with: String
+
+  """All values ending with the given string."""
+  targetConnector_ends_with: String
+
+  """All values not ending with the given string."""
+  targetConnector_not_ends_with: String
+  sourceConnector: String
+
+  """All values that are not equal to given value."""
+  sourceConnector_not: String
+
+  """All values that are contained in given list."""
+  sourceConnector_in: [String!]
+
+  """All values that are not contained in given list."""
+  sourceConnector_not_in: [String!]
+
+  """All values less than the given value."""
+  sourceConnector_lt: String
+
+  """All values less than or equal the given value."""
+  sourceConnector_lte: String
+
+  """All values greater than the given value."""
+  sourceConnector_gt: String
+
+  """All values greater than or equal the given value."""
+  sourceConnector_gte: String
+
+  """All values containing the given string."""
+  sourceConnector_contains: String
+
+  """All values not containing the given string."""
+  sourceConnector_not_contains: String
+
+  """All values starting with the given string."""
+  sourceConnector_starts_with: String
+
+  """All values not starting with the given string."""
+  sourceConnector_not_starts_with: String
+
+  """All values ending with the given string."""
+  sourceConnector_ends_with: String
+
+  """All values not ending with the given string."""
+  sourceConnector_not_ends_with: String
+}
+
+input WorkflowConnectionWhereUniqueInput {
+  id: ID
+}
+
 type WorkflowNode implements Node {
   id: ID!
   x: Int!
   y: Int!
   type: WorkflowNodeType!
   properties: Json!
+  connections(where: WorkflowConnectionWhereInput, orderBy: WorkflowConnectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WorkflowConnection!]
 }
 
 """A connection to a list of items."""
@@ -2514,6 +2841,12 @@ input WorkflowNodeCreateInput {
   y: Int!
   type: WorkflowNodeType!
   properties: Json!
+  connections: WorkflowConnectionCreateManyInput
+}
+
+input WorkflowNodeCreateManyInput {
+  create: [WorkflowNodeCreateInput!]
+  connect: [WorkflowNodeWhereUniqueInput!]
 }
 
 """An edge in a connection."""
@@ -2599,11 +2932,40 @@ enum WorkflowNodeType {
   APPROVAL
 }
 
+input WorkflowNodeUpdateDataInput {
+  x: Int
+  y: Int
+  type: WorkflowNodeType
+  properties: Json
+  connections: WorkflowConnectionUpdateManyInput
+}
+
 input WorkflowNodeUpdateInput {
   x: Int
   y: Int
   type: WorkflowNodeType
   properties: Json
+  connections: WorkflowConnectionUpdateManyInput
+}
+
+input WorkflowNodeUpdateManyInput {
+  create: [WorkflowNodeCreateInput!]
+  connect: [WorkflowNodeWhereUniqueInput!]
+  disconnect: [WorkflowNodeWhereUniqueInput!]
+  delete: [WorkflowNodeWhereUniqueInput!]
+  update: [WorkflowNodeUpdateWithWhereUniqueNestedInput!]
+  upsert: [WorkflowNodeUpsertWithWhereUniqueNestedInput!]
+}
+
+input WorkflowNodeUpdateWithWhereUniqueNestedInput {
+  where: WorkflowNodeWhereUniqueInput!
+  data: WorkflowNodeUpdateDataInput!
+}
+
+input WorkflowNodeUpsertWithWhereUniqueNestedInput {
+  where: WorkflowNodeWhereUniqueInput!
+  update: WorkflowNodeUpdateDataInput!
+  create: WorkflowNodeCreateInput!
 }
 
 input WorkflowNodeWhereInput {
@@ -2709,6 +3071,9 @@ input WorkflowNodeWhereInput {
 
   """All values that are not contained in given list."""
   type_not_in: [WorkflowNodeType!]
+  connections_every: WorkflowConnectionWhereInput
+  connections_some: WorkflowConnectionWhereInput
+  connections_none: WorkflowConnectionWhereInput
 }
 
 input WorkflowNodeWhereUniqueInput {

@@ -41,6 +41,7 @@ type DocumentTemplate {
   checkboxFields: [CheckboxField!]!
   textFields: [TextField!]!
   markdownFields: [MarkdownField!]!
+  workflowNodes: [WorkflowNode!]!
 }
 
 type CheckboxFieldValue {
