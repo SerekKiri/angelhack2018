@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import templateById from "../../lib/templateById"
 export default {
   async asyncData({ params }) {
     return {
@@ -15,47 +15,7 @@ export default {
   },
   apollo: {
     documentTemplate: {
-      query: gql`
-        query dtById($id: ID!) {
-          documentTemplate(where: { id: $id }) {
-            id
-            name
-            fieldHeaders {
-              id
-              type
-              order
-              definitionId
-            }
-            checkboxFields {
-              id
-              label
-              defaultValue
-            }
-            textFields {
-              id
-              label
-              defaultValue
-            }
-            markdownFields {
-              id
-              content
-            }
-            workflowNodes {
-              id
-              x
-              y
-              type
-              properties
-              connections {
-                id
-                targetNodeId
-                targetConnector
-                sourceConnector
-              }
-            }
-          }
-        }
-      `,
+      query: templateById,
       variables() {
         return { id: this.id }
       }

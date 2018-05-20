@@ -84,26 +84,14 @@ import MarkdownField from '../components/fields/MarkdownField.vue'
 import PropertyEditorDrawer from '../components/PropertyEditorDrawer'
 import WorkflowEditor from '../components/WorkflowEditor'
 import draggable from 'vuedraggable'
-
 import gql from 'graphql-tag'
-
-const fieldComponents = {
-  TEXT: TextField,
-  CHECKBOX: CheckboxField,
-  MARKDOWN: MarkdownField
-}
+import { fieldComponents, fieldDefinitionKeys } from '../lib/fieldUtils'
 
 /*const fieldMockProps = {
     TEXT: {
         value: 
     }
 }*/
-
-const fieldDefinitionKeys = {
-  TEXT: 'textFields',
-  CHECKBOX: 'checkboxFields',
-  MARKDOWN: 'markdownFields'
-}
 
 const fieldProperties = {
   TEXT: [
