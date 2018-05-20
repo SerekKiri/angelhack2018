@@ -1,0 +1,12 @@
+query getUserActionRequestTypes($email:String!) {
+  userActionRequests(where: { user:{ email: $email} }) {
+    ...UserActionRequestFragment
+  }
+}
+
+fragment UserActionRequestFragment on UserActionRequest {
+  id
+  type
+  title
+  content
+}

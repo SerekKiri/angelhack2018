@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import io.github.feelfree.docugram.ui.modules.login.LoginActivity
 import io.github.feelfree.docugram.ui.modules.login.LoginModule
 import io.github.feelfree.docugram.ui.modules.mainactivity.MainActivity
+import io.github.feelfree.docugram.ui.modules.mainactivity.MainActivityFragmentProvider
 import io.github.feelfree.docugram.ui.modules.template.TemplateActivity
 import io.github.feelfree.docugram.ui.modules.template.TemplateModule
 
@@ -17,7 +18,7 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [LoginModule::class])
     abstract fun bindLoginActivity() : LoginActivity
 
-    @ContributesAndroidInjector(modules = [])
+    @ContributesAndroidInjector(modules = [MainActivityFragmentProvider::class])
     abstract fun bindMainActivity() : MainActivity
 
 }

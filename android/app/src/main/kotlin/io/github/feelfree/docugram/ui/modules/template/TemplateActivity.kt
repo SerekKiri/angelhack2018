@@ -45,7 +45,7 @@ class TemplateActivity : BaseActivity(), TemplateView {
 
         // Load data
         loadingView.isVisible = true
-        presenter.loadTemplate("cjhdw9xv000ph0826fq615lxf")
+        presenter.loadTemplate("cjhdz6iwu00t60826kv1myw9e")
     }
 
     override fun onDestroy() {
