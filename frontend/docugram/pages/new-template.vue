@@ -7,7 +7,7 @@
   <div v-else>
     <!-- <h1 class="subheader">Create a document template</h1> -->
     <div class="pa-3">
-      <v-text-field :label="Name"
+      <v-text-field label="Name"
                     v-model="name"
                     solo />
     </div>
