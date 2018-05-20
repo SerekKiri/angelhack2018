@@ -22,6 +22,7 @@ type Mutation {
   createMarkdownField(data: MarkdownFieldCreateInput!): MarkdownField!
   createDocumentTemplate(data: DocumentTemplateCreateInput!): DocumentTemplate!
   createSubmission(data: SubmissionCreateInput!): Submission!
+  createWorkflowNode(data: WorkflowNodeCreateInput!): WorkflowNode!
 }
 
 #type Subscription {
