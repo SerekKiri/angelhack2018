@@ -222,6 +222,8 @@ export default {
     emitEvent() {
       let serializedData = this.nodes.map(n => ({
         ...n,
+        x: Math.round(n.x),
+        y: Math.round(n.y),
         connections: n.connections.map(c => ({
           targetNodeId: c.targetNode.id,
           targetConnector: c.targetConnector.name,
