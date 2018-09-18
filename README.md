@@ -2,6 +2,8 @@
 
 # Docugram
 
+### Project description in [story.md](https://github.com/SerekKiri/angelhack2018/blob/master/STORY.md)
+
 To run this app you need:
 
 Go to folder:
